@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
-import MovieList from '../RenderMovies/MovieList';
+import MovieList from '../MovieList/MovieList';
 import getData from '../../utilities/getData';
 
 function Homepage() {
@@ -8,7 +8,7 @@ function Homepage() {
 
   useEffect(() => {
     getData().then((res) => setMovies(res));
-    // console.log('movies', movies);
+    console.log('movies', movies);
   }, []);
   return (
     <div>

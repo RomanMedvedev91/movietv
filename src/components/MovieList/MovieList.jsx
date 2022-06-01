@@ -1,13 +1,14 @@
+import { Card } from 'semantic-ui-react';
 import MovieCard from '../MovieCard/MovieCard';
 
 function MovieList({ movies }) {
   // console.log(movies);
   return (
-    <div>
+    <Card.Group>
       {movies.map((movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}
-    </div>
+    </Card.Group>
   );
 }
 
