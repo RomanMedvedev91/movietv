@@ -8,10 +8,14 @@ const extra = (
 );
 
 function MovieCard({ movie }) {
+  const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500/';
+  // const tmdbPosterPath = 'https://image.tmdb.org/t/p/w185_and_h278_face/';
+
   return (
     <Card
-      image={movie.backdrop_path}
-      header={movie.title}
+      image={movie.poster_path ? `${tmdbPosterPath + movie.poster_path}` : '/img-placeholder.jpg'}
+      // image={movie.backdrop_path}
+      header={movie.title || movie.name}
       // header={`Elliot Baker\n ${movie.id}`}
       meta={movie.id}
       description={movie.o}
