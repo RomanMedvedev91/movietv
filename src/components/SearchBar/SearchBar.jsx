@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import { Input, Form, Button } from 'semantic-ui-react';
-import getData from '../../utilities/getData';
+import { useNavigate } from 'react-router-dom';
 
-let searchQuery = '';
-const searchMovieUrl = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&query=${searchQuery}d&page=1&include_adult=false`;
+import getData from '../../utilities/getData';
 
 function SearchBar({ setMovies }) {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
+
+  const navigate = useNavigate();
+
+  const getSearchMovieUrl = (query) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
+    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&query=${query}&include_adult=false`;
 
   const search = async () => {
     if (name === '') {
@@ -16,8 +21,10 @@ function SearchBar({ setMovies }) {
     }
 
     setError('');
-    searchQuery = name;
-    await getData(searchMovieUrl).then((res) => setMovies(res));
+    await getData(getSearchMovieUrl(name)).then((res) => setMovies(res));
+
+    // link to search page
+    navigate(`/search?query=${name}`);
     // empty textarea
     setName('');
   };
