@@ -1,15 +1,20 @@
 // import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
+import { SearchProvider } from './context/Search.context';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  <App />
+  <BrowserRouter>
+    <SearchProvider>
+      <App />
+    </SearchProvider>
+  </BrowserRouter>
   // </React.StrictMode>
 );
 
