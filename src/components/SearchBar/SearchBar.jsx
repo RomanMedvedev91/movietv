@@ -1,22 +1,15 @@
 import { useState, useContext } from 'react';
 import { Input, Form, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
-
 import { SearchContext } from '../../context/Search.context';
-
 import getData from '../../utilities/getData';
+import getSearchMovieUrl from '../../utilities/helperFunctions';
 
 function SearchBar() {
   const [currentSearch, setCurrentSearch] = useState('');
   const [error, setError] = useState('');
-
   const { setSearchMovies } = useContext(SearchContext);
-
   const navigate = useNavigate();
-
-  const getSearchMovieUrl = (query) =>
-    // eslint-disable-next-line implicit-arrow-linebreak
-    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&query=${query}&include_adult=false`;
 
   const search = async () => {
     if (currentSearch === '') {
@@ -26,7 +19,9 @@ function SearchBar() {
 
     setError('');
     const searchUrl = getSearchMovieUrl(currentSearch);
-    await getData(searchUrl).then((res) => setSearchMovies(res));
+    // await getData(searchUrl).then((res) => setSearchMovies(res));
+    const res = await getData(searchUrl);
+    setSearchMovies(res);
 
     // link to search page
     navigate(`/search?query=${currentSearch}`);
