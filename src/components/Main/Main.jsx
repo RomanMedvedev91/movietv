@@ -14,7 +14,7 @@ function Main() {
   };
 
   return (
-    <div>
+    <div style={{ padding: '200px' }}>
       Homepage
       <SearchBar />
       <Button onClick={renderMovieCards}>Top Rated movies</Button>

@@ -1,11 +1,16 @@
 import { Outlet } from 'react-router-dom';
+import { HeaderContainer } from './Header.style';
+
+import Navbar from '../../components/Navbar/Navbar';
 
 function Header() {
   return (
-    <div>
-      Header
+    <>
+      <HeaderContainer>
+        <Navbar />
+      </HeaderContainer>
       <Outlet />
-    </div>
+    </>
   );
 }
 

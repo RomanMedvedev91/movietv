@@ -1,0 +1,11 @@
+#root {
+  max-width: 1512px;
+  margin: auto;
+  padding: 0 170px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
