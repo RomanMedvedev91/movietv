@@ -32,12 +32,12 @@ function Navbar() {
           </NavItem>
 
           <NavItem>
-            <NavLink to={route.HOME}>Movies</NavLink>
+            <NavLink to={route.MOVIES}>Movies</NavLink>
             <Submenu />
           </NavItem>
 
           <NavItem>
-            <NavLink to={route.HOME}>Tv Shoes</NavLink>
+            <NavLink to={route.TVSHOES}>Tv Shoes</NavLink>
           </NavItem>
         </NavItemContainer>
       </NavContainer>

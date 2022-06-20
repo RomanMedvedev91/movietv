@@ -6,10 +6,10 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 2.5em;
 `;
 
 export const Navlinks = styled.nav`
-  /* width: 20%; */
   height: 100%;
   display: flex;
   align-items: center;

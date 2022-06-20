@@ -1,3 +1,4 @@
 export const HOME = '/';
-export const TOP_RATED = '/top_rated';
+export const MOVIES = '/movies/*';
+export const TVSHOES = '/tv-shoes/*';
 export const SEARCH = '/search/*';
