@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 
 // eslint-disable-next-line import/prefer-default-export
 export const HeaderContainer = styled.header`
+  max-width: 1172px;
+  /* position: inherit;
+  z-index: 1; */
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -1,7 +1,8 @@
 #root {
-  max-width: 1512px;
+  width: 100%;
+  max-width: 1172px;
   margin: auto;
-  padding: 0 170px;
+  /* padding: 0 170px; */
 }
 
 ul {
