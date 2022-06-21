@@ -23,7 +23,6 @@ function Navbar() {
       <NavContainer>
         <LogoLink to="/">
           <Logo />
-          <h1>MovieTV</h1>
         </LogoLink>
 
         <NavItemContainer>

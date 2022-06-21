@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 // eslint-disable-next-line import/prefer-default-export
 export const MainScreenContainer = styled.div`
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
 `;
 
 export const BackgroundImgContainer = styled.div`

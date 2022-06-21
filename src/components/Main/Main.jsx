@@ -21,9 +21,6 @@ function Main() {
       <BackgroundImgContainer>
         <BackgroundImage src={mainBackground} alt="mainBackground" />
       </BackgroundImgContainer>
-      <div>
-        <p>Millions of movies, TV shows and people to discover. Explore now</p>
-      </div>
       <SearchBar />
       <Button onClick={renderMovieCards}>Top Rated movies</Button>
       {movies ? <MovieList movies={movies} /> : ''}

@@ -11,7 +11,15 @@ export const NavContainer = styled.nav`
   }
 `;
 
-export const NavItemContainer = styled.ul``;
+export const NavItemContainer = styled.ul`
+  a {
+    color: #fff;
+    &:hover {
+      color: #3c64b1;
+      font-weight: 800;
+    }
+  }
+`;
 
 export const NavItem = styled.li`
   width: calc(90px * 0.8);
@@ -22,8 +30,8 @@ export const NavItem = styled.li`
   justify-content: center;
 
   &:hover {
-    color: #3c64b1;
-    font-weight: 800;
+    /* color: #3c64b1;
+    font-weight: 800; */
 
     ${NavSubMenuContainer} {
       display: block;
