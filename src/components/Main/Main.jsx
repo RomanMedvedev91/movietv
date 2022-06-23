@@ -6,8 +6,9 @@ import PopularMovieList from '../PopularMovieList/PopularMovieList';
 import getData from '../../utilities/getData';
 import { topRatedMovieUrl } from '../../constants/apiUrls';
 
-import { MainScreenContainer, BackgroundImgContainer, BackgroundImage } from './Main.style';
+import { BackgroundImgContainer, BackgroundImage, Title } from './Main.style';
 import mainBackground from '../../assets/mainBackground.png';
+import NowPlayingMovies from './NowPlayingMovies/NowPlayingMovies';
 
 function Main() {
   const [movies, setMovies] = useState([]);
@@ -18,15 +19,21 @@ function Main() {
   };
 
   return (
-    <MainScreenContainer>
+    <>
+      {/* <MainScreenContainer> */}
       <BackgroundImgContainer>
         <BackgroundImage src={mainBackground} alt="mainBackground" />
       </BackgroundImgContainer>
+      <Title>
+        <p>Millions of movies, TV shows and people to discover. Explore now</p>
+      </Title>
       <SearchBar />
       <PopularMovieList />
+      <NowPlayingMovies />
       <Button onClick={renderMovieCards}>Top Rated movies</Button>
       {movies ? <MovieList movies={movies} /> : ''}
-    </MainScreenContainer>
+      {/* </MainScreenContainer> */}
+    </>
   );
 }
 

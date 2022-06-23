@@ -26,6 +26,7 @@ function PopularMovieList() {
     // console.log('movies', movies);
     // eslint-disable-next-line implicit-arrow-linebreak
     moviesCards.map((movie) => <MovieCardNoDetails key={movie.id} movie={movie} />);
+
   return (
     <PopularMoviesContainer>
       PopularMovieList

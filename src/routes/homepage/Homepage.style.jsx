@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // eslint-disable-next-line import/prefer-default-export
-export const HomepageContainer = styled.div`
+export const HomepageContainer = styled.main`
   max-width: 1172px;
   /* display: flex;
   flex-direction: column;
