@@ -2,9 +2,12 @@ import styled from 'styled-components';
 
 export const SearchFormContainer = styled.section`
   max-width: 590px;
+  /* .ui.form input {
+    background: none;
+  } */
+
   form {
     display: flex;
-
     div.input {
       opacity: 85%;
       width: 100%;

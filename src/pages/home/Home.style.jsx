@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
 // eslint-disable-next-line import/prefer-default-export
-// export const MainScreenContainer = styled.div`
-//   /* background-color: aliceblue; */
-// `;
+export const HomepageContainer = styled.main`
+  max-width: 1172px;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  /* background-color: bisque; */
+  /* padding: 20px 80px; */
+`;
 
 export const BackgroundImgContainer = styled.div`
   position: absolute;
