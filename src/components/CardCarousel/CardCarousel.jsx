@@ -4,7 +4,7 @@ import { Icon } from 'semantic-ui-react';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 import CardSlide from './CardSlide';
-import DotGroup from './DotGroup';
+// import DotGroup from './DotGroup';
 
 import { CarouselContainer } from './CardCarousel.style';
 
@@ -38,7 +38,7 @@ function CardCarousel({ movies }) {
         <ButtonNext>
           <Icon name="angle right" size="big" />
         </ButtonNext>
-        <DotGroup slides={movies.length} />
+        {/* <DotGroup slides={movies.length} /> */}
       </CarouselProvider>
     </CarouselContainer>
   );

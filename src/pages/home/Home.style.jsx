@@ -36,10 +36,10 @@ export const BackgroundImage = styled.img`
 export const Title = styled.div`
   max-width: 590px;
 
+  font-family: 'Mulish', sans-serif;
   margin: 7em 0 3.8em 0;
   color: #fff;
   p {
-    font-family: 'Mulish', sans-serif;
     font-weight: 800;
     font-size: 2.3em;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -47,7 +47,7 @@ export const Title = styled.div`
 `;
 
 export const PopularMoviesContainer = styled.section`
-  margin: 12em 0;
+  margin-top: 12em;
   /* .ui.card,
   .ui.cards > .card {
     box-shadow: none;
@@ -57,4 +57,30 @@ export const PopularMoviesContainer = styled.section`
       transform: scale(1.1);
     }
   } */
+`;
+
+export const CarouselMoviesContainer = styled.section`
+  width: 100%;
+`;
+
+export const MoviesTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12em;
+  margin-bottom: 2em;
+
+  color: #fff;
+  font-family: 'Mulish', sans-serif;
+
+  h2 {
+    font-weight: 800;
+    font-size: 2.5em;
+    margin: 0;
+  }
+  a {
+    font-weight: 600;
+    font-size: 1.2em;
+    color: #fff;
+    align-self: center;
+  }
 `;

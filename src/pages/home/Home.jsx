@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
+import { Button, Card, Icon } from 'semantic-ui-react';
+import * as route from '../../constants/routes';
 
-import { Button, Card } from 'semantic-ui-react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 // import MovieList from '../../components/MovieList/MovieList';
 import MovieCard from '../../components/MovieCard/MovieCard';
@@ -10,18 +11,21 @@ import CardCarousel from '../../components/CardCarousel/CardCarousel';
 
 import getData from '../../utilities/getData';
 // import { topRatedMovieUrl } from '../../constants/apiUrls';
-import { popularMovieUrl, topRatedMovieUrl } from '../../constants/apiUrls';
+import { popularMovieUrl, topRatedMovieUrl, nowPlayingMovieUrl } from '../../constants/apiUrls';
 import mainBackground from '../../assets/mainBackground.png';
 
 // import useFetch from '../../hooks/useFetch';
 
 // eslint-disable-next-line object-curly-newline
+
 import {
   HomepageContainer,
   BackgroundImgContainer,
   BackgroundImage,
   Title,
-  PopularMoviesContainer
+  PopularMoviesContainer,
+  CarouselMoviesContainer,
+  MoviesTitle
 } from './Home.style';
 
 function Homepage() {
@@ -29,7 +33,7 @@ function Homepage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [popularMovies, setPopularMovies] = useState([]);
-  // const [nowPlayingMovies, setnowPlayingMovies] = useState([]);
+  const [nowPlayingMovies, setnowPlayingMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
 
   useEffect(() => {
@@ -37,9 +41,10 @@ function Homepage() {
       setIsLoading(true);
       const popularMoviesResult = await getData(popularMovieUrl);
       const topRateMoviesResult = await getData(topRatedMovieUrl);
+      const playingNowMoviesResult = await getData(nowPlayingMovieUrl);
       setPopularMovies(popularMoviesResult);
-      // setnowPlayingMovies(topRateMoviesResult.slice(0, 5));
       setTopRatedMovies(topRateMoviesResult);
+      setnowPlayingMovies(playingNowMoviesResult);
 
       setIsLoading(false);
     };
@@ -61,7 +66,6 @@ function Homepage() {
       </Title>
       <SearchBar />
       <PopularMoviesContainer>
-        PopularMovieList
         {/* {loading ? <div>Loading</div> : ''}
         {error ? <div>error</div> : ''} */}
         {isLoading ? <div>Loading</div> : ''}
@@ -69,13 +73,26 @@ function Homepage() {
           <Card.Group itemsPerRow={5}>{renderMovieCards(popularMovies)}</Card.Group>
         )}
       </PopularMoviesContainer>
-      <div>
-        {/* NowPlayingMovies
-        {popularMovies && (
-          <Card.Group itemsPerRow={5}>{renderMovieCards(topRatedMovies)}</Card.Group>
-        )} */}
+      <CarouselMoviesContainer>
+        <MoviesTitle>
+          <h2>Top Rated</h2>
+          <Link to={route.MOVIES}>
+            See more
+            <Icon name="angle right" size="small" />
+          </Link>
+        </MoviesTitle>
         <CardCarousel movies={topRatedMovies} />
-      </div>
+      </CarouselMoviesContainer>
+      <CarouselMoviesContainer>
+        <MoviesTitle>
+          <h2>Playing now</h2>
+          <Link to={route.MOVIES}>
+            See more
+            <Icon name="angle right" size="small" />
+          </Link>
+        </MoviesTitle>
+        <CardCarousel movies={nowPlayingMovies} />
+      </CarouselMoviesContainer>
 
       <Button onClick={renderMovieCards}>Top Rated movies</Button>
       {/* {movies ? <MovieList movies={movies} /> : ''} */}
