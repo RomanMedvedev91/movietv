@@ -9,15 +9,15 @@ import CardSlide from './CardSlide';
 import { CarouselContainer } from './CardCarousel.style';
 
 function CardCarousel({ movies }) {
-  console.log(movies);
+  // console.log(movies);
   return (
     <CarouselContainer>
       <CarouselProvider
-        naturalSlideWidth={100}
-        naturalSlideHeight={185}
+        naturalSlideWidth={70}
+        naturalSlideHeight={130}
         totalSlides={movies.length}
-        visibleSlides={5}
-        step={3}
+        visibleSlides={4}
+        step={1}
 
         // eslint-disable-next-line react/jsx-closing-bracket-location
         // style={{ width: '800px' }}

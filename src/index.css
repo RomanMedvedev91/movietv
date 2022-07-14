@@ -13,6 +13,11 @@ body {
   background: #141313;
 }
 
+.ui.modal > .header {
+  background: #141313;
+  color: #fff;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

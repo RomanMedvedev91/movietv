@@ -13,6 +13,11 @@ https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_OPEN
 export const latestMovieUrl = `
 https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
 
+// eslint-disable-next-line prettier/prettier
+export const videoUrl = (movieId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
 // const topRated = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
 
 // `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`;
