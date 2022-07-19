@@ -70,14 +70,14 @@ export const NavLink = styled(Link)`
 
 export const LogoLink = styled(Link)`
   margin-right: 5em;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
-  h1 {
+  /* h1 {
     margin: 0;
     margin-left: 0.5em;
     display: flex;
     align-items: center;
-  }
+  } */
 `;
 
 // eslint-disable-next-line import/prefer-default-export
@@ -85,10 +85,12 @@ export const HeaderContainer = styled.header`
   /* max-width: 1172px; */
   /* position: inherit;
   z-index: 1; */
+  max-width: 1172px;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.5em;
+  /* margin-top: 1.5em; */
   padding: 1em 0 1em 0;
 `;
 
