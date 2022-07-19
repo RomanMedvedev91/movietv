@@ -7,19 +7,18 @@ import { Outlet, Link } from 'react-router-dom';
 
 // eslint-disable-next-line object-curly-newline
 import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-react-carousel';
+
 import 'pure-react-carousel/dist/react-carousel.es.css';
 // eslint-disable-next-line object-curly-newline
 import { Card, Icon, Embed, Modal } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
-// import MovieList from '../../components/MovieList/MovieList';
 import MovieCard from '../../components/MovieCard/MovieCard';
-
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 
 import getData from '../../utilities/getData';
-// import { topRatedMovieUrl } from '../../constants/apiUrls';
+
 import {
   popularMovieUrl,
   topRatedMovieUrl,
@@ -28,10 +27,6 @@ import {
   videoUrl
 } from '../../constants/apiUrls';
 import mainBackground from '../../assets/mainBackground.png';
-
-// import useFetch from '../../hooks/useFetch';
-
-// eslint-disable-next-line object-curly-newline
 
 import {
   HomepageContainer,
@@ -46,8 +41,6 @@ import {
 } from './Home.style';
 
 function Homepage() {
-  // const { data, loading, error } = useFetch(popularMovieUrl);
-
   const [isLoading, setIsLoading] = useState(false);
   const [popularMovies, setPopularMovies] = useState([]);
   const [nowPlayingMovies, setnowPlayingMovies] = useState([]);
@@ -56,8 +49,6 @@ function Homepage() {
   const [open, setOpen] = useState(false);
   const [currentTrailer, setCurrentTrailer] = useState();
 
-  // const [upcomingdMoviesTrailer, setUpcomingMoviesTrailer] = useState([]);
-
   useEffect(() => {
     const renderMainMovieCards = async () => {
       setIsLoading(true);
@@ -65,13 +56,13 @@ function Homepage() {
       const topRateMoviesResult = await getData(topRatedMovieUrl);
       const playingNowMoviesResult = await getData(nowPlayingMovieUrl);
       const upcomingMoviesResult = await getData(upcommingMovieUrl);
-      // Add movie data to upcomingMovies state
 
       const upcomingMoviesWithTrailer = await Promise.all(
         upcomingMoviesResult.map(async (movie) => {
           const movieObj = movie;
-          const trailerUrl = videoUrl(movieObj.id);
-          movieObj.trailer = await getData(trailerUrl);
+          const trailerUrl = videoUrl(movie.id);
+          const trailerResponse = await getData(trailerUrl);
+          movieObj.trailer = trailerResponse;
 
           return movieObj;
         })
@@ -82,8 +73,6 @@ function Homepage() {
       setnowPlayingMovies(playingNowMoviesResult);
       setUpcomingMovies(upcomingMoviesWithTrailer);
 
-      // setUpcomingMovies(upcomingMoviesResult);
-
       setIsLoading(false);
     };
 
@@ -91,28 +80,26 @@ function Homepage() {
   }, []);
 
   const renderMovieCards = (moviesCards) =>
-    // console.log('movies', movies);
     // eslint-disable-next-line implicit-arrow-linebreak
     moviesCards.slice(0, 5).map((movie) => <MovieCard key={movie.id} image={movie.poster_path} />);
 
   const modalHadler = (movie) => {
     setCurrentTrailer(movie);
-    console.log(currentTrailer);
     setOpen(true);
   };
 
   return (
     <HomepageContainer>
-      <BackgroundImgContainer>
-        <BackgroundImage src={mainBackground} alt="mainBackground" />
-      </BackgroundImgContainer>
-      <Title>
-        <p>Millions of movies, TV shows and people to discover. Explore now</p>
-      </Title>
-      <SearchBar />
+      <section>
+        <BackgroundImgContainer>
+          <BackgroundImage src={mainBackground} alt="mainBackground" />
+        </BackgroundImgContainer>
+        <Title>
+          <p>Millions of movies, TV shows and people to discover. Explore now</p>
+        </Title>
+        <SearchBar />
+      </section>
       <PopularMoviesContainer>
-        {/* {loading ? <div>Loading</div> : ''}
-        {error ? <div>error</div> : ''} */}
         {isLoading ? <div>Loading</div> : ''}
         {popularMovies && (
           <Card.Group itemsPerRow={5}>{renderMovieCards(popularMovies)}</Card.Group>
@@ -149,12 +136,11 @@ function Homepage() {
             <Icon name="angle right" size="small" />
           </Link>
         </MoviesTitle>
-        {console.log(upcomingdMovies)}
 
         <CarouselContainer>
           <CarouselProvider
-            naturalSlideWidth={50}
-            naturalSlideHeight={60}
+            naturalSlideWidth={100}
+            naturalSlideHeight={75}
             totalSlides={upcomingdMovies.length}
             visibleSlides={3}
             step={1}>
@@ -169,12 +155,13 @@ function Homepage() {
                       onClick={() => modalHadler(movie)}
                       icon="play"
                       active={false}
-                      id={movie.trailer[0].key}
+                      id={movie.trailer[0] && movie.trailer[0].key}
                       placeholder={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
                       source="youtube"
                     />
                     <h3>{movie.title}</h3>
-                    <p>{movie.trailer[0].name}</p>
+                    {/* check if trailer is Loaded */}
+                    {movie.trailer[0] && <p>{movie.trailer[0].name}</p>}
                   </TrailerContainer>
                 </Slide>
               ))}
@@ -184,26 +171,21 @@ function Homepage() {
             </ButtonNext>
           </CarouselProvider>
         </CarouselContainer>
-
-        {currentTrailer && (
-          <Modal onClose={() => setOpen(false)} onOpen={() => setOpen(true)} open={open} closeIcon>
-            <Modal.Header className="modal-header">
-              <Modal.Content>{currentTrailer.title}</Modal.Content>
-              {/* <Modal.Actions>
-                <Button labelPosition="right" onClick={() => setOpen(false)}>
-                  <Icon name="close" />
-                </Button>
-              </Modal.Actions> */}
-            </Modal.Header>
-            <Embed
-              active
-              id={currentTrailer.trailer[0].key}
-              placeholder={`https://image.tmdb.org/t/p/w500/${currentTrailer.backdrop_path}`}
-              source="youtube"
-            />
-          </Modal>
-        )}
       </CarouselMoviesContainer>
+
+      {currentTrailer && (
+        <Modal onClose={() => setOpen(false)} onOpen={() => setOpen(true)} open={open} closeIcon>
+          <Modal.Header className="modal-header">
+            <Modal.Content>{currentTrailer.title}</Modal.Content>
+          </Modal.Header>
+          <Embed
+            active
+            id={currentTrailer.trailer[0].key}
+            placeholder={`https://image.tmdb.org/t/p/w500/${currentTrailer.backdrop_path}`}
+            source="youtube"
+          />
+        </Modal>
+      )}
 
       <Outlet />
     </HomepageContainer>
