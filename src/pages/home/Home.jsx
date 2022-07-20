@@ -37,7 +37,8 @@ import {
   CarouselMoviesContainer,
   MoviesTitle,
   CarouselContainer,
-  TrailerContainer
+  TrailerContainer,
+  HeaderGradient
 } from './Home.style';
 
 function Homepage() {
@@ -94,6 +95,8 @@ function Homepage() {
         <BackgroundImgContainer>
           <BackgroundImage src={mainBackground} alt="mainBackground" />
         </BackgroundImgContainer>
+        <HeaderGradient />
+
         <Title>
           <p>Millions of movies, TV shows and people to discover. Explore now</p>
         </Title>

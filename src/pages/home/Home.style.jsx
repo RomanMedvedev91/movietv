@@ -23,11 +23,22 @@ export const HomepageContainer = styled.main`
 
 export const BackgroundImgContainer = styled.div`
   position: absolute;
-  z-index: -1;
+  z-index: -10;
   top: 0;
   left: 0;
   width: 100%;
   margin: auto;
+  opacity: 0.5;
+`;
+
+export const HeaderGradient = styled.div`
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 100px;
+  width: 100%;
+  height: 1000px;
+  background: linear-gradient(0deg, #141313, 80%, transparent);
 `;
 
 export const BackgroundImage = styled.img`

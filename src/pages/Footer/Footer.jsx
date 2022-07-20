@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 
-import footerBackground from '../../assets/footer2.png';
+import footerBackground from '../../assets/footer3.jpg';
 
 // eslint-disable-next-line object-curly-newline
 import {
@@ -11,18 +11,21 @@ import {
   NavItemContainer,
   NavItem,
   LinksContainer,
-  SocialsContainer
+  SocialsContainer,
+  FooterDownContainer,
+  FooterGradient
 } from './Footer.style';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 
 function Footer() {
   return (
     <FooterContainer>
-      <LinksContainer>
-        <BackgroundImg>
-          <img src={footerBackground} alt="footerImg" />
-        </BackgroundImg>
+      <FooterGradient />
+      <BackgroundImg>
+        <img src={footerBackground} alt="footerImg" />
+      </BackgroundImg>
 
+      <LinksContainer>
         <Link to="/">
           <Logo />
         </Link>
@@ -73,7 +76,7 @@ function Footer() {
         </NavItemContainer>
       </LinksContainer>
 
-      <div>
+      <FooterDownContainer>
         <div>
           <p>© 2022 MovieTV, Canada, Toronto, 185 Roehampton Ave </p>
         </div>
@@ -97,7 +100,7 @@ function Footer() {
             </Link>
           </div>
         </SocialsContainer>
-      </div>
+      </FooterDownContainer>
     </FooterContainer>
   );
 }
