@@ -32,6 +32,11 @@ export const LinksContainer = styled.div`
   z-index: 1;
 `;
 
+export const NavigationContainer = styled.div`
+  display: flex;
+  padding-top: 1.4em;
+`;
+
 export const BackgroundImg = styled.div`
   position: absolute;
   z-index: -5;
@@ -39,7 +44,7 @@ export const BackgroundImg = styled.div`
   left: 0;
   right: 0;
   width: 100%;
-  opacity: 70%;
+  opacity: 50%;
   /* height: 572px; */
 
   img {

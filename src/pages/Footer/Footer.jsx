@@ -13,7 +13,8 @@ import {
   LinksContainer,
   SocialsContainer,
   FooterDownContainer,
-  FooterGradient
+  FooterGradient,
+  NavigationContainer
 } from './Footer.style';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 
@@ -29,51 +30,52 @@ function Footer() {
         <Link to="/">
           <Logo />
         </Link>
+        <NavigationContainer>
+          <NavItemContainer>
+            <NavItem>
+              <Link to={route.MOVIES}>Movies</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Popular</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Upcomming</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Top rated</Link>
+            </NavItem>
+          </NavItemContainer>
 
-        <NavItemContainer>
-          <NavItem>
-            <Link to={route.MOVIES}>Movies</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Popular</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Upcomming</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Top rated</Link>
-          </NavItem>
-        </NavItemContainer>
+          <NavItemContainer>
+            <NavItem>
+              <Link to={route.MOVIES}>Movies</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Popular</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Upcomming</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Top rated</Link>
+            </NavItem>
+          </NavItemContainer>
 
-        <NavItemContainer>
-          <NavItem>
-            <Link to={route.MOVIES}>Movies</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Popular</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Upcomming</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Top rated</Link>
-          </NavItem>
-        </NavItemContainer>
-
-        <NavItemContainer>
-          <NavItem>
-            <Link to={route.MOVIES}>Movies</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Popular</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Upcomming</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={route.MOVIES}>Top rated</Link>
-          </NavItem>
-        </NavItemContainer>
+          <NavItemContainer>
+            <NavItem>
+              <Link to={route.MOVIES}>Movies</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Popular</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Upcomming</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.MOVIES}>Top rated</Link>
+            </NavItem>
+          </NavItemContainer>
+        </NavigationContainer>
       </LinksContainer>
 
       <FooterDownContainer>
