@@ -9,7 +9,7 @@ function MovieList({ movies }) {
     return moviesCards.map((movie) => <MovieCard key={movie.id} movie={movie} />);
   };
 
-  return <Card.Group>{renderMovieCards(movies)}</Card.Group>;
+  return <Card.Group itemsPerRow={5}>{renderMovieCards(movies)}</Card.Group>;
 }
 
 export default MovieList;

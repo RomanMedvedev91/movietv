@@ -1,7 +1,10 @@
 #root {
-  max-width: 1512px;
-  margin: auto;
-  padding: 0 170px;
+  width: 100%;
+  /* max-width: 1172px;
+  margin: auto; */
+  position: relative;
+  min-height: 100vh;
+  /* overflow: hidden; */
 }
 
 ul {

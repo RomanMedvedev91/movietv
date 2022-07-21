@@ -3,6 +3,8 @@ import { Input, Form, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../../context/Search.context';
 
+import { SearchFormContainer, ButtonContainer } from './SearchBar.style';
+
 function SearchBar() {
   const [currentInput, setCurrentInput] = useState('');
   const { currentSearch, setCurrentSearch } = useContext(SearchContext);
@@ -20,19 +22,26 @@ function SearchBar() {
   };
 
   return (
-    <Form>
-      <Form.Field>
-        <label htmlFor="find movie">Find movie</label>
+    <SearchFormContainer>
+      {/* <Title>
+        <p>Millions of movies, TV shows and people to discover. Explore now</p>
+      </Title> */}
+      <Form>
         <Input
-          placeholder="Search..."
+          fluid
+          icon="search"
+          iconPosition="left"
+          placeholder="Movie, artist, genre"
           value={currentInput}
           onChange={(e) => onInputChangeHandle(e)}
         />
-        <Button onSubmit={(e) => e.preventDefault()} onClick={search}>
-          Search
-        </Button>
-      </Form.Field>
-    </Form>
+        <ButtonContainer>
+          <Button primary onSubmit={(e) => e.preventDefault()} onClick={search}>
+            Search
+          </Button>
+        </ButtonContainer>
+      </Form>
+    </SearchFormContainer>
   );
 }
 
