@@ -7,7 +7,12 @@ function MovieList({ movies }) {
     console.log('movies', movies);
     // eslint-disable-next-line implicit-arrow-linebreak
     return moviesCards.map((movie) => (
-      <MovieCard key={movie.id} image={movie.poster_path} header={movie.title || movie.name} />
+      <MovieCard
+        key={movie.id}
+        id={movie.id}
+        image={movie.poster_path}
+        header={movie.title || movie.name}
+      />
     ));
   };
 
