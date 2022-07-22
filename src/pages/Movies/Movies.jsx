@@ -6,7 +6,7 @@ function Movies() {
   return (
     <Routes>
       <Route index element={<MoviesPreview />} />
-      <Route path=":movie_id" element={<Movie />} />
+      <Route path=":movieId" element={<Movie />} />
     </Routes>
   );
 }

@@ -29,6 +29,7 @@ function CardCarousel({ movies }) {
           {movies.map((movie, indx) => (
             <CardSlide
               key={movie.id}
+              id={movie.id}
               image={movie.poster_path}
               index={indx}
               header={movie.title || movie.name}

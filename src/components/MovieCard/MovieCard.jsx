@@ -1,20 +1,19 @@
+// import { useContext } from 'react';
 import { Card } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
+// import { MovieContext } from '../../context/Movie.context';
 // import { Card, Icon, Button } from 'semantic-ui-react';
 
-// const extra = (
-//   <Button>
-//     <Icon name="film" />
-//     Details
-//   </Button>
-// );
+const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500/';
 
 function MovieCard({ image, header, id }) {
-  const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500/';
+  // const { setCurrentMovie } = useContext(MovieContext);
+
   // const tmdbPosterPath = 'https://image.tmdb.org/t/p/w185_and_h278_face/';
   const navigate = useNavigate();
 
   const cardHandleClick = () => {
+    // setCurrentMovie(id);
     navigate(`/movies/${id}`);
   };
   return (

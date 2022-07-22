@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const MovieContainer = styled.main``;
+export const MovieContainer = styled.main`
+  color: #fff;
+`;
 
 export const MovieDetail = styled.section``;
 
