@@ -18,7 +18,7 @@ function Search() {
       setIsLoading(true);
       const searchUrl = getSearchMovieUrl(query || currentSearch);
       const res = await getData(searchUrl);
-      setSearchMovies(res);
+      setSearchMovies(res.results);
       setIsLoading(false);
     };
     loadMovies();

@@ -59,19 +59,19 @@ function Homepage() {
       const upcomingMoviesResult = await getData(upcommingMovieUrl);
 
       const upcomingMoviesWithTrailer = await Promise.all(
-        upcomingMoviesResult.map(async (movie) => {
+        upcomingMoviesResult.results.map(async (movie) => {
           const movieObj = movie;
           const trailerUrl = videoUrl(movie.id);
           const trailerResponse = await getData(trailerUrl);
-          movieObj.trailer = trailerResponse;
+          movieObj.trailer = trailerResponse.results;
 
           return movieObj;
         })
       );
 
-      setPopularMovies(popularMoviesResult);
-      setTopRatedMovies(topRateMoviesResult);
-      setnowPlayingMovies(playingNowMoviesResult);
+      setPopularMovies(popularMoviesResult.results);
+      setTopRatedMovies(topRateMoviesResult.results);
+      setnowPlayingMovies(playingNowMoviesResult.results);
       setUpcomingMovies(upcomingMoviesWithTrailer);
 
       setIsLoading(false);
@@ -82,7 +82,9 @@ function Homepage() {
 
   const renderMovieCards = (moviesCards) =>
     // eslint-disable-next-line implicit-arrow-linebreak
-    moviesCards.slice(0, 5).map((movie) => <MovieCard key={movie.id} image={movie.poster_path} />);
+    moviesCards
+      .slice(0, 5)
+      .map((movie) => <MovieCard key={movie.id} id={movie.id} image={movie.poster_path} />);
 
   const modalHadler = (movie) => {
     setCurrentTrailer(movie);

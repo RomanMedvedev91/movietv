@@ -15,8 +15,10 @@ export const HomepageContainer = styled.main`
     box-shadow: none;
     transition: transform 0.5s ease;
     &:hover {
+      box-shadow: none;
+
       cursor: pointer;
-      transform: scale(1.1);
+      /* transform: scale(1.1); */
     }
   }
 `;

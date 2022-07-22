@@ -14,7 +14,7 @@ function MoviesPreview() {
     const loadMovies = async () => {
       setIsLoading(true);
       const res = await getData(popularMovieUrl);
-      setMoviespreview(res);
+      setMoviespreview(res.results);
       setIsLoading(false);
     };
     loadMovies();
