@@ -21,6 +21,15 @@ export const videoUrl = (movieId) =>
 export const getMovieDetails = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
+export const getMovieImages = (movieId) =>
+  `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
+export const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500';
+
+export const TMDB_POSTER_BASE = 'https://image.tmdb.org/t/p/original';
+export const TMDB_BACKDROP_PATH = 'https://image.tmdb.org/t/p/w1400_and_h450_face/';
+export const TMDB_POSTER_PATH = 'https://image.tmdb.org/t/p/w185_and_h278_face/';
+
 // const topRated = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
 
 // `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`;

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
-// import { MovieContext } from '../../context/Movie.context';
-import { getMovieDetails } from '../../constants/apiUrls';
+import { getMovieDetails, TMDB_POSTER_BASE, getMovieImages } from '../../constants/apiUrls';
 import getData from '../../utilities/getData';
 
 import {
@@ -16,18 +15,19 @@ import {
 function Movie() {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState({});
+  const [movieImages, setMovieImages] = useState({});
   const { movieId } = useParams();
-
-  // const { currentMovie } = useContext(MovieContext);
 
   useEffect(() => {
     const loadMovie = async () => {
       setIsLoading(true);
-      const searchUrl = getMovieDetails(movieId);
-      // const searchUrl = getMovieDetails(currentMovie);
-      const res = await getData(searchUrl);
-      console.log('searchurl', res);
-      setMovieDetails(res);
+      const movieDetailUrl = getMovieDetails(movieId);
+      const movieImagesUrl = getMovieImages(movieId);
+      const resMovieDetail = await getData(movieDetailUrl);
+      const resMovieImages = await getData(movieImagesUrl);
+
+      setMovieDetails(resMovieDetail);
+      setMovieImages(resMovieImages);
 
       setIsLoading(false);
     };
@@ -36,16 +36,19 @@ function Movie() {
 
   return (
     <>
-      <MovieContainer>
-        {isLoading ? <h4>loadiing</h4> : ''}
-        {movieId}
-        {console.log('details', movieDetails)}
-        {movieDetails && <div>{movieDetails.budget}</div>}
-        <MovieDetail>movie details</MovieDetail>
-        <CastContainer>Cast details</CastContainer>
-        <MediaContainer>Media details</MediaContainer>
-        <RecommendedContainer>Recomended movies</RecommendedContainer>
-      </MovieContainer>
+      {isLoading ? <h4>loadiing</h4> : ''}
+      {movieDetails && (
+        <MovieContainer>
+          {console.log(movieImages)}
+          {movieDetails && <div>{movieDetails.budget}</div>}
+          <MovieDetail img={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`}>
+            movie details
+          </MovieDetail>
+          <CastContainer>Cast details</CastContainer>
+          <MediaContainer>Media details</MediaContainer>
+          <RecommendedContainer>Recomended movies</RecommendedContainer>
+        </MovieContainer>
+      )}
       <Outlet />
     </>
   );
