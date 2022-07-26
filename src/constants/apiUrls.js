@@ -26,9 +26,9 @@ export const getMovieImages = (movieId) =>
 
 export const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500';
 
-export const TMDB_POSTER_BASE = 'https://image.tmdb.org/t/p/original';
+export const TMDB_POSTER_BASE = 'https://image.tmdb.org/t/p/original/';
 export const TMDB_BACKDROP_PATH = 'https://image.tmdb.org/t/p/w1400_and_h450_face/';
-export const TMDB_POSTER_PATH = 'https://image.tmdb.org/t/p/w185_and_h278_face/';
+export const TMDB_POSTER_PATH = 'https://image.tmdb.org/t/p/w600_and_h900_face/';
 
 // const topRated = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
 
