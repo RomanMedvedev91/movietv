@@ -7,6 +7,7 @@ import getData from '../../utilities/getData';
 import {
   MovieContainer,
   MovieDetail,
+  BackgroundImage,
   CastContainer,
   MediaContainer,
   RecommendedContainer
@@ -41,7 +42,11 @@ function Movie() {
         <MovieContainer>
           {console.log(movieImages)}
           {movieDetails && <div>{movieDetails.budget}</div>}
-          <MovieDetail img={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`}>
+          <MovieDetail>
+            <BackgroundImage>
+              <img src={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`} alt="mainBackground" />
+            </BackgroundImage>
+            <h2>{movieDetails.title}</h2>
             movie details
           </MovieDetail>
           <CastContainer>Cast details</CastContainer>
