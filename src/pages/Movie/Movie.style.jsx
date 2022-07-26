@@ -16,7 +16,8 @@ export const MovieContainer = styled.main`
 export const MovieDetail = styled.section`
   z-index: 1;
   width: 100%;
-  /* height: 100vh; */
+  height: 100vh;
+  display: flex;
 
   top: 0;
   left: 0;
@@ -35,6 +36,15 @@ export const BackgroundImage = styled.div`
     max-width: 100%;
     max-height: 100%;
     margin: auto;
+    display: block;
+  }
+`;
+
+export const PosterContainer = styled.div`
+  max-width: 300px;
+
+  img {
+    width: 100%;
     display: block;
   }
 `;
