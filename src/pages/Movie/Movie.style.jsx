@@ -5,8 +5,8 @@ export const MovieContainer = styled.main`
   max-width: 1172px;
   margin: auto;
   /* z-index: 2; */
+  font-family: 'Mulish', sans-serif;
   h2 {
-    font-family: 'Mulish', sans-serif;
     font-weight: 800;
     font-size: 2.5em;
     margin: 0;
@@ -14,15 +14,10 @@ export const MovieContainer = styled.main`
 `;
 
 export const MovieDetail = styled.section`
-  z-index: 1;
   width: 100%;
   height: 100vh;
   display: flex;
-
-  top: 0;
-  left: 0;
-  /* 
-  overflow: hidden; */
+  margin-top: 4.8em;
 `;
 
 export const BackgroundImage = styled.div`
@@ -46,6 +41,34 @@ export const PosterContainer = styled.div`
   img {
     width: 100%;
     display: block;
+  }
+`;
+
+export const MovieDataContainer = styled.div`
+  width: 800px;
+  padding: 0 55px 0 20px;
+
+  p:nth-of-type(1) span:not(:first-child)::before {
+    content: ' • ';
+  }
+  p:nth-of-type(2) {
+    max-width: 510px;
+  }
+`;
+
+export const MovieDataTable = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2.2em;
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    span:nth-child(2) {
+      font-size: 1.2em;
+      font-weight: 600;
+    }
   }
 `;
 
