@@ -37,10 +37,12 @@ export const BackgroundImage = styled.div`
 
 export const PosterContainer = styled.div`
   max-width: 300px;
+  border-radius: 0.28571429rem;
 
   img {
     width: 100%;
     display: block;
+    border-radius: inherit;
   }
 `;
 

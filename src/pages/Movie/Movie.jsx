@@ -1,9 +1,16 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/jsx-closing-bracket-location */
 /* eslint-disable implicit-arrow-linebreak */
 import { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button, Icon, Modal, Embed, Loader, Dimmer } from 'semantic-ui-react';
 
-import { getMovieDetails, TMDB_POSTER_BASE, TMDB_POSTER_PATH } from '../../constants/apiUrls';
+import {
+  getMovieDetails,
+  TMDB_POSTER_BASE,
+  TMDB_POSTER_PATH,
+  videoUrl
+} from '../../constants/apiUrls';
 import getData from '../../utilities/getData';
 
 import {
@@ -21,6 +28,9 @@ import {
 function Movie() {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
+  const [currentTrailer, setCurrentTrailer] = useState(null);
+  const [open, setOpen] = useState(false);
+
   // const [movieImages, setMovieImages] = useState();
   const { movieId } = useParams();
 
@@ -34,8 +44,9 @@ function Movie() {
 
       setMovieDetails(resMovieDetail);
       // setMovieImages(resMovieImages);
-
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 200);
     };
     loadMovie();
   }, [movieId]);
@@ -72,12 +83,37 @@ function Movie() {
   };
 
   const formatMoneyToCurrenct = (amount) =>
-    `$ ${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+  // regex
+  // `$ ${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+
+  const playTrailer = async () => {
+    // setIsLoading(true);
+    const trailerUrl = videoUrl(movieId);
+    console.log(trailerUrl);
+    const trailerResponse = await getData(trailerUrl);
+    const trailers = trailerResponse.results;
+
+    setCurrentTrailer(trailers);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 200);
+    setOpen(true);
+  };
+
+  const getOriginalLanguage = () => {
+    const languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
+    return languageNames.of(`${movieDetails.original_language}`);
+  };
 
   return (
     <>
-      {isLoading ? <h4>loadiing</h4> : ''}
-      {movieDetails && (
+      {isLoading && (
+        <Dimmer active>
+          <Loader size="medium">Loading...</Loader>
+        </Dimmer>
+      )}
+      {!isLoading && movieDetails && (
         <MovieContainer>
           {/* {console.log(movieImages)} */}
           <MovieDetail>
@@ -103,7 +139,7 @@ function Movie() {
 
                 <div>
                   <span>Original language</span>
-                  <span>{movieDetails.status}</span>
+                  <span>{getOriginalLanguage()}</span>
                 </div>
 
                 <div>
@@ -116,11 +152,29 @@ function Movie() {
                   <span>{formatMoneyToCurrenct(movieDetails.revenue)}</span>
                 </div>
               </MovieDataTable>
-              <Button primary>
+              <Button primary onClick={playTrailer}>
                 <Icon name="play" />
                 Play Trailer
               </Button>
+              {console.log(currentTrailer)}
             </MovieDataContainer>
+            {currentTrailer && (
+              <Modal
+                onClose={() => setOpen(false)}
+                onOpen={() => setOpen(true)}
+                open={open}
+                closeIcon>
+                <Modal.Header className="modal-header">
+                  <Modal.Content>{movieDetails.title}</Modal.Content>
+                </Modal.Header>
+                <Embed
+                  active
+                  id={currentTrailer[0].key}
+                  placeholder={`https://image.tmdb.org/t/p/w500/${movieDetails.backdrop_path}`}
+                  source="youtube"
+                />
+              </Modal>
+            )}
           </MovieDetail>
           <CastContainer>Cast details</CastContainer>
           <MediaContainer>Media details</MediaContainer>
