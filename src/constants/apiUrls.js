@@ -24,6 +24,9 @@ export const getMovieDetails = (movieId) =>
 export const getMovieImages = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
+export const getMovieCredits = (movieId) =>
+  `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
 export const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500';
 
 export const TMDB_POSTER_BASE = 'https://image.tmdb.org/t/p/original/';

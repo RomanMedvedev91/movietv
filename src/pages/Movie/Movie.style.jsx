@@ -15,7 +15,7 @@ export const MovieContainer = styled.main`
 
 export const MovieDetail = styled.section`
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   margin-top: 4.8em;
 `;
@@ -49,11 +49,18 @@ export const PosterContainer = styled.div`
 export const MovieDataContainer = styled.div`
   width: 800px;
   padding: 0 55px 0 20px;
+  p {
+    margin: 0;
+  }
+  p:nth-of-type(1) {
+    margin-top: 1.2em;
+  }
 
   p:nth-of-type(1) span:not(:first-child)::before {
     content: ' • ';
   }
   p:nth-of-type(2) {
+    margin-top: 3.2em;
     max-width: 510px;
   }
 `;
@@ -61,6 +68,7 @@ export const MovieDataContainer = styled.div`
 export const MovieDataTable = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 3.2em;
   margin-bottom: 2.2em;
 
   div {

@@ -9,7 +9,8 @@ import {
   getMovieDetails,
   TMDB_POSTER_BASE,
   TMDB_POSTER_PATH,
-  videoUrl
+  videoUrl,
+  getMovieCredits
 } from '../../constants/apiUrls';
 import getData from '../../utilities/getData';
 
@@ -29,6 +30,7 @@ function Movie() {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
   const [currentTrailer, setCurrentTrailer] = useState(null);
+  const [movieCredits, movieSetCredits] = useState(null);
   const [open, setOpen] = useState(false);
 
   // const [movieImages, setMovieImages] = useState();
@@ -38,11 +40,14 @@ function Movie() {
     const loadMovie = async () => {
       setIsLoading(true);
       const movieDetailUrl = getMovieDetails(movieId);
+      const movieCreditUrl = getMovieCredits(movieId);
       // const movieImagesUrl = getMovieImages(movieId);
       const resMovieDetail = await getData(movieDetailUrl);
+      const resMovieCredit = await getData(movieCreditUrl);
       // const resMovieImages = await getData(movieImagesUrl);
 
       setMovieDetails(resMovieDetail);
+      movieSetCredits(resMovieCredit);
       // setMovieImages(resMovieImages);
       setTimeout(() => {
         setIsLoading(false);
@@ -88,16 +93,15 @@ function Movie() {
   // `$ ${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
 
   const playTrailer = async () => {
-    // setIsLoading(true);
     const trailerUrl = videoUrl(movieId);
-    console.log(trailerUrl);
     const trailerResponse = await getData(trailerUrl);
     const trailers = trailerResponse.results;
+    const trailer = trailers.find((video) => {
+      const type = 'trailer';
+      return video.type.toLowerCase() === type;
+    });
 
-    setCurrentTrailer(trailers);
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 200);
+    setCurrentTrailer(trailer);
     setOpen(true);
   };
 
@@ -115,7 +119,6 @@ function Movie() {
       )}
       {!isLoading && movieDetails && (
         <MovieContainer>
-          {/* {console.log(movieImages)} */}
           <MovieDetail>
             <BackgroundImage>
               <img src={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`} alt="mainBackground" />
@@ -156,7 +159,6 @@ function Movie() {
                 <Icon name="play" />
                 Play Trailer
               </Button>
-              {console.log(currentTrailer)}
             </MovieDataContainer>
             {currentTrailer && (
               <Modal
@@ -167,15 +169,18 @@ function Movie() {
                 <Modal.Header className="modal-header">
                   <Modal.Content>{movieDetails.title}</Modal.Content>
                 </Modal.Header>
+
                 <Embed
                   active
-                  id={currentTrailer[0].key}
-                  placeholder={`https://image.tmdb.org/t/p/w500/${movieDetails.backdrop_path}`}
+                  brandedUI
+                  id={currentTrailer.key}
                   source="youtube"
+                  // placeholder={`https://image.tmdb.org/t/p/w500/${movieDetails.backdrop_path}`}
                 />
               </Modal>
             )}
           </MovieDetail>
+          {console.log(movieCredits)}
           <CastContainer>Cast details</CastContainer>
           <MediaContainer>Media details</MediaContainer>
           <RecommendedContainer>Recomended movies</RecommendedContainer>
