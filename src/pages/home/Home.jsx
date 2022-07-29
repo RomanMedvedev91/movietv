@@ -3,14 +3,14 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 /* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 // eslint-disable-next-line object-curly-newline
-import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-react-carousel';
+// import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-react-carousel';
 
 import 'pure-react-carousel/dist/react-carousel.es.css';
 // eslint-disable-next-line object-curly-newline
-import { Card, Icon, Embed, Modal } from 'semantic-ui-react';
+import { Card, Embed, Modal } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -34,10 +34,10 @@ import {
   BackgroundImage,
   Title,
   PopularMoviesContainer,
-  CarouselMoviesContainer,
-  MoviesTitle,
-  CarouselContainer,
-  TrailerContainer,
+  // CarouselMoviesContainer,
+  // MoviesTitle,
+  // CarouselContainer,
+  // TrailerContainer,
   HeaderGradient
 } from './Home.style';
 
@@ -46,7 +46,7 @@ function Homepage() {
   const [popularMovies, setPopularMovies] = useState([]);
   const [nowPlayingMovies, setnowPlayingMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
-  const [upcomingdMovies, setUpcomingMovies] = useState([]);
+  const [upcomingdMovies, setUpcomingMovies] = useState(null);
   const [open, setOpen] = useState(false);
   const [currentTrailer, setCurrentTrailer] = useState();
 
@@ -87,6 +87,7 @@ function Homepage() {
       .map((movie) => <MovieCard key={movie.id} id={movie.id} image={movie.poster_path} />);
 
   const modalHadler = (movie) => {
+    console.log('hit', movie);
     setCurrentTrailer(movie);
     setOpen(true);
   };
@@ -111,72 +112,90 @@ function Homepage() {
         )}
       </PopularMoviesContainer>
 
-      <CarouselMoviesContainer>
+      {/* <CarouselMoviesContainer>
         <MoviesTitle>
           <h2>Top Rated</h2>
           <Link to={route.MOVIES}>
             See more
             <Icon name="angle right" size="small" />
           </Link>
-        </MoviesTitle>
-        <CardCarousel movies={topRatedMovies} />
-      </CarouselMoviesContainer>
+        </MoviesTitle> */}
 
-      <CarouselMoviesContainer>
+      <CardCarousel movies={topRatedMovies} header="Top Rated" link={route.MOVIES} />
+
+      {/* </CarouselMoviesContainer> */}
+
+      {/* <CarouselMoviesContainer>
         <MoviesTitle>
           <h2>Playing now</h2>
           <Link to={route.MOVIES}>
             See more
             <Icon name="angle right" size="small" />
           </Link>
-        </MoviesTitle>
-        <CardCarousel movies={nowPlayingMovies} />
-      </CarouselMoviesContainer>
+        </MoviesTitle> */}
 
-      <CarouselMoviesContainer>
+      <CardCarousel movies={nowPlayingMovies} header="Playing now" link={route.MOVIES} />
+      {/* </CarouselMoviesContainer> */}
+
+      {upcomingdMovies && (
+        <CardCarousel
+          movies={upcomingdMovies}
+          header="Upcoming Trailers"
+          link={route.MOVIES}
+          naturalSlideWidth={1}
+          naturalSlideHeight={0.75}
+          visibleSlides={3}
+          isTrailers
+          modalHadler={modalHadler}
+        />
+      )}
+
+      {/* <CarouselMoviesContainer>
         <MoviesTitle>
           <h2>Upcoming trailers</h2>
           <Link to={route.MOVIES}>
             See more
             <Icon name="angle right" size="small" />
           </Link>
-        </MoviesTitle>
+        </MoviesTitle> */}
 
-        <CarouselContainer>
-          <CarouselProvider
-            naturalSlideWidth={100}
-            naturalSlideHeight={75}
-            totalSlides={upcomingdMovies.length}
-            visibleSlides={3}
-            step={1}>
-            <ButtonBack>
-              <Icon name="angle left" size="big" />
-            </ButtonBack>
-            <Slider>
-              {upcomingdMovies.map((movie, indx) => (
-                <Slide key={movie.id} index={indx}>
-                  <TrailerContainer>
-                    <Embed
-                      onClick={() => modalHadler(movie)}
-                      icon="play"
-                      active={false}
-                      id={movie.trailer[0] && movie.trailer[0].key}
-                      placeholder={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
-                      source="youtube"
-                    />
-                    <h3>{movie.title}</h3>
-                    {/* check if trailer is Loaded */}
-                    {movie.trailer[0] && <p>{movie.trailer[0].name}</p>}
-                  </TrailerContainer>
-                </Slide>
-              ))}
-            </Slider>
-            <ButtonNext>
-              <Icon name="angle right" size="big" />
-            </ButtonNext>
-          </CarouselProvider>
-        </CarouselContainer>
-      </CarouselMoviesContainer>
+      {/* {upcomingdMovies && ( */}
+      {/* <CarouselContainer> */}
+      {/* <CarouselProvider
+              naturalSlideWidth={100}
+              naturalSlideHeight={75}
+              totalSlides={upcomingdMovies.length}
+              visibleSlides={3}
+              step={1}> */}
+      {/* <ButtonBack>
+                <Icon name="angle left" size="big" />
+              </ButtonBack> */}
+      {/* <Slider> */}
+      {/* {upcomingdMovies.map((movie, indx) => (
+                  <Slide key={movie.id} index={indx}>
+                    <TrailerContainer>
+                      <Embed
+                        onClick={() => modalHadler(movie)}
+                        icon="play"
+                        active={false}
+                        id={movie.trailer[0] && movie.trailer[0].key}
+                        placeholder={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
+                        source="youtube"
+                      /> */}
+      {/* <h3>{movie.title}</h3> */}
+      {/* check if trailer is Loaded */}
+      {/* {movie.trailer[0] && <p>{movie.trailer[0].name}</p>} */}
+      {/* </TrailerContainer> */}
+      {/* </Slide> */}
+      {/* ))} */}
+      {/* </Slider> */}
+      {/* <ButtonNext> */}
+      {/* <Icon name="angle right" size="big" /> */}
+      {/* </ButtonNext> */}
+      {/* </CarouselProvider> */}
+      {/* </CarouselContainer> */}
+      {/* )} */}
+      {/* </CarouselMoviesContainer> } */}
 
       {currentTrailer && (
         <Modal onClose={() => setOpen(false)} onOpen={() => setOpen(true)} open={open} closeIcon>

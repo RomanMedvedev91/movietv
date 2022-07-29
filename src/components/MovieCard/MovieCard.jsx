@@ -1,39 +1,48 @@
+/* eslint-disable object-curly-newline */
 // import { useContext } from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, Embed } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
+import { TrailerContainer } from './MovieCard.style';
+import { tmdbPosterPath } from '../../constants/apiUrls';
 // import { MovieContext } from '../../context/Movie.context';
 // import { Card, Icon, Button } from 'semantic-ui-react';
 
-const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500/';
-
-function MovieCard({ image, header, id }) {
+function MovieCard({ movie, id, image, header, modalHadler, isTrailers, trailer }) {
   // const { setCurrentMovie } = useContext(MovieContext);
 
-  // const tmdbPosterPath = 'https://image.tmdb.org/t/p/w185_and_h278_face/';
   const navigate = useNavigate();
 
   const cardHandleClick = () => {
     // setCurrentMovie(id);
+    console.log(movie);
     navigate(`/movies/${id}`);
   };
+
   return (
-    <Card
-      image={image ? `${tmdbPosterPath + image}` : '/img-placeholder.jpg'}
-      header={header || ''}
-      onClick={cardHandleClick}
-      // eslint-disable-next-line max-len
-      // image={movie.poster_path ? `${tmdbPosterPath + movie.poster_path}` : '/img-placeholder.jpg'}
-      // image={movie.backdrop_path}
-      // header={header ? movie.tite || movie.name}
-      // // header={`Elliot Baker\n ${movie.id}`}
-      // meta={movie.id}
-      // description={movie.o}
-      // extra={extra}
-    />
-    // <div>
-    //   MovieCard
-    //   <div>{movie.id}</div>
-    // </div>
+    <>
+      {!isTrailers && (
+        <Card
+          image={image ? `${tmdbPosterPath + image}` : '/img-placeholder.jpg'}
+          header={header || ''}
+          onClick={cardHandleClick}
+        />
+      )}
+
+      {isTrailers && (
+        <TrailerContainer>
+          <Embed
+            onClick={() => modalHadler(movie)}
+            icon="play"
+            active={false}
+            id={trailer && trailer.key}
+            placeholder={`${tmdbPosterPath}${movie.backdrop_path}`}
+            source="youtube"
+          />
+          <h3>{movie.title}</h3>
+          {trailer ? <p>{trailer.name}</p> : <p>name is not defined</p>}
+        </TrailerContainer>
+      )}
+    </>
   );
 }
 
