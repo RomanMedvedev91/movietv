@@ -1,21 +1,26 @@
 import styled from 'styled-components';
 
 // eslint-disable-next-line import/prefer-default-export
+
+export const CarouselMoviesContainer = styled.section`
+  width: 100%;
+
+  .ui.embed > .icon:before {
+    font-size: 4em;
+  }
+`;
+
 export const CarouselContainer = styled.div`
   position: relative;
   .carousel__back-button {
     position: absolute;
     left: -7%;
     top: 35%;
-    /* left: -4em;
-    top: 10em; */
   }
   .carousel__next-button {
     position: absolute;
     right: -7%;
     top: 35%;
-    /* right: -4em;
-    top: 10em; */
   }
   button {
     margin: 0;
@@ -31,18 +36,6 @@ export const CarouselContainer = styled.div`
     &:disabled {
       color: rgba(255, 255, 255, 0.3);
     }
-  }
-  /* .carousel {
-    margin-left: -0.75em;
-    margin-right: -0.75em;
-  } */
-`;
-
-export const CarouselMoviesContainer = styled.section`
-  width: 100%;
-
-  .ui.embed > .icon:before {
-    font-size: 4em;
   }
 `;
 
@@ -67,7 +60,6 @@ export const MoviesTitle = styled.div`
     align-self: center;
     &:hover {
       color: #3c64b1;
-      /* font-weight: 800; */
     }
   }
 `;

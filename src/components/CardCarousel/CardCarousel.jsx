@@ -28,7 +28,6 @@ function CardCarousel({
           <Icon name="angle right" size="small" />
         </Link>
       </MoviesTitle>
-      {/* <CardCarousel movies={topRatedMovies} /> */}
 
       <CarouselContainer>
         <CarouselProvider
@@ -39,7 +38,6 @@ function CardCarousel({
           step={1}
 
           // eslint-disable-next-line react/jsx-closing-bracket-location
-          // style={{ width: '800px' }}
         >
           <ButtonBack>
             <Icon name="angle left" size="big" />
@@ -67,17 +65,6 @@ function CardCarousel({
           </ButtonNext>
         </CarouselProvider>
       </CarouselContainer>
-      {/* <CardSlide
-        key={movie.id}
-        movie={movie}
-        id={movie.id}
-        index={indx}
-        {...cardProps}
-        // image={movie.poster_path}
-        // header={movie.title || movie.name}
-        // isTrailers={isTrailers}
-        // modalHadler={modalHadler}
-/> */}
     </CarouselMoviesContainer>
   );
 }
