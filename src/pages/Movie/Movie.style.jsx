@@ -16,7 +16,7 @@ export const MovieContainer = styled.main`
 export const MovieDetail = styled.section`
   width: 100%;
   // img background full height
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   margin-top: 4.8em;
 `;

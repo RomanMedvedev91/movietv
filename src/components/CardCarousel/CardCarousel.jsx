@@ -45,18 +45,18 @@ function CardCarousel({
           <Slider>
             {movies.map((movie, indx) => (
               <Slide key={movie.id} index={indx}>
-                {/* <div style={{ padding: 10 }}> */}
-                <MovieCard
-                  // fluid
-                  id={movie.id}
-                  movie={movie}
-                  image={movie.poster_path}
-                  header={movie.title || movie.name}
-                  isTrailers={isTrailers}
-                  trailer={isTrailers && movie.trailer[0]}
-                  modalHadler={modalHadler}
-                />
-                {/* </div> */}
+                <div style={{ padding: 10 }}>
+                  <MovieCard
+                    // fluid
+                    id={movie.id}
+                    movie={movie}
+                    image={movie.poster_path || movie.profile_path}
+                    header={movie.title || movie.name}
+                    isTrailers={isTrailers}
+                    trailer={isTrailers && movie.trailer[0]}
+                    modalHadler={modalHadler}
+                  />
+                </div>
               </Slide>
             ))}
           </Slider>

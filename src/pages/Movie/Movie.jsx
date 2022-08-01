@@ -4,6 +4,8 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { Button, Icon, Modal, Embed, Loader, Dimmer } from 'semantic-ui-react';
+import CardCarousel from '../../components/CardCarousel/CardCarousel';
+import * as route from '../../constants/routes';
 
 import {
   getMovieDetails,
@@ -34,7 +36,8 @@ function Movie() {
   const [open, setOpen] = useState(false);
 
   // const [movieImages, setMovieImages] = useState();
-  const { movieId } = useParams();
+  const { category, movieId } = useParams();
+  // const { movieId } = useParams();
 
   useEffect(() => {
     const loadMovie = async () => {
@@ -112,6 +115,7 @@ function Movie() {
 
   return (
     <>
+      {console.log(category, movieId)}
       {isLoading && (
         <Dimmer active>
           <Loader size="medium">Loading...</Loader>
@@ -181,7 +185,17 @@ function Movie() {
             )}
           </MovieDetail>
           {console.log(movieCredits)}
-          <CastContainer>Cast details</CastContainer>
+          <CastContainer>
+            Cast details
+            <CardCarousel
+              movies={movieCredits.cast}
+              header="Casts"
+              link={route.MOVIES}
+              visibleSlides={6}
+              naturalSlideWidth={1}
+              naturalSlideHeight={1.9}
+            />
+          </CastContainer>
           <MediaContainer>Media details</MediaContainer>
           <RecommendedContainer>Recomended movies</RecommendedContainer>
         </MovieContainer>
