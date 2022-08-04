@@ -64,7 +64,7 @@ function Movie() {
       // setMovieImages(resMovieImages);
       setTimeout(() => {
         setIsLoading(false);
-      }, 200);
+      }, 300);
     };
     loadMovie();
   }, [movieId]);
@@ -236,17 +236,6 @@ function Movie() {
           </MovieDetail>
           {console.log('movieCredits', movieCredits)}
           {console.log('movieDetails', movieDetails)}
-          {/* <CastContainer>
-            <CardCarousel
-              movies={movieCredits.cast}
-              header="Casts"
-              link={`${route.MOVIES}/${movieId}/persons`}
-              visibleSlides={6}
-              naturalSlideWidth={1}
-              naturalSlideHeight={2.2}
-              category="persons"
-            />
-          </CastContainer> */}
 
           <CastContainer>
             <CardCarousel
@@ -254,11 +243,10 @@ function Movie() {
               titleHeader="Casts"
               titleLink={`${route.MOVIES}`}
               visibleSlides={6}
-              totalSlides={movieCredits.cast.length}
+              totalSlides={10}
               naturalSlideWidth={1}
-              naturalSlideHeight={2.2}
-              category="persons">
-              {movieCredits.cast.map((person) => (
+              naturalSlideHeight={2.2}>
+              {movieCredits.cast.slice(0, 10).map((person) => (
                 <Card
                   key={person.id}
                   image={

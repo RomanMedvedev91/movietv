@@ -32,9 +32,21 @@ code {
 .ui.cards > .card {
   box-shadow: none;
   transition: transform 0.5s ease;
+  background: none;
 }
 
 a.ui.card:hover {
   box-shadow: none;
   cursor: pointer;
+  background: none;
+}
+
+.ui.card > .content > .header,
+.ui.cards > .card > .content > .header {
+  color: #fff;
+}
+
+.ui.card .meta,
+.ui.cards > .card .meta {
+  color: rgba(255, 255, 255, 0.85);
 }

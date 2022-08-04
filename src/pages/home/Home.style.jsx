@@ -87,6 +87,7 @@ export const TrailerContainer = styled.div`
   p {
     cursor: pointer;
     font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .ui.embed {

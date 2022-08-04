@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { Card, Embed, Modal, Dimmer, Loader } from 'semantic-ui-react';
+import { Card, Embed, Modal } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -114,15 +114,6 @@ function Homepage() {
         )}
       </PopularMoviesContainer>
 
-      {/* {topRatedMovies && (
-        <CardCarousel
-          movies={topRatedMovies}
-          header="Top Rated"
-          link={route.MOVIES}
-          category="movies"
-        />
-      )} */}
-
       {topRatedMovies && (
         <CardCarousel
           title
@@ -144,15 +135,6 @@ function Homepage() {
           ))}
         </CardCarousel>
       )}
-
-      {/* {nowPlayingMovies && (
-        <CardCarousel
-          movies={nowPlayingMovies}
-          header="Playing now"
-          link={route.MOVIES}
-          category="movies"
-        />
-      )} */}
 
       {nowPlayingMovies && (
         <CardCarousel
@@ -176,23 +158,6 @@ function Homepage() {
         </CardCarousel>
       )}
 
-      {/* {upcomingdMovies && (
-        <CardCarousel
-          movies={upcomingdMovies}
-          header="Upcoming Trailers"
-          link={route.MOVIES}
-          naturalSlideWidth={1}
-          naturalSlideHeight={0.75}
-          visibleSlides={3}
-          modalHadler={modalHadler}
-          category="trailers"
-        />
-      )} */}
-      {isLoading && (
-        <Dimmer active>
-          <Loader size="medium">Loading...</Loader>
-        </Dimmer>
-      )}
       {console.log('upcomingdMovies', upcomingdMovies)}
       {/* {console.log('upcomingTrailers', upcomingTrailers)} */}
 
