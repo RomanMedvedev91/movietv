@@ -31,6 +31,8 @@ import {
   MovieDataTable
 } from './Movie.style';
 
+import TrailerCard from '../../components/MovieCard/TrailerCard';
+
 function Movie() {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
@@ -123,12 +125,18 @@ function Movie() {
     return languageNames.of(`${movieDetails.original_language}`);
   };
 
+  const modalHandler = (movie) => {
+    console.log('hit', movie);
+    setCurrentTrailer(movie);
+    setOpen(true);
+  };
+
   const panes = [
     {
       menuItem: 'Tab 1',
       render: () => (
         <Tab.Pane attached={false}>
-          {videos && (
+          {/* {videos && (
             <CardCarousel
               movies={videos}
               // header="Upcoming Trailers"
@@ -139,6 +147,25 @@ function Movie() {
               // modalHadler={modalHadler}
               category="trailers"
             />
+          )} */}
+          {videos && (
+            <CardCarousel
+              title
+              titleHeader="Upcoming Trailers"
+              titleLink={`${route.MOVIES}`}
+              totalSlides={videos.length}
+              naturalSlideWidth={1}
+              naturalSlideHeight={0.75}
+              visibleSlides={3}>
+              {videos.map((video) => (
+                <TrailerCard
+                  key={video.id}
+                  trailer={video}
+                  modalHadler={modalHandler}
+                  backdropPath={movieDetails.backdrop_path}
+                />
+              ))}
+            </CardCarousel>
           )}
         </Tab.Pane>
       )
@@ -256,7 +283,7 @@ function Movie() {
                   }
                   header={person.name}
                   meta={person.character}
-                  onClick={cardHandleClick}
+                  onClick={() => cardHandleClick('persons', person.id)}
                 />
               ))}
             </CardCarousel>

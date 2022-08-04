@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 import { Embed } from 'semantic-ui-react';
 import { TrailerContainer } from './TrailerCard.style';
-import { tmdbPosterPath } from '../../constants/apiUrls';
+// import { tmdbPosterPath } from '../../constants/apiUrls';
 
 function TrailerCard({ trailer, modalHadler }) {
   return (
@@ -11,7 +11,9 @@ function TrailerCard({ trailer, modalHadler }) {
         icon="play"
         active={false}
         id={trailer?.key}
-        placeholder={trailer.backdropPath ? `${tmdbPosterPath}${trailer.backdropPath}` : ''}
+        // placeholder={`https://i.ytimg.com/vi/${trailer.key}/hqdefault.jpg`}
+        placeholder={`https://img.youtube.com/vi/${trailer.key}/maxresdefault.jpg`}
+        // placeholder={`${tmdbPosterPath}${trailer.backdropPath}`}
         source="youtube"
       />
       <h3>{trailer.title}</h3>
