@@ -27,3 +27,14 @@ code {
 .ui.embed {
   background: #000;
 }
+
+.ui.card,
+.ui.cards > .card {
+  box-shadow: none;
+  transition: transform 0.5s ease;
+}
+
+a.ui.card:hover {
+  box-shadow: none;
+  cursor: pointer;
+}

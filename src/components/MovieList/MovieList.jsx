@@ -2,7 +2,7 @@
 import { Card } from 'semantic-ui-react';
 import MovieCard from '../MovieCard/MovieCard';
 
-function MovieList({ movies }) {
+function MovieList({ movies, category }) {
   const renderMovieCards = (moviesCards) => {
     console.log('movies', movies);
     // eslint-disable-next-line implicit-arrow-linebreak
@@ -12,6 +12,7 @@ function MovieList({ movies }) {
         id={movie.id}
         image={movie.poster_path}
         header={movie.title || movie.name}
+        category={category}
       />
     ));
   };

@@ -1,9 +1,12 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-closing-bracket-location */
 /* eslint-disable implicit-arrow-linebreak */
 import { useState, useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
-import { Button, Icon, Modal, Embed, Loader, Dimmer } from 'semantic-ui-react';
+import { Outlet, useParams, useNavigate } from 'react-router-dom';
+// import { Slide } from 'pure-react-carousel';
+
+import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 import * as route from '../../constants/routes';
 
@@ -32,18 +35,24 @@ function Movie() {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
   const [currentTrailer, setCurrentTrailer] = useState(null);
+  const [videos, setVideos] = useState(null);
   const [movieCredits, movieSetCredits] = useState(null);
   const [open, setOpen] = useState(false);
 
   // const [movieImages, setMovieImages] = useState();
-  const { category, movieId } = useParams();
-  // const { movieId } = useParams();
+  // const { category, movieId } = useParams();
+  const { movieId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadMovie = async () => {
       setIsLoading(true);
       const movieDetailUrl = getMovieDetails(movieId);
       const movieCreditUrl = getMovieCredits(movieId);
+
+      const videosUrl = videoUrl(movieId);
+      const videosResponse = await getData(videosUrl);
+      const videosResult = videosResponse.results;
       // const movieImagesUrl = getMovieImages(movieId);
       const resMovieDetail = await getData(movieDetailUrl);
       const resMovieCredit = await getData(movieCreditUrl);
@@ -51,6 +60,7 @@ function Movie() {
 
       setMovieDetails(resMovieDetail);
       movieSetCredits(resMovieCredit);
+      setVideos(videosResult);
       // setMovieImages(resMovieImages);
       setTimeout(() => {
         setIsLoading(false);
@@ -113,9 +123,49 @@ function Movie() {
     return languageNames.of(`${movieDetails.original_language}`);
   };
 
+  const panes = [
+    {
+      menuItem: 'Tab 1',
+      render: () => (
+        <Tab.Pane attached={false}>
+          {videos && (
+            <CardCarousel
+              movies={videos}
+              // header="Upcoming Trailers"
+              link={route.MOVIES}
+              naturalSlideWidth={1}
+              naturalSlideHeight={0.75}
+              visibleSlides={3}
+              // modalHadler={modalHadler}
+              category="trailers"
+            />
+          )}
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: 'Tab 2',
+      render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
+    },
+    {
+      menuItem: 'Tab 3',
+      render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
+    }
+  ];
+
+  const cardHandleClick = (category, id) => {
+    navigate(`/${category}/${id}`);
+  };
+
+  // eslint-disable-next-line max-len
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const TabExampleSecondaryPointing = () => (
+    <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+  );
+
   return (
     <>
-      {console.log(category, movieId)}
+      {console.log(videos)}
       {isLoading && (
         <Dimmer active>
           <Loader size="medium">Loading...</Loader>
@@ -184,19 +234,50 @@ function Movie() {
               </Modal>
             )}
           </MovieDetail>
-          {console.log(movieCredits)}
-          <CastContainer>
-            Cast details
+          {console.log('movieCredits', movieCredits)}
+          {console.log('movieDetails', movieDetails)}
+          {/* <CastContainer>
             <CardCarousel
               movies={movieCredits.cast}
               header="Casts"
-              link={route.MOVIES}
+              link={`${route.MOVIES}/${movieId}/persons`}
               visibleSlides={6}
               naturalSlideWidth={1}
-              naturalSlideHeight={1.9}
+              naturalSlideHeight={2.2}
+              category="persons"
             />
+          </CastContainer> */}
+
+          <CastContainer>
+            <CardCarousel
+              title
+              titleHeader="Casts"
+              titleLink={`${route.MOVIES}`}
+              visibleSlides={6}
+              totalSlides={movieCredits.cast.length}
+              naturalSlideWidth={1}
+              naturalSlideHeight={2.2}
+              category="persons">
+              {movieCredits.cast.map((person) => (
+                <Card
+                  key={person.id}
+                  image={
+                    person.profile_path
+                      ? `${TMDB_POSTER_PATH + person.profile_path}`
+                      : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                  }
+                  header={person.name}
+                  meta={person.character}
+                  onClick={cardHandleClick}
+                />
+              ))}
+            </CardCarousel>
           </CastContainer>
-          <MediaContainer>Media details</MediaContainer>
+
+          <MediaContainer>
+            Media details
+            {TabExampleSecondaryPointing()}
+          </MediaContainer>
           <RecommendedContainer>Recomended movies</RecommendedContainer>
         </MovieContainer>
       )}

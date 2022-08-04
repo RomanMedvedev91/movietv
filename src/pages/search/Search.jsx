@@ -31,7 +31,7 @@ function Search() {
         <SearchBar />
       </div>
       {isLoading ? <h4>loadiing</h4> : ''}
-      {currentSearchMovies ? <MovieList movies={currentSearchMovies} /> : ''}
+      {currentSearchMovies ? <MovieList movies={currentSearchMovies} category="movies" /> : ''}
     </div>
   );
 }

@@ -4,25 +4,34 @@ import { useNavigate } from 'react-router-dom';
 import { TrailerContainer } from './MovieCard.style';
 import { tmdbPosterPath } from '../../constants/apiUrls';
 
-function MovieCard({ movie, id, image, header, modalHadler, isTrailers, trailer }) {
+function MovieCard({ movie, id, image, header, modalHadler, trailer, category }) {
   const navigate = useNavigate();
 
   const cardHandleClick = () => {
     console.log(movie);
-    navigate(`/movies/${id}`);
+    navigate(`/${category}/${id}`);
   };
 
   return (
     <>
-      {!isTrailers && (
+      {category === 'movies' && (
         <Card
           image={image ? `${tmdbPosterPath + image}` : '/img-placeholder.jpg'}
-          header={header || ''}
+          header={header}
+          meta={movie?.character}
+          onClick={cardHandleClick}
+        />
+      )}
+      {category === 'persons' && (
+        <Card
+          image={image ? `${tmdbPosterPath + image}` : '/img-placeholder.jpg'}
+          header={header}
+          meta={movie?.character}
           onClick={cardHandleClick}
         />
       )}
 
-      {isTrailers && (
+      {category === 'trailers' && (
         <TrailerContainer>
           <Embed
             onClick={() => modalHadler(movie)}

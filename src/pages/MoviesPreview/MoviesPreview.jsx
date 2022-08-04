@@ -27,7 +27,7 @@ function MoviesPreview() {
         <SearchBar />
       </div>
       {isLoading ? <h4>loadiing</h4> : ''}
-      {moviesPreview ? <MovieList movies={moviesPreview} /> : ''}
+      {moviesPreview ? <MovieList movies={moviesPreview} category="movies" /> : ''}
     </div>
   );
 }
