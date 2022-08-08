@@ -30,6 +30,7 @@ code {
 
 .ui.card,
 .ui.cards > .card {
+  width: auto;
   box-shadow: none;
   transition: transform 0.5s ease;
   background: none;

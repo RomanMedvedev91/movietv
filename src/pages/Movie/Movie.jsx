@@ -13,6 +13,7 @@ import {
   getMovieDetails,
   TMDB_POSTER_BASE,
   TMDB_POSTER_PATH,
+  TMDB_BACKDROP_PATH,
   getMovieCredits
 } from '../../constants/apiUrls';
 import getData from '../../utilities/getData';
@@ -116,16 +117,20 @@ function Movie() {
     setOpen(true);
   };
 
+  const cardHandleClick = (category, id) => {
+    navigate(`/${category}/${id}`);
+  };
+
   const panes = [
     {
-      menuItem: 'Tab 1',
+      menuItem: 'Videos',
       render: () => (
         <Tab.Pane loading={!movieDetails.videos.results} attached={false}>
           {movieDetails.videos.results && (
             <CardCarousel
-              title
-              titleHeader="Upcoming Trailers"
-              titleLink={`${route.MOVIES}`}
+              // title
+              // titleHeader="Videos"
+              // titleLink={`${route.MOVIES}`}
               totalSlides={movieDetails.videos.results.length}
               naturalSlideWidth={1}
               naturalSlideHeight={0.75}
@@ -144,24 +149,66 @@ function Movie() {
       )
     },
     {
-      menuItem: 'Tab 2',
-      render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
+      menuItem: 'Posters',
+      render: () => (
+        <Tab.Pane loading={!movieDetails.images.posters} attached={false}>
+          {movieDetails.images.posters && (
+            <CardCarousel
+              // title
+              // titleHeader="Posters"
+              // titleLink={`${route.MOVIES}`}
+              totalSlides={10}
+              naturalSlideWidth={1}
+              naturalSlideHeight={1.5}
+              visibleSlides={6}>
+              {movieDetails.images.posters.slice(0, 10).map((image) => (
+                <Card
+                  key={image.file_path}
+                  image={
+                    image.file_path
+                      ? `${TMDB_POSTER_PATH + image.file_path}`
+                      : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                  }
+                />
+              ))}
+            </CardCarousel>
+          )}
+        </Tab.Pane>
+      )
     },
     {
-      menuItem: 'Tab 3',
-      render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
+      menuItem: 'Backdrops',
+      render: () => (
+        <Tab.Pane loading={!movieDetails.images.backdrops} attached={false}>
+          {movieDetails.images.backdrops && (
+            <CardCarousel
+              // title
+              // titleHeader="Posters"
+              // titleLink={`${route.MOVIES}`}
+              totalSlides={10}
+              naturalSlideWidth={1.8}
+              naturalSlideHeight={1}
+              visibleSlides={3}>
+              {movieDetails.images.backdrops.slice(0, 10).map((image) => (
+                <Card
+                  key={image.file_path}
+                  image={
+                    image.file_path
+                      ? `${TMDB_BACKDROP_PATH + image.file_path}`
+                      : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                  }
+                />
+              ))}
+            </CardCarousel>
+          )}
+        </Tab.Pane>
+      )
     }
   ];
 
-  const cardHandleClick = (category, id) => {
-    navigate(`/${category}/${id}`);
-  };
-
   // eslint-disable-next-line max-len
   // eslint-disable-next-line react/no-unstable-nested-components
-  const TabExampleSecondaryPointing = () => (
-    <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
-  );
+  const TabExampleSecondaryPointing = () => <Tab menu={{ text: true }} panes={panes} />;
 
   return (
     <>
@@ -263,7 +310,7 @@ function Movie() {
           </CastContainer>
 
           <MediaContainer>
-            Media details
+            <h2>Media details</h2>
             {TabExampleSecondaryPointing()}
           </MediaContainer>
           <RecommendedContainer>Recomended movies</RecommendedContainer>
