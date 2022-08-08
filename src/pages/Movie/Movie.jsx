@@ -4,7 +4,6 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { useState, useEffect } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router-dom';
-// import { Slide } from 'pure-react-carousel';
 
 import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
@@ -14,7 +13,6 @@ import {
   getMovieDetails,
   TMDB_POSTER_BASE,
   TMDB_POSTER_PATH,
-  videoUrl,
   getMovieCredits
 } from '../../constants/apiUrls';
 import getData from '../../utilities/getData';
@@ -37,11 +35,8 @@ function Movie() {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
   const [currentTrailer, setCurrentTrailer] = useState(null);
-  const [videos, setVideos] = useState(null);
   const [movieCredits, movieSetCredits] = useState(null);
   const [open, setOpen] = useState(false);
-
-  // const [movieImages, setMovieImages] = useState();
   // const { category, movieId } = useParams();
   const { movieId } = useParams();
   const navigate = useNavigate();
@@ -52,18 +47,12 @@ function Movie() {
       const movieDetailUrl = getMovieDetails(movieId);
       const movieCreditUrl = getMovieCredits(movieId);
 
-      const videosUrl = videoUrl(movieId);
-      const videosResponse = await getData(videosUrl);
-      const videosResult = videosResponse.results;
-      // const movieImagesUrl = getMovieImages(movieId);
       const resMovieDetail = await getData(movieDetailUrl);
       const resMovieCredit = await getData(movieCreditUrl);
-      // const resMovieImages = await getData(movieImagesUrl);
 
       setMovieDetails(resMovieDetail);
       movieSetCredits(resMovieCredit);
-      setVideos(videosResult);
-      // setMovieImages(resMovieImages);
+
       setTimeout(() => {
         setIsLoading(false);
       }, 300);
@@ -107,11 +96,8 @@ function Movie() {
   // regex
   // `$ ${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
 
-  const playTrailer = async () => {
-    const trailerUrl = videoUrl(movieId);
-    const trailerResponse = await getData(trailerUrl);
-    const trailers = trailerResponse.results;
-    const trailer = trailers.find((video) => {
+  const playTrailer = () => {
+    const trailer = movieDetails.videos.results.find((video) => {
       const type = 'trailer';
       return video.type.toLowerCase() === type;
     });
@@ -126,7 +112,6 @@ function Movie() {
   };
 
   const modalHandler = (movie) => {
-    console.log('hit', movie);
     setCurrentTrailer(movie);
     setOpen(true);
   };
@@ -135,29 +120,17 @@ function Movie() {
     {
       menuItem: 'Tab 1',
       render: () => (
-        <Tab.Pane attached={false}>
-          {/* {videos && (
-            <CardCarousel
-              movies={videos}
-              // header="Upcoming Trailers"
-              link={route.MOVIES}
-              naturalSlideWidth={1}
-              naturalSlideHeight={0.75}
-              visibleSlides={3}
-              // modalHadler={modalHadler}
-              category="trailers"
-            />
-          )} */}
-          {videos && (
+        <Tab.Pane loading={!movieDetails.videos.results} attached={false}>
+          {movieDetails.videos.results && (
             <CardCarousel
               title
               titleHeader="Upcoming Trailers"
               titleLink={`${route.MOVIES}`}
-              totalSlides={videos.length}
+              totalSlides={movieDetails.videos.results.length}
               naturalSlideWidth={1}
               naturalSlideHeight={0.75}
               visibleSlides={3}>
-              {videos.map((video) => (
+              {movieDetails.videos.results.map((video) => (
                 <TrailerCard
                   key={video.id}
                   trailer={video}
@@ -192,7 +165,7 @@ function Movie() {
 
   return (
     <>
-      {console.log(videos)}
+      {console.log('movieDetails', movieDetails)}
       {isLoading && (
         <Dimmer active>
           <Loader size="medium">Loading...</Loader>

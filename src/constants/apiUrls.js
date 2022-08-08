@@ -19,10 +19,12 @@ export const videoUrl = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
 export const getMovieDetails = (movieId) =>
-  `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+  `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&append_to_response=videos,images&include_image_language=en,null`;
+// export const getMovieDetails = (movieId) =>
+//   `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
-export const getMovieImages = (movieId) =>
-  `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+// export const getMovieImages = (movieId) =>
+//   `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
 export const getMovieCredits = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
