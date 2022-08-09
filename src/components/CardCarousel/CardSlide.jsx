@@ -9,7 +9,6 @@ function CardSlide({ index, ...cardProps }) {
   return (
     <Slide index={index}>
       <div style={{ padding: 10 }}>
-        {/* <Card fluid {...cardProps} /> */}
         <MovieCard fluid {...cardProps} />
       </div>
     </Slide>

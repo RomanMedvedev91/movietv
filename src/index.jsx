@@ -6,13 +6,16 @@ import App from './App';
 import { SearchProvider } from './context/Search.context';
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
+import { MovieProvider } from './context/Movie.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
   <BrowserRouter>
     <SearchProvider>
-      <App />
+      <MovieProvider>
+        <App />
+      </MovieProvider>
     </SearchProvider>
   </BrowserRouter>
   // </React.StrictMode>

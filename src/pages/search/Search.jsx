@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import MovieList from '../../components/MovieList/MovieList';
 import { SearchContext } from '../../context/Search.context';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -8,18 +9,20 @@ import getSearchMovieUrl from '../../utilities/helperFunctions';
 
 function Search() {
   const [isLoading, setIsLoading] = useState(false);
+
+  const { query } = useParams();
   const { currentSearch, currentSearchMovies, setSearchMovies } = useContext(SearchContext);
 
   useEffect(() => {
     const loadMovies = async () => {
       setIsLoading(true);
-      const searchUrl = getSearchMovieUrl(currentSearch);
+      const searchUrl = getSearchMovieUrl(query || currentSearch);
       const res = await getData(searchUrl);
-      setSearchMovies(res);
+      setSearchMovies(res.results);
       setIsLoading(false);
     };
     loadMovies();
-  }, [currentSearch, setSearchMovies]);
+  }, [currentSearch, query, setSearchMovies]);
 
   return (
     <div>
@@ -28,7 +31,7 @@ function Search() {
         <SearchBar />
       </div>
       {isLoading ? <h4>loadiing</h4> : ''}
-      {currentSearchMovies ? <MovieList movies={currentSearchMovies} /> : ''}
+      {currentSearchMovies ? <MovieList movies={currentSearchMovies} category="movies" /> : ''}
     </div>
   );
 }

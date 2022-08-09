@@ -23,3 +23,32 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.ui.embed {
+  background: #000;
+}
+
+.ui.card,
+.ui.cards > .card {
+  padding: 10px;
+  width: auto;
+  box-shadow: none;
+  transition: transform 0.5s ease;
+  background: none;
+}
+
+a.ui.card:hover {
+  background: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.ui.card > .content > .header,
+.ui.cards > .card > .content > .header {
+  color: #fff;
+}
+
+.ui.card .meta,
+.ui.cards > .card .meta {
+  color: rgba(255, 255, 255, 0.85);
+}

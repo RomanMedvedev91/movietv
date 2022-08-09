@@ -10,15 +10,18 @@ export const HomepageContainer = styled.main`
   justify-content: center; */
   /* background-color: bisque; */
   /* padding: 20px 80px; */
-  .ui.card,
+  /* .
+  ui.card,
   .ui.cards > .card {
     box-shadow: none;
     transition: transform 0.5s ease;
     &:hover {
+      box-shadow: none;
       cursor: pointer;
-      transform: scale(1.1);
+       transform: scale(1.1); 
     }
   }
+  */
 `;
 
 export const BackgroundImgContainer = styled.div`
@@ -60,82 +63,15 @@ export const Title = styled.div`
 
 export const PopularMoviesContainer = styled.section`
   margin-top: 12em;
-  /* .ui.card,
-  .ui.cards > .card {
-    box-shadow: none;
-    transition: transform 0.5s ease;
+  a.ui.card {
+    padding: 0;
+
     &:hover {
+      background: none;
+      box-shadow: none;
       cursor: pointer;
-      transform: scale(1.1);
-    }
-  } */
-`;
-
-export const CarouselMoviesContainer = styled.section`
-  width: 100%;
-
-  .ui.embed > .icon:before {
-    font-size: 4em;
-  }
-`;
-
-export const MoviesTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12em;
-  margin-bottom: 2em;
-
-  color: #fff;
-  font-family: 'Mulish', sans-serif;
-
-  h2 {
-    font-weight: 800;
-    font-size: 2.5em;
-    margin: 0;
-  }
-  a {
-    font-weight: 600;
-    font-size: 1.2em;
-    color: #fff;
-    align-self: center;
-    &:hover {
-      color: #3c64b1;
-      /* font-weight: 800; */
     }
   }
-`;
-
-export const CarouselContainer = styled.div`
-  position: relative;
-  .carousel__back-button {
-    position: absolute;
-    left: -4em;
-    top: 7em;
-  }
-  .carousel__next-button {
-    position: absolute;
-    right: -4em;
-    top: 7em;
-  }
-  button {
-    margin: 0;
-    background: none;
-    border: none;
-    padding: 0px;
-    transition: transform 0.3s ease;
-    color: #fff;
-
-    &:hover {
-      transform: scale(1.15);
-    }
-    &:disabled {
-      color: rgba(255, 255, 255, 0.3);
-    }
-  }
-  /* .carousel {
-    margin-left: -0.75em;
-    margin-right: -0.75em;
-  } */
 `;
 
 export const TrailerContainer = styled.div`
@@ -152,6 +88,7 @@ export const TrailerContainer = styled.div`
   p {
     cursor: pointer;
     font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .ui.embed {
@@ -165,4 +102,8 @@ export const TrailerContainer = styled.div`
       }
     }
   }
+`;
+
+export const CardContainer = styled.div`
+  padding: 10px;
 `;

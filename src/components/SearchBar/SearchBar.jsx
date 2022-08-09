@@ -7,7 +7,7 @@ import { SearchFormContainer, ButtonContainer } from './SearchBar.style';
 
 function SearchBar() {
   const [currentInput, setCurrentInput] = useState('');
-  const { currentSearch, setCurrentSearch } = useContext(SearchContext);
+  const { setCurrentSearch } = useContext(SearchContext);
 
   const navigate = useNavigate();
 
@@ -18,7 +18,8 @@ function SearchBar() {
   const search = () => {
     setCurrentSearch(currentInput);
     // link to search page
-    navigate(`/search?query=${currentSearch}`);
+    navigate(`/search/${currentInput}`);
+    // navigate(`/search?query=${currentInput}`);
   };
 
   return (
@@ -26,7 +27,7 @@ function SearchBar() {
       {/* <Title>
         <p>Millions of movies, TV shows and people to discover. Explore now</p>
       </Title> */}
-      <Form>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <Input
           fluid
           icon="search"

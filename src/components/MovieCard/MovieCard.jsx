@@ -1,34 +1,51 @@
-import { Card } from 'semantic-ui-react';
-// import { Card, Icon, Button } from 'semantic-ui-react';
+/* eslint-disable object-curly-newline */
+import { Card, Embed } from 'semantic-ui-react';
+import { useNavigate } from 'react-router-dom';
+import { TrailerContainer } from './MovieCard.style';
+import { tmdbPosterPath } from '../../constants/apiUrls';
 
-// const extra = (
-//   <Button>
-//     <Icon name="film" />
-//     Details
-//   </Button>
-// );
+function MovieCard({ movie, id, image, header, modalHadler, trailer, category }) {
+  const navigate = useNavigate();
 
-function MovieCard({ image, header }) {
-  const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500/';
-  // const tmdbPosterPath = 'https://image.tmdb.org/t/p/w185_and_h278_face/';
+  const cardHandleClick = () => {
+    console.log(movie);
+    navigate(`/${category}/${id}`);
+  };
 
   return (
-    <Card
-      image={image ? `${tmdbPosterPath + image}` : '/img-placeholder.jpg'}
-      header={header || ''}
-      // eslint-disable-next-line max-len
-      // image={movie.poster_path ? `${tmdbPosterPath + movie.poster_path}` : '/img-placeholder.jpg'}
-      // image={movie.backdrop_path}
-      // header={header ? movie.tite || movie.name}
-      // // header={`Elliot Baker\n ${movie.id}`}
-      // meta={movie.id}
-      // description={movie.o}
-      // extra={extra}
-    />
-    // <div>
-    //   MovieCard
-    //   <div>{movie.id}</div>
-    // </div>
+    <>
+      {category === 'movies' && (
+        <Card
+          image={image ? `${tmdbPosterPath + image}` : '/img-placeholder.jpg'}
+          header={header}
+          meta={movie?.character}
+          onClick={cardHandleClick}
+        />
+      )}
+      {category === 'persons' && (
+        <Card
+          image={image ? `${tmdbPosterPath + image}` : '/img-placeholder.jpg'}
+          header={header}
+          meta={movie?.character}
+          onClick={cardHandleClick}
+        />
+      )}
+
+      {category === 'trailers' && (
+        <TrailerContainer>
+          <Embed
+            onClick={() => modalHadler(movie)}
+            icon="play"
+            active={false}
+            id={trailer && trailer.key}
+            placeholder={`${tmdbPosterPath}${movie.backdrop_path}`}
+            source="youtube"
+          />
+          <h3>{movie.title}</h3>
+          {trailer ? <p>{trailer.name}</p> : <p>name is not defined</p>}
+        </TrailerContainer>
+      )}
+    </>
   );
 }
 
