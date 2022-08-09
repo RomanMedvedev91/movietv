@@ -20,6 +20,9 @@ export const videoUrl = (movieId) =>
 
 export const getMovieDetails = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&append_to_response=videos,images&include_image_language=en,null`;
+
+export const getRecommendationsMovies = (movieId) =>
+  `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 // export const getMovieDetails = (movieId) =>
 //   `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 

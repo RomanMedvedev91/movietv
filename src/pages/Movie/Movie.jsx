@@ -14,7 +14,8 @@ import {
   TMDB_POSTER_BASE,
   TMDB_POSTER_PATH,
   TMDB_BACKDROP_PATH,
-  getMovieCredits
+  getMovieCredits,
+  getRecommendationsMovies
 } from '../../constants/apiUrls';
 import getData from '../../utilities/getData';
 
@@ -27,7 +28,8 @@ import {
   RecommendedContainer,
   PosterContainer,
   MovieDataContainer,
-  MovieDataTable
+  MovieDataTable,
+  HeaderGradient
 } from './Movie.style';
 
 import TrailerCard from '../../components/MovieCard/TrailerCard';
@@ -36,7 +38,8 @@ function Movie() {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
   const [currentTrailer, setCurrentTrailer] = useState(null);
-  const [movieCredits, movieSetCredits] = useState(null);
+  const [movieCredits, setMovieSetCredits] = useState(null);
+  const [recommendationsMovies, setrecommendationsMovies] = useState(null);
   const [open, setOpen] = useState(false);
   // const { category, movieId } = useParams();
   const { movieId } = useParams();
@@ -47,12 +50,15 @@ function Movie() {
       setIsLoading(true);
       const movieDetailUrl = getMovieDetails(movieId);
       const movieCreditUrl = getMovieCredits(movieId);
+      const recommendationsMoviesUrl = getRecommendationsMovies(movieId);
 
       const resMovieDetail = await getData(movieDetailUrl);
       const resMovieCredit = await getData(movieCreditUrl);
+      const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
 
       setMovieDetails(resMovieDetail);
-      movieSetCredits(resMovieCredit);
+      setMovieSetCredits(resMovieCredit);
+      setrecommendationsMovies(resrecommendationsMovies.results);
 
       setTimeout(() => {
         setIsLoading(false);
@@ -157,11 +163,11 @@ function Movie() {
               // title
               // titleHeader="Posters"
               // titleLink={`${route.MOVIES}`}
-              totalSlides={10}
+              totalSlides={movieDetails.images.posters.length}
               naturalSlideWidth={1}
               naturalSlideHeight={1.5}
               visibleSlides={6}>
-              {movieDetails.images.posters.slice(0, 10).map((image) => (
+              {movieDetails.images.posters.map((image) => (
                 <Card
                   key={image.file_path}
                   image={
@@ -185,11 +191,11 @@ function Movie() {
               // title
               // titleHeader="Posters"
               // titleLink={`${route.MOVIES}`}
-              totalSlides={10}
+              totalSlides={movieDetails.images.backdrops.length}
               naturalSlideWidth={1.8}
               naturalSlideHeight={1}
               visibleSlides={3}>
-              {movieDetails.images.backdrops.slice(0, 10).map((image) => (
+              {movieDetails.images.backdrops.map((image) => (
                 <Card
                   key={image.file_path}
                   image={
@@ -212,6 +218,8 @@ function Movie() {
 
   return (
     <>
+      {console.log('recommendationsMovies', recommendationsMovies)}
+      {console.log('movieCredits', movieCredits)}
       {console.log('movieDetails', movieDetails)}
       {isLoading && (
         <Dimmer active>
@@ -280,9 +288,8 @@ function Movie() {
                 />
               </Modal>
             )}
+            <HeaderGradient />
           </MovieDetail>
-          {console.log('movieCredits', movieCredits)}
-          {console.log('movieDetails', movieDetails)}
 
           <CastContainer>
             <CardCarousel
@@ -290,9 +297,9 @@ function Movie() {
               titleHeader="Casts"
               titleLink={`${route.MOVIES}`}
               visibleSlides={6}
-              totalSlides={10}
+              totalSlides={movieCredits.cast.length > 10 ? 10 : movieCredits.cast.length}
               naturalSlideWidth={1}
-              naturalSlideHeight={2.2}>
+              naturalSlideHeight={2}>
               {movieCredits.cast.slice(0, 10).map((person) => (
                 <Card
                   key={person.id}
@@ -313,7 +320,31 @@ function Movie() {
             <h2>Media details</h2>
             {TabExampleSecondaryPointing()}
           </MediaContainer>
-          <RecommendedContainer>Recomended movies</RecommendedContainer>
+
+          <RecommendedContainer>
+            <CardCarousel
+              title
+              titleHeader="Recomended movies"
+              titleLink={`${route.MOVIES}`}
+              visibleSlides={3}
+              totalSlides={recommendationsMovies.length > 10 ? 10 : recommendationsMovies.length}
+              naturalSlideWidth={1.8}
+              naturalSlideHeight={1.4}>
+              {recommendationsMovies.slice(0, 10).map((movie) => (
+                <Card
+                  key={movie.id}
+                  image={
+                    movie.backdrop_path
+                      ? `${TMDB_BACKDROP_PATH + movie.backdrop_path}`
+                      : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                  }
+                  header={movie.title}
+                  meta={movie.release_date}
+                  onClick={() => cardHandleClick('movies', movie.id)}
+                />
+              ))}
+            </CardCarousel>
+          </RecommendedContainer>
         </MovieContainer>
       )}
       <Outlet />

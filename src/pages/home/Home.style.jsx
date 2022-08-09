@@ -10,17 +10,18 @@ export const HomepageContainer = styled.main`
   justify-content: center; */
   /* background-color: bisque; */
   /* padding: 20px 80px; */
-  .ui.card,
+  /* .
+  ui.card,
   .ui.cards > .card {
     box-shadow: none;
     transition: transform 0.5s ease;
     &:hover {
       box-shadow: none;
-
       cursor: pointer;
-      /* transform: scale(1.1); */
+       transform: scale(1.1); 
     }
   }
+  */
 `;
 
 export const BackgroundImgContainer = styled.div`
@@ -62,15 +63,15 @@ export const Title = styled.div`
 
 export const PopularMoviesContainer = styled.section`
   margin-top: 12em;
-  /* .ui.card,
-  .ui.cards > .card {
-    box-shadow: none;
-    transition: transform 0.5s ease;
+  a.ui.card {
+    padding: 0;
+
     &:hover {
+      background: none;
+      box-shadow: none;
       cursor: pointer;
-      transform: scale(1.1);
     }
-  } */
+  }
 `;
 
 export const TrailerContainer = styled.div`

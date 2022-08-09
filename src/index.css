@@ -30,6 +30,7 @@ code {
 
 .ui.card,
 .ui.cards > .card {
+  padding: 10px;
   width: auto;
   box-shadow: none;
   transition: transform 0.5s ease;
@@ -37,9 +38,9 @@ code {
 }
 
 a.ui.card:hover {
+  background: none;
   box-shadow: none;
   cursor: pointer;
-  background: none;
 }
 
 .ui.card > .content > .header,

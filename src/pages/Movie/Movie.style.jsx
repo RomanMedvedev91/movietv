@@ -26,6 +26,7 @@ export const BackgroundImage = styled.div`
   top: 0;
   left: 0;
   /* margin: auto; */
+  width: 100%;
   z-index: -1;
   img {
     opacity: 0.2;
@@ -34,6 +35,16 @@ export const BackgroundImage = styled.div`
     margin: auto;
     display: block;
   }
+`;
+
+export const HeaderGradient = styled.div`
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 100px;
+  width: 100%;
+  height: 1000px;
+  background: linear-gradient(0deg, #141313, 80%, transparent);
 `;
 
 export const PosterContainer = styled.div`
@@ -90,9 +101,14 @@ export const CastContainer = styled.section`
 `;
 
 export const MediaContainer = styled.section`
-  .ui.card {
-    padding: 10px;
+  margin-top: 6em;
+
+  h2 {
+    margin-bottom: 1em;
   }
+  /* .ui.card {
+    padding: 10px;
+  } */
   .ui.segment {
     min-height: 300px;
     background: none;
