@@ -41,7 +41,6 @@ function Movie() {
   const [movieCredits, setMovieSetCredits] = useState(null);
   const [recommendationsMovies, setrecommendationsMovies] = useState(null);
   const [open, setOpen] = useState(false);
-  // const { category, movieId } = useParams();
   const { movieId } = useParams();
   const navigate = useNavigate();
 
