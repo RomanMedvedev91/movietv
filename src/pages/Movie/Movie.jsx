@@ -232,7 +232,7 @@ function Movie() {
               <img src={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`} alt="mainBackground" />
             </BackgroundImage>
             <PosterContainer>
-              <img src={`${TMDB_POSTER_PATH + movieDetails.poster_path}`} alt="posted" />
+              <img src={`${TMDB_POSTER_PATH + movieDetails.poster_path}`} alt="poster" />
             </PosterContainer>
             <MovieDataContainer>
               <h2>{movieDetails.title}</h2>
