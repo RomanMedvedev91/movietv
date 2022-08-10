@@ -309,7 +309,7 @@ function Movie() {
                   }
                   header={person.name}
                   meta={person.character}
-                  onClick={() => cardHandleClick('persons', person.id)}
+                  onClick={() => cardHandleClick('person', person.id)}
                 />
               ))}
             </CardCarousel>

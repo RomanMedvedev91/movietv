@@ -32,6 +32,15 @@ export const getRecommendationsMovies = (movieId) =>
 export const getMovieCredits = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
+export const getPersonDetails = (personId) =>
+  `https://api.themoviedb.org/3/person/${personId}?append_to_response=images&api_key=${process.env.REACT_APP_OPENAI_API_KEY}`;
+
+export const getPersonMoviesCredits = (personId) =>
+  `https://api.themoviedb.org/3/person/${personId}/combined_credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
+export const getPersonExternalIds = (personId) =>
+  `https://api.themoviedb.org/3/person/${personId}/external_ids?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
 export const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500';
 
 export const TMDB_POSTER_BASE = 'https://image.tmdb.org/t/p/original';
