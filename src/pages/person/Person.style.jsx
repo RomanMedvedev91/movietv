@@ -61,7 +61,7 @@ export const PosterContainer = styled.div`
 export const PersonDataContainer = styled.div`
   width: 800px;
   padding: 0 55px 0 20px;
-  .ui.button {
+  .ui.button.show-more {
     padding: 0;
     margin-left: 1.2em;
     background: none;

@@ -49,6 +49,10 @@ function Person() {
         (el) => el.backdrop_path !== null
         // && el.media_type !== 'tv'
       );
+
+      // const sortedCreditList = resPersonCredits.cast.sort((a, b) => {
+
+      // })
       const sortedKnownForMovies = knownForMovies
         .sort((a, b) => b.popularity - a.popularity)
         .slice(0, 10);
@@ -70,6 +74,28 @@ function Person() {
     return showMoreBio
       ? personDetails.biography
       : `${personDetails.biography.substring(0, length)} . . . `;
+  };
+
+  const getAge = (birthday, deathday = null) => {
+    const today = new Date();
+    const birthDate = new Date(birthday);
+
+    if (deathday) {
+      const deadDate = new Date(deathday);
+      let lifeAge = deadDate.getFullYear() - birthDate.getFullYear();
+      const lifeMonth = deadDate.getMonth() - birthDate.getMonth();
+      if (lifeMonth < 0 || (lifeMonth === 0 && deadDate.getDate() < birthDate.getDate())) {
+        lifeAge -= 1;
+      }
+      return lifeAge;
+    }
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age -= 1;
+    }
+    return age;
   };
 
   return (
@@ -99,7 +125,7 @@ function Person() {
             </p> */}
               <p>
                 {getPersonBiography()}
-                <Button onClick={() => setShowMoreBio(!showMoreBio)}>
+                <Button className="show-more" onClick={() => setShowMoreBio(!showMoreBio)}>
                   {showMoreBio ? 'Show less' : 'Show more'}
                 </Button>
               </p>
@@ -121,13 +147,23 @@ function Person() {
 
                 <div>
                   <span>Birthday</span>
-                  <span>{personDetails.birthday}</span>
+                  <span>
+                    {personDetails.birthday}
+                    {!personDetails.deathday && (
+                      <span>{` (${getAge(personDetails.birthday)} years old)`}</span>
+                    )}
+                  </span>
                 </div>
 
                 {personDetails.deathday && (
                   <div>
                     <span>Death Day</span>
-                    <span>{personDetails.deathday}</span>
+                    <span>
+                      {personDetails.deathday}
+                      <span>
+                        {` (${getAge(personDetails.birthday, personDetails.deathday)} years old)`}
+                      </span>
+                    </span>
                   </div>
                 )}
 
