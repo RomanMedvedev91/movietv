@@ -1,7 +1,8 @@
+/* eslint-disable indent */
 /* eslint-disable react/jsx-closing-bracket-location */
 import { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import { Icon, Card } from 'semantic-ui-react';
+import { Icon, Card, Button } from 'semantic-ui-react';
 import {
   getPersonDetails,
   getPersonMoviesCredits,
@@ -29,6 +30,7 @@ function Person() {
   const [personCredits, setPersonCredits] = useState(null);
   const [personExternalIds, setPersonExternalIds] = useState(null);
   const [personKnownForMovies, setPersonKnownForMovies] = useState(null);
+  const [showMoreBio, setShowMoreBio] = useState(false);
   const { personId } = useParams();
   // const navigate = useNavigate();
 
@@ -44,7 +46,8 @@ function Person() {
       const resPersonExternalIds = await getData(personExternalIdsUrl);
 
       const knownForMovies = resPersonCredits.cast.filter(
-        (el) => el.backdrop_path !== null && el.media_type !== 'tv'
+        (el) => el.backdrop_path !== null
+        // && el.media_type !== 'tv'
       );
       const sortedKnownForMovies = knownForMovies
         .sort((a, b) => b.popularity - a.popularity)
@@ -61,6 +64,13 @@ function Person() {
     };
     loadMovie();
   }, [personId]);
+
+  const getPersonBiography = () => {
+    const length = personDetails.biography.length / 2;
+    return showMoreBio
+      ? personDetails.biography
+      : `${personDetails.biography.substring(0, length)} . . . `;
+  };
 
   return (
     <>
@@ -87,7 +97,13 @@ function Person() {
               <span>{getGenres()}</span>
               <span>{runTime()}</span>
             </p> */}
-              <p>{personDetails.biography}</p>
+              <p>
+                {getPersonBiography()}
+                <Button onClick={() => setShowMoreBio(!showMoreBio)}>
+                  {showMoreBio ? 'Show less' : 'Show more'}
+                </Button>
+              </p>
+
               <PersonDataTable>
                 <div>
                   <span>Known For</span>
@@ -169,8 +185,8 @@ function Person() {
                       ? `${TMDB_POSTER_PATH + movie.poster_path}`
                       : 'https://react.semantic-ui.com/images/wireframe/image.png'
                   }
-                  header={movie.title}
-                  meta={movie.release_date}
+                  header={movie.title || movie.name}
+                  meta={movie.release_date || movie.first_air_date}
                 />
               ))}
             </CardCarousel>
