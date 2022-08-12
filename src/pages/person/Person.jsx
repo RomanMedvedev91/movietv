@@ -1,8 +1,11 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-closing-bracket-location */
 import { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import { Icon, Card, Button } from 'semantic-ui-react';
+// eslint-disable-next-line object-curly-newline
+import { Icon, Card, Button, List } from 'semantic-ui-react';
 import {
   getPersonDetails,
   getPersonMoviesCredits,
@@ -50,15 +53,37 @@ function Person() {
         // && el.media_type !== 'tv'
       );
 
-      // const sortedCreditList = resPersonCredits.cast.sort((a, b) => {
+      // const PersonCreditCombined = [...resPersonCredits.cast, ...resPersonCredits.crew];
+      // console.log('PersonCreditCombined', PersonCreditCombined);
+      console.log('resPersonCredits', resPersonCredits);
 
-      // })
+      const sortedCreditList = resPersonCredits.cast.sort((a, b) => {
+        // const today = new Date();
+
+        const releaseA =
+          a.release_date || a.first_air_date ? new Date(a.release_date || a.first_air_date) : null;
+        const releaseB =
+          b.release_date || b.first_air_date ? new Date(b.release_date || b.first_air_date) : null;
+
+        if (!releaseA) return -1;
+        if (!releaseB) return 1;
+        return releaseB - releaseA;
+      });
+      // const sortedCreditList = PersonCreditCombined.sort((a, b) => {
+      //   // const today = new Date();
+      //   const releaseA = new Date(a.release_date || a.first_air_date);
+      //   const releaseB = new Date(b.release_date || b.first_air_date);
+
+      //   return releaseB - releaseA;
+      // });
+
       const sortedKnownForMovies = knownForMovies
         .sort((a, b) => b.popularity - a.popularity)
         .slice(0, 10);
 
       setPersonDetails(resPersonDetails);
-      setPersonCredits(resPersonCredits);
+      setPersonCredits(sortedCreditList);
+      // setPersonCredits(resPersonCredits);
       setPersonExternalIds(resPersonExternalIds);
       setPersonKnownForMovies(sortedKnownForMovies);
 
@@ -101,12 +126,12 @@ function Person() {
   return (
     <>
       {isLoading && <div>Loading...</div>}
-      {console.log('personDetails', personDetails)}
+      {/* {console.log('personDetails', personDetails)} */}
       {console.log('personCredits', personCredits)}
-      {console.log('personExternalIds', personExternalIds)}
+      {/* {console.log('personExternalIds', personExternalIds)} */}
       {!isLoading && personDetails && (
         <PersonContainer>
-          {console.log('getKnownForMovies', console.log(personKnownForMovies))}
+          {/* {console.log('getKnownForMovies', console.log(personKnownForMovies))} */}
           <PersonDetail>
             <BackgroundImage>
               <img src="https//" alt="mainBackground" />
@@ -227,6 +252,18 @@ function Person() {
               ))}
             </CardCarousel>
           )}
+
+          <List divided relaxed>
+            {personCredits.map((el) => (
+              <List.Item key={el.id}>
+                <List.Icon name="github" size="large" verticalAlign="middle" />
+                <List.Content>
+                  <List.Header as="a">{el.title || el.name}</List.Header>
+                  <List.Header as="a">{el.release_date || el.first_air_date}</List.Header>
+                </List.Content>
+              </List.Item>
+            ))}
+          </List>
         </PersonContainer>
       )}
       <Outlet />
