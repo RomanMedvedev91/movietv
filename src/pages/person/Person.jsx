@@ -27,6 +27,9 @@ import {
 import * as route from '../../constants/routes';
 
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
+import { HeaderGradient } from '../home/Home.style';
+
+import personBackground from '../../assets/personBackground.jpg';
 
 function Person() {
   const [isLoading, setIsLoading] = useState(false);
@@ -149,38 +152,40 @@ function Person() {
     return year?.slice(0, 4);
   };
 
+  const personCreditsTable = (credits) => (
+    <Table basic="very" compact collapsing inverted>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Year</Table.HeaderCell>
+          <Table.HeaderCell>Movies / TV Shoes</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+
+      <Table.Body>
+        {credits.map((el) => (
+          <Table.Row key={el.credit_id}>
+            <Table.Cell>
+              <span>{getRelieasedYear(el)}</span>
+              {/* <span>{el.release_date?.slice(0, 4) 
+                      || el.first_air_date?.slice(0, 4)}</span> */}
+            </Table.Cell>
+
+            <Table.Cell>
+              <a href="/">{el.title || el.name}</a>
+              {el.character || (el.job && <span>{` as ${el.character || el.job}`}</span>)}
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+
   const panes = [
     {
       menuItem: 'Cast',
       render: () => (
         <Tab.Pane loading={!personCredits} attached={false}>
-          {personCredits && (
-            <Table basic="very" compact collapsing inverted>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>Year</Table.HeaderCell>
-                  <Table.HeaderCell>Movies / TV Shoes</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-
-              <Table.Body>
-                {personCredits.map((el) => (
-                  <Table.Row key={el.credit_id}>
-                    <Table.Cell>
-                      <span>{getRelieasedYear(el)}</span>
-                      {/* <span>{el.release_date?.slice(0, 4) 
-                      || el.first_air_date?.slice(0, 4)}</span> */}
-                    </Table.Cell>
-
-                    <Table.Cell>
-                      <a href="/">{el.title || el.name}</a>
-                      {el.character && <span>{` as ${el.character}`}</span>}
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          )}
+          {personCredits && personCreditsTable(personCredits)}
         </Tab.Pane>
       )
     },
@@ -188,33 +193,7 @@ function Person() {
       menuItem: 'Crew',
       render: () => (
         <Tab.Pane loading={!personCreditsCrew} attached={false}>
-          {personCreditsCrew && (
-            <Table basic="very" compact collapsing inverted>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>Year</Table.HeaderCell>
-                  <Table.HeaderCell>Movies / TV Shoes</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-
-              <Table.Body>
-                {personCreditsCrew.map((el) => (
-                  <Table.Row key={el.credit_id}>
-                    <Table.Cell>
-                      <span>{getRelieasedYear(el)}</span>
-                      {/* <span>{el.release_date?.slice(0, 4) 
-                      || el.first_air_date?.slice(0, 4)}</span> */}
-                    </Table.Cell>
-
-                    <Table.Cell>
-                      <a href="/">{el.title || el.name}</a>
-                      {el.job && <span>{` as ${el.job}`}</span>}
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          )}
+          {personCreditsCrew && personCreditsTable(personCreditsCrew)}
         </Tab.Pane>
       )
     }
@@ -229,16 +208,13 @@ function Person() {
   return (
     <>
       {isLoading && <div>Loading...</div>}
-      {/* {console.log('personDetails', personDetails)} */}
       {console.log('personCredits', personCredits)}
       {console.log('personCreditsCrew', personCreditsCrew)}
-      {/* {console.log('personExternalIds', personExternalIds)} */}
       {!isLoading && personDetails && (
         <PersonContainer>
-          {/* {console.log('getKnownForMovies', console.log(personKnownForMovies))} */}
           <PersonDetail>
             <BackgroundImage>
-              <img src="https//" alt="mainBackground" />
+              <img src={personBackground} alt="personBackground" />
             </BackgroundImage>
 
             <PosterContainer>
@@ -334,6 +310,7 @@ function Person() {
                 </a>
               )}
             </PersonDataContainer>
+            <HeaderGradient />
           </PersonDetail>
           {console.log('personKnownForMovies', personKnownForMovies)}
           {personKnownForMovies && (
