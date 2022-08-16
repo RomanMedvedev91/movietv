@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 // eslint-disable-next-line object-curly-newline
-import { Icon, Card, Button, List } from 'semantic-ui-react';
+import { Icon, Card, Button, Table, Tab } from 'semantic-ui-react';
 import {
   getPersonDetails,
   getPersonMoviesCredits,
@@ -21,7 +21,8 @@ import {
   PersonDataContainer,
   PersonDataTable,
   PersonDetail,
-  PosterContainer
+  PosterContainer,
+  PersonCreditsTable
 } from './Person.style';
 import * as route from '../../constants/routes';
 
@@ -31,11 +32,26 @@ function Person() {
   const [isLoading, setIsLoading] = useState(false);
   const [personDetails, setPersonDetails] = useState(null);
   const [personCredits, setPersonCredits] = useState(null);
+  const [personCreditsCrew, setPersonCreditsCrew] = useState(null);
   const [personExternalIds, setPersonExternalIds] = useState(null);
   const [personKnownForMovies, setPersonKnownForMovies] = useState(null);
   const [showMoreBio, setShowMoreBio] = useState(false);
   const { personId } = useParams();
   // const navigate = useNavigate();
+
+  const getSortedCreditList = (list) => {
+    const sortedList = list.sort((a, b) => {
+      const releaseA =
+        a.release_date || a.first_air_date ? new Date(a.release_date || a.first_air_date) : null;
+      const releaseB =
+        b.release_date || b.first_air_date ? new Date(b.release_date || b.first_air_date) : null;
+
+      if (!releaseA) return -1;
+      if (!releaseB) return 1;
+      return releaseB - releaseA;
+    });
+    return sortedList;
+  };
 
   useEffect(() => {
     const loadMovie = async () => {
@@ -57,18 +73,22 @@ function Person() {
       // console.log('PersonCreditCombined', PersonCreditCombined);
       console.log('resPersonCredits', resPersonCredits);
 
-      const sortedCreditList = resPersonCredits.cast.sort((a, b) => {
-        // const today = new Date();
+      const sortedCastList = getSortedCreditList(resPersonCredits.cast);
+      const sortedCrewList = getSortedCreditList(resPersonCredits.crew);
+      // const sortedCreditList = resPersonCredits.cast.sort((a, b) => {
+      //   // const today = new Date();
 
-        const releaseA =
-          a.release_date || a.first_air_date ? new Date(a.release_date || a.first_air_date) : null;
-        const releaseB =
-          b.release_date || b.first_air_date ? new Date(b.release_date || b.first_air_date) : null;
+      //   const releaseA =
+      // eslint-disable-next-line max-len
+      //     a.release_date || a.first_air_date ? new Date(a.release_date || a.first_air_date) : null;
+      //   const releaseB =
+      // eslint-disable-next-line max-len
+      //     b.release_date || b.first_air_date ? new Date(b.release_date || b.first_air_date) : null;
 
-        if (!releaseA) return -1;
-        if (!releaseB) return 1;
-        return releaseB - releaseA;
-      });
+      //   if (!releaseA) return -1;
+      //   if (!releaseB) return 1;
+      //   return releaseB - releaseA;
+      // });
       // const sortedCreditList = PersonCreditCombined.sort((a, b) => {
       //   // const today = new Date();
       //   const releaseA = new Date(a.release_date || a.first_air_date);
@@ -82,7 +102,8 @@ function Person() {
         .slice(0, 10);
 
       setPersonDetails(resPersonDetails);
-      setPersonCredits(sortedCreditList);
+      setPersonCredits(sortedCastList);
+      setPersonCreditsCrew(sortedCrewList);
       // setPersonCredits(resPersonCredits);
       setPersonExternalIds(resPersonExternalIds);
       setPersonKnownForMovies(sortedKnownForMovies);
@@ -123,11 +144,94 @@ function Person() {
     return age;
   };
 
+  const getRelieasedYear = (date) => {
+    const year = date?.release_date || date?.first_air_date;
+    return year?.slice(0, 4);
+  };
+
+  const panes = [
+    {
+      menuItem: 'Cast',
+      render: () => (
+        <Tab.Pane loading={!personCredits} attached={false}>
+          {personCredits && (
+            <Table basic="very" compact collapsing inverted>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Year</Table.HeaderCell>
+                  <Table.HeaderCell>Movies / TV Shoes</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                {personCredits.map((el) => (
+                  <Table.Row key={el.credit_id}>
+                    <Table.Cell>
+                      <span>{getRelieasedYear(el)}</span>
+                      {/* <span>{el.release_date?.slice(0, 4) 
+                      || el.first_air_date?.slice(0, 4)}</span> */}
+                    </Table.Cell>
+
+                    <Table.Cell>
+                      <a href="/">{el.title || el.name}</a>
+                      {el.character && <span>{` as ${el.character}`}</span>}
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          )}
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: 'Crew',
+      render: () => (
+        <Tab.Pane loading={!personCreditsCrew} attached={false}>
+          {personCreditsCrew && (
+            <Table basic="very" compact collapsing inverted>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Year</Table.HeaderCell>
+                  <Table.HeaderCell>Movies / TV Shoes</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                {personCreditsCrew.map((el) => (
+                  <Table.Row key={el.credit_id}>
+                    <Table.Cell>
+                      <span>{getRelieasedYear(el)}</span>
+                      {/* <span>{el.release_date?.slice(0, 4) 
+                      || el.first_air_date?.slice(0, 4)}</span> */}
+                    </Table.Cell>
+
+                    <Table.Cell>
+                      <a href="/">{el.title || el.name}</a>
+                      {el.job && <span>{` as ${el.job}`}</span>}
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          )}
+        </Tab.Pane>
+      )
+    }
+  ];
+
+  // eslint-disable-next-line max-len
+  // eslint-disable-next-line react/no-unstable-nested-components
+  function TabExampleSecondaryPointing() {
+    return <Tab menu={{ text: true }} panes={panes} />;
+  }
+
   return (
     <>
       {isLoading && <div>Loading...</div>}
       {/* {console.log('personDetails', personDetails)} */}
       {console.log('personCredits', personCredits)}
+      {console.log('personCreditsCrew', personCreditsCrew)}
       {/* {console.log('personExternalIds', personExternalIds)} */}
       {!isLoading && personDetails && (
         <PersonContainer>
@@ -231,6 +335,7 @@ function Person() {
               )}
             </PersonDataContainer>
           </PersonDetail>
+          {console.log('personKnownForMovies', personKnownForMovies)}
           {personKnownForMovies && (
             <CardCarousel
               title
@@ -240,7 +345,7 @@ function Person() {
               visibleSlides={5}>
               {personKnownForMovies.map((movie) => (
                 <Card
-                  key={movie.id}
+                  key={`${movie.credit_id}`}
                   image={
                     movie.backdrop_path
                       ? `${TMDB_POSTER_PATH + movie.poster_path}`
@@ -252,18 +357,10 @@ function Person() {
               ))}
             </CardCarousel>
           )}
-
-          <List divided relaxed>
-            {personCredits.map((el) => (
-              <List.Item key={el.id}>
-                <List.Icon name="github" size="large" verticalAlign="middle" />
-                <List.Content>
-                  <List.Header as="a">{el.title || el.name}</List.Header>
-                  <List.Header as="a">{el.release_date || el.first_air_date}</List.Header>
-                </List.Content>
-              </List.Item>
-            ))}
-          </List>
+          <PersonCreditsTable>
+            <h2>Person credits</h2>
+            {TabExampleSecondaryPointing()}
+          </PersonCreditsTable>
         </PersonContainer>
       )}
       <Outlet />
