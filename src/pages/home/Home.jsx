@@ -81,7 +81,7 @@ function Homepage() {
     moviesCards
       .slice(0, 5)
       .map((movie) => (
-        <MovieCard key={movie.id} id={movie.id} image={movie.poster_path} category="movies" />
+        <MovieCard key={movie.id} id={movie.id} image={movie.poster_path} category="movie" />
       ));
 
   const modalHandler = (movie) => {
@@ -130,7 +130,7 @@ function Homepage() {
               }
               header={movie.title}
               meta={movie.release_date}
-              onClick={() => cardHandleClick('movies', movie.id)}
+              onClick={() => cardHandleClick('movie', movie.id)}
             />
           ))}
         </CardCarousel>
@@ -152,7 +152,7 @@ function Homepage() {
               }
               header={movie.title}
               meta={movie.release_date}
-              onClick={() => cardHandleClick('movies', movie.id)}
+              onClick={() => cardHandleClick('movie', movie.id)}
             />
           ))}
         </CardCarousel>

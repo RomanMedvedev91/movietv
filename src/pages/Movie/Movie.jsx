@@ -339,7 +339,7 @@ function Movie() {
                   }
                   header={movie.title}
                   meta={movie.release_date}
-                  onClick={() => cardHandleClick('movies', movie.id)}
+                  onClick={() => cardHandleClick(movie.media_type, movie.id)}
                 />
               ))}
             </CardCarousel>
