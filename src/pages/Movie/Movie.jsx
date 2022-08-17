@@ -232,7 +232,7 @@ function Movie() {
               <img src={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`} alt="mainBackground" />
             </BackgroundImage>
             <PosterContainer>
-              <img src={`${TMDB_POSTER_PATH + movieDetails.poster_path}`} alt="posted" />
+              <img src={`${TMDB_POSTER_PATH + movieDetails.poster_path}`} alt="poster" />
             </PosterContainer>
             <MovieDataContainer>
               <h2>{movieDetails.title}</h2>
@@ -309,7 +309,7 @@ function Movie() {
                   }
                   header={person.name}
                   meta={person.character}
-                  onClick={() => cardHandleClick('persons', person.id)}
+                  onClick={() => cardHandleClick('person', person.id)}
                 />
               ))}
             </CardCarousel>
@@ -339,7 +339,7 @@ function Movie() {
                   }
                   header={movie.title}
                   meta={movie.release_date}
-                  onClick={() => cardHandleClick('movies', movie.id)}
+                  onClick={() => cardHandleClick(movie.media_type, movie.id)}
                 />
               ))}
             </CardCarousel>

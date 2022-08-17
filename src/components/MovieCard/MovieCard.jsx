@@ -14,7 +14,7 @@ function MovieCard({ movie, id, image, header, modalHadler, trailer, category })
 
   return (
     <>
-      {category === 'movies' && (
+      {category === 'movie' && (
         <Card
           image={image ? `${tmdbPosterPath + image}` : '/img-placeholder.jpg'}
           header={header}
