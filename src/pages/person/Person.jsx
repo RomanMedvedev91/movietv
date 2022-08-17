@@ -1,24 +1,19 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-closing-bracket-location */
 import { useState, useEffect } from 'react';
-import {
-  Outlet,
-  useParams,
-  useNavigate
-  // useNavigate,
-} from 'react-router-dom';
-// eslint-disable-next-line object-curly-newline
+import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import { Icon, Card, Button, Table, Tab } from 'semantic-ui-react';
+
 import {
   getPersonDetails,
   getPersonMoviesCredits,
   getPersonExternalIds,
-  // TMDB_POSTER_BASE,
   TMDB_POSTER_PATH
-  // TMDB_BACKDROP_PATH
 } from '../../constants/apiUrls';
+
 import getData from '../../utilities/getData';
 import {
   BackgroundImage,
@@ -73,38 +68,10 @@ function Person() {
       const resPersonCredits = await getData(personCreditsUrl);
       const resPersonExternalIds = await getData(personExternalIdsUrl);
 
-      const knownForMovies = resPersonCredits.cast.filter(
-        (el) => el.backdrop_path !== null
-        // && el.media_type !== 'tv'
-      );
-
-      // const PersonCreditCombined = [...resPersonCredits.cast, ...resPersonCredits.crew];
-      // console.log('PersonCreditCombined', PersonCreditCombined);
-      console.log('resPersonCredits', resPersonCredits);
+      const knownForMovies = resPersonCredits.cast.filter((el) => el.backdrop_path !== null);
 
       const sortedCastList = getSortedCreditList(resPersonCredits.cast);
       const sortedCrewList = getSortedCreditList(resPersonCredits.crew);
-      // const sortedCreditList = resPersonCredits.cast.sort((a, b) => {
-      //   // const today = new Date();
-
-      //   const releaseA =
-      // eslint-disable-next-line max-len
-      //     a.release_date || a.first_air_date ? new Date(a.release_date || a.first_air_date) : null;
-      //   const releaseB =
-      // eslint-disable-next-line max-len
-      //     b.release_date || b.first_air_date ? new Date(b.release_date || b.first_air_date) : null;
-
-      //   if (!releaseA) return -1;
-      //   if (!releaseB) return 1;
-      //   return releaseB - releaseA;
-      // });
-      // const sortedCreditList = PersonCreditCombined.sort((a, b) => {
-      //   // const today = new Date();
-      //   const releaseA = new Date(a.release_date || a.first_air_date);
-      //   const releaseB = new Date(b.release_date || b.first_air_date);
-
-      //   return releaseB - releaseA;
-      // });
 
       const sortedKnownForMovies = knownForMovies
         .sort((a, b) => b.popularity - a.popularity)
@@ -166,7 +133,9 @@ function Person() {
     <Table basic="very" compact collapsing inverted>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Year</Table.HeaderCell>
+          <Table.HeaderCell textAlign="center" width={2}>
+            Year
+          </Table.HeaderCell>
           <Table.HeaderCell>Movies / TV Shoes</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -174,10 +143,8 @@ function Person() {
       <Table.Body>
         {credits.map((el) => (
           <Table.Row key={el.credit_id}>
-            <Table.Cell>
+            <Table.Cell textAlign="center">
               <span>{getRelieasedYear(el)}</span>
-              {/* <span>{el.release_date?.slice(0, 4) 
-                      || el.first_air_date?.slice(0, 4)}</span> */}
             </Table.Cell>
 
             <Table.Cell>
@@ -236,11 +203,7 @@ function Person() {
 
             <PersonDataContainer>
               <h2>{personDetails.name}</h2>
-              {/* <p>
-              <span>{getReleaseDateAndCountry()}</span>
-              <span>{getGenres()}</span>
-              <span>{runTime()}</span>
-            </p> */}
+
               <p>
                 {getPersonBiography()}
                 <Button className="show-more" onClick={() => setShowMoreBio(!showMoreBio)}>
@@ -253,10 +216,6 @@ function Person() {
                   <span>Known For</span>
                   <span>{personDetails.known_for_department}</span>
                 </div>
-                {/* <div>
-                <span>Known credits</span>
-                <span>Known credits</span>
-              </div> */}
 
                 <div>
                   <span>Gender</span>

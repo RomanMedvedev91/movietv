@@ -30,7 +30,7 @@ export const BackgroundImage = styled.div`
   width: 100%;
   z-index: -1;
   img {
-    opacity: 0.2;
+    /* opacity: 0.2; */
     max-width: 100%;
     max-height: 100%;
     margin: auto;
@@ -119,9 +119,6 @@ export const PersonDataTable = styled.div`
 `;
 
 export const PersonCreditsTable = styled.section`
-  /* .ui.table {
-    margin: auto;
-  } */
   //from movie.style
   margin-top: 6em;
 
