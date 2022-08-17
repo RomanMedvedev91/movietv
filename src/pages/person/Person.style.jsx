@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const PersonContainer = styled.main`
   color: #fff;
@@ -118,9 +119,9 @@ export const PersonDataTable = styled.div`
 `;
 
 export const PersonCreditsTable = styled.section`
-  .ui.table {
+  /* .ui.table {
     margin: auto;
-  }
+  } */
   //from movie.style
   margin-top: 6em;
 
@@ -147,5 +148,15 @@ export const PersonCreditsTable = styled.section`
   .ui.text.menu .active.item {
     color: rgba(255, 255, 255, 0.95);
     border-bottom: 2px solid #3c64b1;
+  }
+`;
+
+export const MovieCreditLink = styled(Link)`
+  color: #3c64b1;
+  cursor: pointer;
+  margin-right: 0.2em;
+  font-weight: 800;
+  &:hover {
+    color: #fff;
   }
 `;

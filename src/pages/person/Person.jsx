@@ -3,7 +3,12 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-closing-bracket-location */
 import { useState, useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import {
+  Outlet,
+  useParams,
+  useNavigate
+  // useNavigate,
+} from 'react-router-dom';
 // eslint-disable-next-line object-curly-newline
 import { Icon, Card, Button, Table, Tab } from 'semantic-ui-react';
 import {
@@ -22,7 +27,8 @@ import {
   PersonDataTable,
   PersonDetail,
   PosterContainer,
-  PersonCreditsTable
+  PersonCreditsTable,
+  MovieCreditLink
 } from './Person.style';
 import * as route from '../../constants/routes';
 
@@ -40,7 +46,7 @@ function Person() {
   const [personKnownForMovies, setPersonKnownForMovies] = useState(null);
   const [showMoreBio, setShowMoreBio] = useState(false);
   const { personId } = useParams();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const getSortedCreditList = (list) => {
     const sortedList = list.sort((a, b) => {
@@ -118,6 +124,10 @@ function Person() {
     loadMovie();
   }, [personId]);
 
+  const cardHandleClick = (category, id) => {
+    navigate(`/${category}/${id}`);
+  };
+
   const getPersonBiography = () => {
     const length = personDetails.biography.length / 2;
     return showMoreBio
@@ -171,8 +181,11 @@ function Person() {
             </Table.Cell>
 
             <Table.Cell>
-              <a href="/">{el.title || el.name}</a>
-              {el.character || (el.job && <span>{` as ${el.character || el.job}`}</span>)}
+              <MovieCreditLink to={`/${el.media_type}/${el.id}`}>
+                {el.title || el.name}
+              </MovieCreditLink>
+              {(el.character && ` as ${el.character}`) ||
+                (el.job && <span>{` as ${el.character || el.job}`}</span>)}
             </Table.Cell>
           </Table.Row>
         ))}
@@ -330,6 +343,7 @@ function Person() {
                   }
                   header={movie.title || movie.name}
                   meta={movie.release_date || movie.first_air_date}
+                  onClick={() => cardHandleClick(movie.media_type, movie.id)}
                 />
               ))}
             </CardCarousel>
