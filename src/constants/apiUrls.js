@@ -2,8 +2,8 @@
 // eslint-disable-next-line import/prefer-default-export
 export const topRatedMovieUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
 
-export const popularMovieUrl = `
-https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
+export const popularMovieUrl = (page = 1) => `
+https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
 export const nowPlayingMovieUrl = `
 https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
