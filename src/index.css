@@ -37,11 +37,17 @@ code {
   background: none;
 }
 
+.ui.cards a.card:hover,
 a.ui.card:hover {
   background: none;
   box-shadow: none;
   cursor: pointer;
 }
+/* a.ui.card:hover {
+  background: none;
+  box-shadow: none;
+  cursor: pointer;
+} */
 
 .ui.card > .content > .header,
 .ui.cards > .card > .content > .header {
