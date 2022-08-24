@@ -57,3 +57,9 @@ export const TMDB_POSTER_PATH = 'https://image.tmdb.org/t/p/w600_and_h900_face';
 // const testRequest = `https://api.themoviedb.org/3/movie/550?api_key=${process.env.REACT_APP_OPENAI_API_KEY}`;
 
 // const getSimilarMovie = (movie_id) => `https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=<<api_key>>&language=en-US&page=1`
+
+export const FILTER_URL = (sortBy, page = 1) =>
+  `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&sort_by=${sortBy}c&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`;
+
+// filter by vote range
+// https://api.themoviedb.org/3/discover/movie?api_key=###&vote_average.gte=2.0&vote_average.lte=8.0

@@ -25,3 +25,9 @@ export const StyledPaginationWrapper = styled.div`
   display: block;
   text-align: center;
 `;
+
+export const StyledFilterContainer = styled.div`
+  display: flex;
+  gap: 1.25em;
+  justify-content: end;
+`;
