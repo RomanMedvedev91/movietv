@@ -46,7 +46,7 @@ function Navbar() {
             </NavItem>
 
             <NavItem>
-              <NavLink to={route.TVSHOES}>Tv Shoes</NavLink>
+              <NavLink to={route.TVSHOWS}>Tv Shoes</NavLink>
             </NavItem>
           </NavItemContainer>
         </NavContainer>

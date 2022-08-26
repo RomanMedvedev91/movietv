@@ -122,7 +122,7 @@ function Homepage() {
         <CardCarousel
           title
           titleHeader="Popular TV Shoes"
-          titleLink={`${route.TVSHOES}`}
+          titleLink={`${route.TVSHOWS}`}
           totalSlides={topRatedMovies.length}>
           {popularTvShoes.map((movie) => (
             <Card
