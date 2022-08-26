@@ -1,18 +1,22 @@
 /* eslint-disable implicit-arrow-linebreak */
 // eslint-disable-next-line import/prefer-default-export
-export const topRatedMovieUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
+
+// ========  MOVIES lists =======
+
+export const topRatedMovieUrl = (page = 1) =>
+  `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
 export const popularMovieUrl = (page = 1) => `
 https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
-export const nowPlayingMovieUrl = `
-https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
+export const nowPlayingMovieUrl = (page = 1) => `
+https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
-export const upcommingMovieUrl = `
-https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
+export const upcommingMovieUrl = (page = 1) => `
+https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
-export const latestMovieUrl = `
-https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
+export const latestMovieUrl = (page = 1) => `
+https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
 export const getMovieFilterUrl = (state, page = 1) => {
   const sortBy = state.sortBy ? `&sort_by=${state.sortBy}` : '';
@@ -30,14 +34,25 @@ export const getMovieDetails = (movieId) =>
 
 export const getRecommendationsMovies = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
-// export const getMovieDetails = (movieId) =>
-//   `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
-
-// export const getMovieImages = (movieId) =>
-//   `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
 export const getMovieCredits = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
+// ===== TV SHOES =========
+
+export const popularTvUrl = (page = 1) =>
+  `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
+
+export const topRatedTvUrl = (page = 1) =>
+  `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
+
+export const airingTodayTvUrl = (page = 1) =>
+  `https://api.themoviedb.org/3/tv/airing_today?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
+
+export const onTheAirTvUrl = (page = 1) =>
+  `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
+
+// ========= PERSON =============
 
 export const getPersonDetails = (personId) =>
   `https://api.themoviedb.org/3/person/${personId}?append_to_response=images&api_key=${process.env.REACT_APP_OPENAI_API_KEY}`;
@@ -47,6 +62,8 @@ export const getPersonMoviesCredits = (personId) =>
 
 export const getPersonExternalIds = (personId) =>
   `https://api.themoviedb.org/3/person/${personId}/external_ids?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
+// ===== IMAGE URLs ============
 
 export const tmdbPosterPath = 'https://image.tmdb.org/t/p/w500';
 
