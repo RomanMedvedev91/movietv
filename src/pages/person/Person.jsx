@@ -198,7 +198,14 @@ function Person() {
             </BackgroundImage>
 
             <PosterContainer>
-              <img src={`${TMDB_POSTER_PATH + personDetails.profile_path}`} alt="poster" />
+              <img
+                src={
+                  personDetails.profile_path
+                    ? `${TMDB_POSTER_PATH + personDetails.profile_path}`
+                    : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                }
+                alt="poster"
+              />
             </PosterContainer>
 
             <PersonDataContainer>

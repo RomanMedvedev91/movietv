@@ -8,7 +8,7 @@ export const StyledMoviesContainer = styled.main`
   h1 {
     font-weight: 800;
     font-size: 2.5em;
-    margin: 2.5em 0;
+    margin: 0;
   }
 `;
 
@@ -28,6 +28,8 @@ export const StyledPaginationWrapper = styled.div`
 
 export const StyledFilterContainer = styled.div`
   display: flex;
+  margin-top: 2em;
+  margin-bottom: 3em;
   gap: 1.25em;
   justify-content: end;
 `;
