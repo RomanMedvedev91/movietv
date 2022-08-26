@@ -2,8 +2,8 @@
 // eslint-disable-next-line import/prefer-default-export
 export const topRatedMovieUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
 
-export const popularMovieUrl = `
-https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
+export const popularMovieUrl = (page = 1) => `
+https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
 export const nowPlayingMovieUrl = `
 https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
@@ -13,6 +13,13 @@ https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_OPEN
 
 export const latestMovieUrl = `
 https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
+
+export const getMovieFilterUrl = (state, page = 1) => {
+  const sortBy = state.sortBy ? `&sort_by=${state.sortBy}` : '';
+  const genres = state.genres ? `&with_genres=${state.genres.join(',')}` : '';
+  const year = state.year ? `&primary_release_year=${state.year}` : '';
+  return `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}${sortBy}${year}${genres}&with_watch_monetization_types=flatrate`;
+};
 
 // eslint-disable-next-line prettier/prettier
 export const videoUrl = (movieId) =>
@@ -48,6 +55,41 @@ export const TMDB_POSTER_BASE = 'https://image.tmdb.org/t/p/original';
 export const TMDB_BACKDROP_PATH = 'https://www.themoviedb.org/t/p/w1066_and_h600_bestv2';
 export const TMDB_POSTER_PATH = 'https://image.tmdb.org/t/p/w600_and_h900_face';
 
+// data for API
+
+export const filterGenres = [
+  { key: 1, text: 'Action', value: 28 },
+  { key: 2, text: 'Adventure', value: 12 },
+  { key: 3, text: 'Animation', value: 16 },
+  { key: 4, text: 'Comedy', value: 35 },
+  { key: 5, text: 'Crime', value: 80 },
+  { key: 6, text: 'Documentary', value: 99 },
+  { key: 7, text: 'Drama', value: 18 },
+  { key: 8, text: 'Family', value: 10751 },
+  { key: 9, text: 'Fantasy', value: 14 },
+  { key: 10, text: 'History', value: 36 },
+  { key: 11, text: 'Horror', value: 27 },
+  { key: 12, text: 'Music', value: 10402 },
+  { key: 13, text: 'Mystery', value: 9648 },
+  { key: 14, text: 'Romance', value: 10749 },
+  { key: 15, text: 'Science Fiction', value: 878 },
+  { key: 16, text: 'TV Movie', value: 10770 },
+  { key: 17, text: 'Thriller', value: 53 },
+  { key: 18, text: 'War', value: 10752 },
+  { key: 19, text: 'Western', value: 37 }
+];
+
+export const filterSortBy = [
+  { key: 1, text: 'Popularity Descending', value: 'popularity.desc' },
+  { key: 2, text: 'Popularity Ascending', value: 'popularity.asc' },
+  { key: 3, text: 'Raiting Descending', value: 'vote_average.desc' },
+  { key: 4, text: 'Raiting Ascending', value: 'vote_average.asc' },
+  { key: 5, text: 'Release Descending', value: 'release_date.desc' },
+  { key: 6, text: 'Release Ascending', value: 'release_date.asc' },
+  { key: 7, text: 'Revenue Descending', value: 'revenue.desc' },
+  { key: 8, text: 'Revenue Ascending', value: 'revenue.asc' },
+  { key: 9, text: 'Title (A-Z)', value: 'original_title.asc' }
+];
 // const topRated = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=1`;
 
 // `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`;
@@ -57,3 +99,9 @@ export const TMDB_POSTER_PATH = 'https://image.tmdb.org/t/p/w600_and_h900_face';
 // const testRequest = `https://api.themoviedb.org/3/movie/550?api_key=${process.env.REACT_APP_OPENAI_API_KEY}`;
 
 // const getSimilarMovie = (movie_id) => `https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=<<api_key>>&language=en-US&page=1`
+
+// export const FILTER_URL = (sortBy, page = 1) =>
+//   `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&sort_by=${sortBy}c&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`;
+
+// filter by vote range
+// https://api.themoviedb.org/3/discover/movie?api_key=###&vote_average.gte=2.0&vote_average.lte=8.0
