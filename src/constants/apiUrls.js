@@ -52,6 +52,13 @@ export const airingTodayTvUrl = (page = 1) =>
 export const onTheAirTvUrl = (page = 1) =>
   `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
+export const getTvShowsFilterUrl = (state, page = 1) => {
+  const sortBy = state.sortBy ? `&sort_by=${state.sortBy}` : '';
+  const genres = state.genres ? `&with_genres=${state.genres.join(',')}` : '';
+  const year = state.year ? `&first_air_date_year=${state.year}` : '';
+  return `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US${sortBy}${year}&page=${page}&timezone=America%2FNew_York${genres}&include_null_first_air_dates=false&with_watch_monetization_types=flatrate&with_status=0&with_type=0`;
+};
+
 // ========= PERSON =============
 
 export const getPersonDetails = (personId) =>

@@ -137,7 +137,7 @@ function MoviesPreview() {
                     {isLoading ? (
                       <Placeholder inverted>
                         <Placeholder.Header>
-                          <Placeholder.Line length=" long" />
+                          <Placeholder.Line length="long" />
                           <Placeholder.Line length="medium" />
                         </Placeholder.Header>
                       </Placeholder>
