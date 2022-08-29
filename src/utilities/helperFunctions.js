@@ -3,3 +3,8 @@ function getSearchMovieUrl(query) {
 }
 
 export default getSearchMovieUrl;
+
+const currentYear = new Date().getFullYear();
+export const filterYear = new Array(currentYear - 1899)
+  .fill({})
+  .map((obj, indx) => ({ key: indx + 1, text: currentYear - indx, value: currentYear - indx }));
