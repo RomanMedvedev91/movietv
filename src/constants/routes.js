@@ -7,6 +7,7 @@ export const TVSHOWS = 'tv/*';
 export const TOP_RATED = 'top-rated';
 export const AIRING_TODAY = 'airing-today';
 export const ON_TV = 'on-the-air';
+export const TVSHOW_ID = ':tvShowId';
 
 export const VIEW_TVSHOWS = '/tv';
 export const VIEW_TVSHOWS_TOP_RATED = '/tv/top-rated';

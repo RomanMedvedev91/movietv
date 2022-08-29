@@ -14,7 +14,7 @@ function TvShowsRoute() {
       <Route path={route.AIRING_TODAY} element={<TvShowsAiringToday />} />
       <Route path={route.ON_TV} element={<TvShowsOnTheAir />} />
       <Route path={route.TOP_RATED} element={<TvShowsTopRated />} />
-      <Route path=":movieId" element={<TvShow />} />
+      <Route path={route.TVSHOW_ID} element={<TvShow />} />
     </Routes>
   );
 }
