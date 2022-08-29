@@ -59,6 +59,15 @@ export const getTvShowsFilterUrl = (state, page = 1) => {
   return `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US${sortBy}${year}&page=${page}&timezone=America%2FNew_York${genres}&include_null_first_air_dates=false&with_watch_monetization_types=flatrate&with_status=0&with_type=0`;
 };
 
+export const getTvShowDetails = (movieId) =>
+  `https://api.themoviedb.org/3/tv/${movieId}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&append_to_response=videos,images&include_image_language=en,null`;
+
+export const getRecommendationsTvShows = (movieId) =>
+  `https://api.themoviedb.org/3/tv/${movieId}/recommendations?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
+export const getTvShowCredits = (movieId) =>
+  `https://api.themoviedb.org/3/tv/${movieId}/credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
 // ========= PERSON =============
 
 export const getPersonDetails = (personId) =>
