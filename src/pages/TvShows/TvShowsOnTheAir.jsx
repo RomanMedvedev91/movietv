@@ -8,10 +8,10 @@ import { Icon, Pagination, Card, Dropdown, Button, Placeholder, Image } from 'se
 import getData from '../../utilities/getData';
 
 import {
-  popularTvUrl,
+  onTheAirTvUrl,
   TMDB_POSTER_PATH,
   getTvShowsFilterUrl,
-  filterGenres,
+  filterTvShowsGenres,
   filterSortBy
 } from '../../constants/apiUrls';
 
@@ -22,19 +22,16 @@ import {
   StyledFilterContainer
 } from '../MoviesPreview/moviesPreview.style';
 
-const currentYear = new Date().getFullYear();
-const filterYear = new Array(currentYear - 1899)
-  .fill({})
-  .map((obj, indx) => ({ key: indx + 1, text: currentYear - indx, value: currentYear - indx }));
+import { filterYear } from '../../utilities/helperFunctions';
 
-function TvShows() {
+function TvShowsPopular() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [moviesPreview, setMoviespreview] = useState(null);
   const [activePage, setActivePage] = useState(1);
   const [filterTempState, setFilterTempState] = useState({
     sortBy: null,
-    genres: [],
+    genres: null,
     year: null
   });
   const [filterState, setFilterState] = useState(null);
@@ -48,11 +45,11 @@ function TvShows() {
     const loadMovies = async () => {
       setIsLoading(true);
       const movieUrl = !filterState
-        ? popularTvUrl(activePage)
+        ? onTheAirTvUrl(activePage)
         : getTvShowsFilterUrl(filterState, activePage);
 
       const res = await getData(movieUrl);
-      setMoviespreview(res.results);
+      setMoviespreview(res);
 
       setTimeout(() => {
         setIsLoading(false);
@@ -78,19 +75,18 @@ function TvShows() {
       <StyledMoviesList>
         {moviesPreview && (
           <>
-            <h1>Popular TV Shows</h1>
+            <h1>Currently Airing TV Shows</h1>
             <StyledFilterContainer>
               <Dropdown
                 clearable
                 options={filterSortBy}
                 selection
-                placeholder="Select Filter"
+                placeholder="Sort By"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'sortBy')}
               />
               <Dropdown
-                options={filterGenres}
+                options={filterTvShowsGenres}
                 selection
-                multiple
                 placeholder="Genres"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'genres')}
               />
@@ -106,7 +102,7 @@ function TvShows() {
               <Button
                 content="Filter"
                 disabled={
-                  !filterTempState.sortBy && !filterTempState.genres[0] && !filterTempState.year
+                  !filterTempState.sortBy && !filterTempState.genres && !filterTempState.year
                 }
                 primary
                 onClick={setNewFilter}
@@ -114,7 +110,7 @@ function TvShows() {
             </StyledFilterContainer>
 
             <Card.Group itemsPerRow={5}>
-              {moviesPreview.map((movie) => (
+              {moviesPreview.results.map((movie) => (
                 <Card key={movie.id} onClick={() => cardHandleClick('tv', movie.id)}>
                   {isLoading ? (
                     <Placeholder inverted style={{ height: 300, width: 200 }}>
@@ -157,7 +153,7 @@ function TvShows() {
                 lastItem={{ content: <Icon name="angle double right" />, icon: true }}
                 prevItem={{ content: <Icon name="angle left" />, icon: true }}
                 nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={500}
+                totalPages={moviesPreview.totalPages < 500 ? moviesPreview.totalPages : 500}
                 onPageChange={onChangePage}
                 inverted
               />
@@ -169,4 +165,4 @@ function TvShows() {
   );
 }
 
-export default TvShows;
+export default TvShowsPopular;
