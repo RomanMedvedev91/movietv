@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-closing-bracket-location */
@@ -5,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router-dom';
 
-import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card } from 'semantic-ui-react';
+import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card, Popup } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 import * as route from '../../constants/routes';
 
@@ -31,6 +32,13 @@ import {
   MovieDataTable,
   HeaderGradient
 } from '../Movie/Movie.style';
+
+import {
+  TvShowCreaterStyleLink,
+  CreatorsTableStyle,
+  TvshowsNetworks,
+  TvShowsLinksStyle
+} from './TvShow.style';
 
 import TrailerCard from '../../components/MovieCard/TrailerCard';
 
@@ -206,7 +214,7 @@ function TvShow() {
               <img src={`${TMDB_POSTER_PATH + movieDetails.poster_path}`} alt="poster" />
             </PosterContainer>
             <MovieDataContainer>
-              <h2>{movieDetails.title}</h2>
+              <h2>{movieDetails.name}</h2>
               <p>
                 <span>{getReleaseDateAndCountry(movieDetails)}</span>
                 <span>{getGenres(movieDetails)}</span>
@@ -238,12 +246,11 @@ function TvShow() {
               </MovieDataTable> */}
 
               <MovieDataTable>
-                {movieDetails.created_by.map((person) => (
-                  <div key={person.id}>
-                    <span>{person?.name}</span>
-                    <span>Creator</span>
-                  </div>
-                ))}
+                <div>
+                  <span>Type</span>
+                  <span>{movieDetails.type}</span>
+                </div>
+
                 <div>
                   <span>Status</span>
                   <span>{movieDetails.status}</span>
@@ -253,12 +260,47 @@ function TvShow() {
                   <span>Original language</span>
                   <span>{getOriginalLanguage()}</span>
                 </div>
+                <TvshowsNetworks>
+                  <span>{movieDetails.networks.length > 1 ? 'Networks' : 'Network'}</span>
+                  <div>
+                    {movieDetails.networks.map((network) => (
+                      <span key={network.id}>
+                        <img src={`${TMDB_POSTER_BASE + network.logo_path}`} alt="networks logo" />
+                      </span>
+                    ))}
+                  </div>
+                </TvshowsNetworks>
               </MovieDataTable>
 
-              <Button primary onClick={playTrailer}>
-                <Icon name="play" />
-                Play Trailer
-              </Button>
+              {movieDetails.created_by[0] && (
+                <CreatorsTableStyle>
+                  {movieDetails.created_by.map((person) => (
+                    <div key={person.id}>
+                      <TvShowCreaterStyleLink to={`/person/${person.id}`}>
+                        {person?.name}
+                      </TvShowCreaterStyleLink>
+                      <span>Creator</span>
+                    </div>
+                  ))}
+                </CreatorsTableStyle>
+              )}
+
+              <TvShowsLinksStyle>
+                <Button primary onClick={playTrailer}>
+                  <Icon name="play" />
+                  Play Trailer
+                </Button>
+                <div>
+                  {movieDetails.homepage && (
+                    <a href={movieDetails.homepage} target="_blank" rel="noreferrer">
+                      <Popup
+                        content="Visit Homepage"
+                        trigger={<Icon name="linkify" size="large" />}
+                      />
+                    </a>
+                  )}
+                </div>
+              </TvShowsLinksStyle>
             </MovieDataContainer>
             {currentTrailer && (
               <Modal
