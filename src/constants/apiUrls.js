@@ -68,6 +68,9 @@ export const getRecommendationsTvShows = (movieId) =>
 export const getTvShowCredits = (movieId) =>
   `https://api.themoviedb.org/3/tv/${movieId}/credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
+export const getTvSeasonDetails = (movieId, seasonNum) =>
+  `https://api.themoviedb.org/3/tv/${movieId}/season/${seasonNum}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+
 // ========= PERSON =============
 
 export const getPersonDetails = (personId) =>
