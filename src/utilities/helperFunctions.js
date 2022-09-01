@@ -40,5 +40,7 @@ export const runTime = (movieDetails) => {
   const hours = Math.floor(timeInMinus / 60);
   const minutes = Math.floor(timeInMinus % 60);
 
+  if (hours === 0 && minutes > 0) return `${minutes}m`;
+  if (hours > 0 && minutes === 0) return `${hours}h`;
   return `${hours}h ${minutes}m`;
 };
