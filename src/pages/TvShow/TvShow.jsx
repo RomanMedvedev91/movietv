@@ -4,9 +4,20 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 /* eslint-disable implicit-arrow-linebreak */
 import { useState, useEffect } from 'react';
-import { Outlet, useParams, useNavigate } from 'react-router-dom';
+import { Outlet, useParams, useNavigate, Link } from 'react-router-dom';
 
-import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card, Popup } from 'semantic-ui-react';
+import {
+  Button,
+  Icon,
+  Modal,
+  Embed,
+  Loader,
+  Dimmer,
+  Tab,
+  Card,
+  Popup,
+  Item
+} from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 import * as route from '../../constants/routes';
 
@@ -16,8 +27,10 @@ import {
   TMDB_POSTER_PATH,
   TMDB_BACKDROP_PATH,
   getTvShowCredits,
-  getRecommendationsTvShows
+  getRecommendationsTvShows,
+  getTvSeasonDetails
 } from '../../constants/apiUrls';
+
 import getData from '../../utilities/getData';
 
 import {
@@ -37,7 +50,8 @@ import {
   TvShowCreaterStyleLink,
   CreatorsTableStyle,
   TvshowsNetworks,
-  TvShowsLinksStyle
+  TvShowsLinksStyle,
+  LastSeasonContainerStyle
 } from './TvShow.style';
 
 import TrailerCard from '../../components/MovieCard/TrailerCard';
@@ -50,6 +64,7 @@ function TvShow() {
   const [currentTrailer, setCurrentTrailer] = useState(null);
   const [movieCredits, setMovieSetCredits] = useState(null);
   const [recommendationsMovies, setrecommendationsMovies] = useState(null);
+  const [seasonDetails, setSeasonDetails] = useState(null);
   const [open, setOpen] = useState(false);
   const { tvShowId } = useParams();
   const navigate = useNavigate();
@@ -68,6 +83,14 @@ function TvShow() {
       setMovieDetails(resMovieDetail);
       setMovieSetCredits(resMovieCredit);
       setrecommendationsMovies(resrecommendationsMovies.results);
+
+      const seasonDetailUrl = getTvSeasonDetails(
+        tvShowId,
+        resMovieDetail?.last_episode_to_air.episode_number
+      );
+      const seasonDetailsRes = await getData(seasonDetailUrl);
+
+      setSeasonDetails(seasonDetailsRes);
 
       setTimeout(() => {
         setIsLoading(false);
@@ -220,7 +243,10 @@ function TvShow() {
                 <span>{getGenres(movieDetails)}</span>
                 <span>{runTime(movieDetails)}</span>
               </p>
-              <h5 style={{ fontStyle: 'italic' }}>{movieDetails.tagline}</h5>
+              {movieDetails.tagline && (
+                <h5 style={{ fontStyle: 'italic' }}>{movieDetails.tagline}</h5>
+              )}
+
               <p>{movieDetails.overview}</p>
 
               {/* <MovieDataTable>
@@ -348,6 +374,41 @@ function TvShow() {
               ))}
             </CardCarousel>
           </CastContainer>
+
+          {seasonDetails && (
+            <LastSeasonContainerStyle>
+              {console.log(seasonDetails)}
+              <h2>Last Season</h2>
+              <Item.Group>
+                <Item>
+                  <Item.Image
+                    size="small"
+                    src={
+                      seasonDetails.poster_path
+                        ? `${TMDB_POSTER_PATH + seasonDetails.poster_path}`
+                        : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                    }
+                  />
+                  <Item.Content>
+                    <Item.Header>
+                      <Link to={`/tv/${tvShowId}/season/${seasonDetails.id}`}>
+                        {seasonDetails.name}
+                      </Link>
+                    </Item.Header>
+                    <Item.Meta>
+                      <span>{seasonDetails.air_date.slice(0, 4)}</span>
+                      <span>{` | ${movieDetails.last_episode_to_air.episode_number} Episodes`}</span>
+                    </Item.Meta>
+                    <Item.Description>{seasonDetails.overview}</Item.Description>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+              <Link to={`/tv/${tvShowId}/seasons`}>
+                View All Seasons
+                <Icon name="angle right" size="small" />
+              </Link>
+            </LastSeasonContainerStyle>
+          )}
 
           <MediaContainer>
             <h2>Media details</h2>
