@@ -22,23 +22,18 @@ import {
   StyledFilterContainer
 } from './Movies.style';
 
-const currentYear = new Date().getFullYear();
-const filterYear = new Array(currentYear - 1899)
-  .fill({})
-  .map((obj, indx) => ({ key: indx + 1, text: currentYear - indx, value: currentYear - indx }));
+import { filterYear } from '../../utilities/helperFunctions';
 
 function MoviesPopular() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [moviesPreview, setMoviespreview] = useState(null);
   const [activePage, setActivePage] = useState(1);
-
   const [filterTempState, setFilterTempState] = useState({
     sortBy: null,
-    genres: [],
+    genres: null,
     year: null
   });
-
   const [filterState, setFilterState] = useState(null);
 
   const navigate = useNavigate();
@@ -54,7 +49,7 @@ function MoviesPopular() {
         : getMovieFilterUrl(filterState, activePage);
 
       const res = await getData(movieUrl);
-      setMoviespreview(res.results);
+      setMoviespreview(res);
 
       setTimeout(() => {
         setIsLoading(false);
@@ -86,13 +81,12 @@ function MoviesPopular() {
                 clearable
                 options={filterSortBy}
                 selection
-                placeholder="Select Filter"
+                placeholder="Sort By"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'sortBy')}
               />
               <Dropdown
                 options={filterMovieGenres}
                 selection
-                multiple
                 placeholder="Genres"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'genres')}
               />
@@ -108,7 +102,7 @@ function MoviesPopular() {
               <Button
                 content="Filter"
                 disabled={
-                  !filterTempState.sortBy && !filterTempState.genres[0] && !filterTempState.year
+                  !filterTempState.sortBy && !filterTempState.genres && !filterTempState.year
                 }
                 primary
                 onClick={setNewFilter}
@@ -116,7 +110,7 @@ function MoviesPopular() {
             </StyledFilterContainer>
 
             <Card.Group itemsPerRow={5}>
-              {moviesPreview.map((movie) => (
+              {moviesPreview.results.map((movie) => (
                 <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
                   {isLoading ? (
                     <Placeholder inverted style={{ height: 300, width: 200 }}>
@@ -159,7 +153,7 @@ function MoviesPopular() {
                 lastItem={{ content: <Icon name="angle double right" />, icon: true }}
                 prevItem={{ content: <Icon name="angle left" />, icon: true }}
                 nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={500}
+                totalPages={moviesPreview.total_pages < 500 ? moviesPreview.total_pages : 500}
                 onPageChange={onChangePage}
                 inverted
               />

@@ -20,7 +20,7 @@ https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_OPENAI
 
 export const getMovieFilterUrl = (state, page = 1) => {
   const sortBy = state.sortBy ? `&sort_by=${state.sortBy}` : '';
-  const genres = state.genres ? `&with_genres=${state.genres.join(',')}` : '';
+  const genres = state.genres ? `&with_genres=${state.genres}` : '';
   const year = state.year ? `&primary_release_year=${state.year}` : '';
   return `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}${sortBy}${year}${genres}&with_watch_monetization_types=flatrate`;
 };
