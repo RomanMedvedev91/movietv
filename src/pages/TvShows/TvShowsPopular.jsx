@@ -20,7 +20,7 @@ import {
   StyledMoviesList,
   StyledPaginationWrapper,
   StyledFilterContainer
-} from '../MoviesPreview/moviesPreview.style';
+} from '../Movies/Movies.style';
 
 import { filterYear } from '../../utilities/helperFunctions';
 
@@ -86,8 +86,8 @@ function TvShowsPopular() {
               />
               <Dropdown
                 options={filterTvShowsGenres}
-                clearable
                 selection
+                clearable
                 placeholder="Genres"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'genres')}
               />
@@ -154,7 +154,7 @@ function TvShowsPopular() {
                 lastItem={{ content: <Icon name="angle double right" />, icon: true }}
                 prevItem={{ content: <Icon name="angle left" />, icon: true }}
                 nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={moviesPreview.totalPages < 500 ? moviesPreview.totalPages : 500}
+                totalPages={moviesPreview.total_pages < 500 ? moviesPreview.total_pages : 500}
                 onPageChange={onChangePage}
                 inverted
               />

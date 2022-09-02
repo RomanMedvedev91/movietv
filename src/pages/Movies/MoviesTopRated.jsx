@@ -8,10 +8,10 @@ import { Icon, Pagination, Card, Dropdown, Button, Placeholder, Image } from 'se
 import getData from '../../utilities/getData';
 
 import {
-  onTheAirTvUrl,
+  topRatedMovieUrl,
   TMDB_POSTER_PATH,
-  getTvShowsFilterUrl,
-  filterTvShowsGenres,
+  getMovieFilterUrl,
+  filterMovieGenres,
   filterSortBy
 } from '../../constants/apiUrls';
 
@@ -20,11 +20,11 @@ import {
   StyledMoviesList,
   StyledPaginationWrapper,
   StyledFilterContainer
-} from '../Movies/Movies.style';
+} from './Movies.style';
 
 import { filterYear } from '../../utilities/helperFunctions';
 
-function TvShowsPopular() {
+function MoviesTopRated() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [moviesPreview, setMoviespreview] = useState(null);
@@ -45,8 +45,8 @@ function TvShowsPopular() {
     const loadMovies = async () => {
       setIsLoading(true);
       const movieUrl = !filterState
-        ? onTheAirTvUrl(activePage)
-        : getTvShowsFilterUrl(filterState, activePage);
+        ? topRatedMovieUrl(activePage)
+        : getMovieFilterUrl(filterState, activePage);
 
       const res = await getData(movieUrl);
       setMoviespreview(res);
@@ -75,7 +75,7 @@ function TvShowsPopular() {
       <StyledMoviesList>
         {moviesPreview && (
           <>
-            <h1>Currently Airing TV Shows</h1>
+            <h1>Top Rated Movies</h1>
             <StyledFilterContainer>
               <Dropdown
                 clearable
@@ -85,7 +85,7 @@ function TvShowsPopular() {
                 onChange={(e, obj) => sortHandleChange(e, obj, 'sortBy')}
               />
               <Dropdown
-                options={filterTvShowsGenres}
+                options={filterMovieGenres}
                 selection
                 clearable
                 placeholder="Genres"
@@ -112,7 +112,7 @@ function TvShowsPopular() {
 
             <Card.Group itemsPerRow={5}>
               {moviesPreview.results.map((movie) => (
-                <Card key={movie.id} onClick={() => cardHandleClick('tv', movie.id)}>
+                <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
                   {isLoading ? (
                     <Placeholder inverted style={{ height: 300, width: 200 }}>
                       <Placeholder.Image rectangular />
@@ -138,8 +138,8 @@ function TvShowsPopular() {
                       </Placeholder>
                     ) : (
                       <>
-                        <Card.Header>{movie.name}</Card.Header>
-                        <Card.Meta>{movie.first_air_date}</Card.Meta>
+                        <Card.Header>{movie.title}</Card.Header>
+                        <Card.Meta>{movie.release_date}</Card.Meta>
                       </>
                     )}
                   </Card.Content>
@@ -166,4 +166,4 @@ function TvShowsPopular() {
   );
 }
 
-export default TvShowsPopular;
+export default MoviesTopRated;
