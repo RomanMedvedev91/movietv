@@ -8,6 +8,9 @@ export const TOP_RATED = 'top-rated';
 export const AIRING_TODAY = 'airing-today';
 export const ON_TV = 'on-the-air';
 export const TVSHOW_ID = ':tvShowId';
+export const TVSHOW_SEASONS = 'seasons';
+export const TVSHOW_SEASON = 'season';
+export const TVSHOW_SEASON_ID = ':seasonId';
 
 export const VIEW_TVSHOWS = '/tv';
 export const VIEW_TVSHOWS_TOP_RATED = '/tv/top-rated';
@@ -18,3 +21,6 @@ export const PERSON = '/person/:personId';
 // export const MOVIE_DETAILS = '/:category/:movieId';
 export const SEARCH = '/search/:query';
 // export const SEARCH = '/search/*';
+
+// /tv/tvshowsID/season/seasonId
+// /tv/tvshowsID/seasons
