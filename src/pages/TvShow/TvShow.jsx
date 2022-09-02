@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable operator-linebreak */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable object-curly-newline */
@@ -35,7 +36,6 @@ import getData from '../../utilities/getData';
 
 import {
   MovieContainer,
-  MovieDetail,
   BackgroundImage,
   CastContainer,
   MediaContainer,
@@ -47,6 +47,8 @@ import {
 } from '../Movie/Movie.style';
 
 import {
+  MovieDetailWrapperStyle,
+  MovieDetail,
   TvShowCreaterStyleLink,
   CreatorsTableStyle,
   TvshowsNetworks,
@@ -56,7 +58,12 @@ import {
 
 import TrailerCard from '../../components/MovieCard/TrailerCard';
 
-import { getGenres, getReleaseDateAndCountry, runTime } from '../../utilities/helperFunctions';
+import {
+  getGenres,
+  getReleaseDateAndCountry,
+  runTime,
+  getDateHumanReadble
+} from '../../utilities/helperFunctions';
 
 function TvShow() {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +73,8 @@ function TvShow() {
   const [recommendationsMovies, setrecommendationsMovies] = useState(null);
   const [seasonDetails, setSeasonDetails] = useState(null);
   const [open, setOpen] = useState(false);
+  const [showMoreBio, setShowMoreBio] = useState(false);
+
   const { tvShowId } = useParams();
   const navigate = useNavigate();
 
@@ -86,7 +95,7 @@ function TvShow() {
 
       const seasonDetailUrl = getTvSeasonDetails(
         tvShowId,
-        resMovieDetail?.last_episode_to_air.episode_number
+        resMovieDetail?.last_episode_to_air?.season_number
       );
       const seasonDetailsRes = await getData(seasonDetailUrl);
 
@@ -99,10 +108,12 @@ function TvShow() {
     loadMovie();
   }, [tvShowId]);
 
-  // const formatMoneyToCurrenct = (amount) =>
-  //   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
-  // regex
-  // `$ ${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+  const getPersonBiography = () => {
+    const length = movieDetails.overview.length / 2;
+    return showMoreBio
+      ? movieDetails.overview
+      : `${movieDetails.overview.substring(0, length)} . . . `;
+  };
 
   const playTrailer = () => {
     const trailer = movieDetails.videos.results.find((video) => {
@@ -233,9 +244,29 @@ function TvShow() {
             <BackgroundImage>
               <img src={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`} alt="mainBackground" />
             </BackgroundImage>
-            <PosterContainer>
-              <img src={`${TMDB_POSTER_PATH + movieDetails.poster_path}`} alt="poster" />
-            </PosterContainer>
+
+            <MovieDetailWrapperStyle>
+              <PosterContainer>
+                <img src={`${TMDB_POSTER_PATH + movieDetails.poster_path}`} alt="poster" />
+              </PosterContainer>
+              <TvShowsLinksStyle>
+                <Button primary onClick={playTrailer}>
+                  <Icon name="play" />
+                  Play Trailer
+                </Button>
+                <div>
+                  {movieDetails.homepage && (
+                    <a href={movieDetails.homepage} target="_blank" rel="noreferrer">
+                      <Popup
+                        content="Visit Homepage"
+                        trigger={<Icon name="linkify" size="large" />}
+                      />
+                    </a>
+                  )}
+                </div>
+              </TvShowsLinksStyle>
+            </MovieDetailWrapperStyle>
+
             <MovieDataContainer>
               <h2>{movieDetails.name}</h2>
               <p>
@@ -243,33 +274,16 @@ function TvShow() {
                 <span>{getGenres(movieDetails)}</span>
                 <span>{runTime(movieDetails)}</span>
               </p>
-              {movieDetails.tagline && (
-                <h5 style={{ fontStyle: 'italic' }}>{movieDetails.tagline}</h5>
-              )}
+              {movieDetails.tagline && <h5 className="tvshow-tagline">{movieDetails.tagline}</h5>}
 
-              <p>{movieDetails.overview}</p>
+              {/* <p>{movieDetails.overview}</p> */}
 
-              {/* <MovieDataTable>
-                <div>
-                  <span>Status</span>
-                  <span>{movieDetails.status}</span>
-                </div>
-
-                <div>
-                  <span>Original language</span>
-                  <span>{getOriginalLanguage()}</span>
-                </div>
-
-                <div>
-                  <span>Budget</span>
-                  <span>{formatMoneyToCurrenct(movieDetails.budget)}</span>
-                </div>
-
-                <div>
-                  <span>Revenue</span>
-                  <span>{formatMoneyToCurrenct(movieDetails.revenue)}</span>
-                </div>
-              </MovieDataTable> */}
+              <p>
+                {getPersonBiography()}
+                <Button className="show-more" onClick={() => setShowMoreBio(!showMoreBio)}>
+                  {showMoreBio ? 'Show less' : 'Show more'}
+                </Button>
+              </p>
 
               <MovieDataTable>
                 <div>
@@ -310,43 +324,8 @@ function TvShow() {
                   ))}
                 </CreatorsTableStyle>
               )}
-
-              <TvShowsLinksStyle>
-                <Button primary onClick={playTrailer}>
-                  <Icon name="play" />
-                  Play Trailer
-                </Button>
-                <div>
-                  {movieDetails.homepage && (
-                    <a href={movieDetails.homepage} target="_blank" rel="noreferrer">
-                      <Popup
-                        content="Visit Homepage"
-                        trigger={<Icon name="linkify" size="large" />}
-                      />
-                    </a>
-                  )}
-                </div>
-              </TvShowsLinksStyle>
             </MovieDataContainer>
-            {currentTrailer && (
-              <Modal
-                onClose={() => setOpen(false)}
-                onOpen={() => setOpen(true)}
-                open={open}
-                closeIcon>
-                <Modal.Header className="modal-header">
-                  <Modal.Content>{movieDetails.title}</Modal.Content>
-                </Modal.Header>
 
-                <Embed
-                  active
-                  brandedUI
-                  id={currentTrailer.key}
-                  source="youtube"
-                  // placeholder={`https://image.tmdb.org/t/p/w500/${movieDetails.backdrop_path}`}
-                />
-              </Modal>
-            )}
             <HeaderGradient />
           </MovieDetail>
 
@@ -368,7 +347,7 @@ function TvShow() {
                       : 'https://react.semantic-ui.com/images/wireframe/image.png'
                   }
                   header={person.name}
-                  meta={person.character}
+                  meta={person.roles.map((el) => el.character).join(', ')}
                   onClick={() => cardHandleClick('person', person.id)}
                 />
               ))}
@@ -378,7 +357,8 @@ function TvShow() {
           {seasonDetails && (
             <LastSeasonContainerStyle>
               {console.log(seasonDetails)}
-              <h2>Last Season</h2>
+              {movieDetails.in_production ? <h2>Current Season</h2> : <h2>Last Season</h2>}
+
               <Item.Group>
                 <Item>
                   <Item.Image
@@ -397,9 +377,15 @@ function TvShow() {
                     </Item.Header>
                     <Item.Meta>
                       <span>{seasonDetails.air_date.slice(0, 4)}</span>
-                      <span>{` | ${movieDetails.last_episode_to_air.episode_number} Episodes`}</span>
+                      <span>{` | ${seasonDetails.episodes.length} Episodes`}</span>
                     </Item.Meta>
-                    <Item.Description>{seasonDetails.overview}</Item.Description>
+                    <Item.Description>
+                      {seasonDetails.overview
+                        ? seasonDetails.overview
+                        : `Season ${movieDetails.last_episode_to_air.season_number} of ${
+                            movieDetails.name
+                          } premiered on ${getDateHumanReadble(seasonDetails.air_date)}`}
+                    </Item.Description>
                   </Item.Content>
                 </Item>
               </Item.Group>
@@ -418,7 +404,7 @@ function TvShow() {
           <RecommendedContainer>
             <CardCarousel
               title
-              titleHeader="Recomended movies"
+              titleHeader="Recomended TV Shows"
               titleLink={`${route.MOVIES}`}
               visibleSlides={3}
               totalSlides={recommendationsMovies.length > 10 ? 10 : recommendationsMovies.length}
@@ -432,14 +418,29 @@ function TvShow() {
                       ? `${TMDB_BACKDROP_PATH + movie.backdrop_path}`
                       : 'https://react.semantic-ui.com/images/wireframe/image.png'
                   }
-                  header={movie.title}
-                  meta={movie.release_date}
+                  header={movie.name}
+                  meta={movie.first_air_date}
                   onClick={() => cardHandleClick(movie.media_type, movie.id)}
                 />
               ))}
             </CardCarousel>
           </RecommendedContainer>
         </MovieContainer>
+      )}
+      {currentTrailer && (
+        <Modal onClose={() => setOpen(false)} onOpen={() => setOpen(true)} open={open} closeIcon>
+          <Modal.Header className="modal-header">
+            <Modal.Content>{movieDetails.title}</Modal.Content>
+          </Modal.Header>
+
+          <Embed
+            active
+            brandedUI
+            id={currentTrailer.key}
+            source="youtube"
+            // placeholder={`https://image.tmdb.org/t/p/w500/${movieDetails.backdrop_path}`}
+          />
+        </Modal>
       )}
       <Outlet />
     </>

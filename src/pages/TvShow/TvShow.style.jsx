@@ -1,6 +1,33 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+export const MovieDetail = styled.section`
+  width: 100%;
+  // img background full height
+  /* height: 100vh; */
+  display: flex;
+  justify-content: space-between;
+  /* flex-direction: column; */
+  margin-top: 4.8em;
+
+  .ui.button.show-more {
+    padding: 0;
+    margin-left: 1.2em;
+    background: none;
+    font-weight: 800;
+    color: #3c64b1;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+`;
+
+export const MovieDetailWrapperStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const CreatorsTableStyle = styled.div`
   display: flex;
   justify-content: start;
@@ -16,7 +43,7 @@ export const CreatorsTableStyle = styled.div`
 
 export const TvshowsNetworks = styled.div`
   span {
-    /* text-align: center; */
+    width: 100%;
   }
   span > img {
     max-width: 3em;
@@ -48,9 +75,13 @@ export const TvShowsLinksStyle = styled.div`
   display: flex;
   align-items: center;
   gap: 2em;
+  margin-top: 2em;
 `;
 
 export const LastSeasonContainerStyle = styled.section`
+  padding-bottom: 4em;
+  /* border-bottom: 1px solid #d7d7d7; */
+
   margin-top: 4em;
   h2 {
     margin-bottom: 2em;
