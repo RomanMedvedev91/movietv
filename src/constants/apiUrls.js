@@ -66,7 +66,7 @@ export const getRecommendationsTvShows = (movieId) =>
   `https://api.themoviedb.org/3/tv/${movieId}/recommendations?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
 export const getTvShowCredits = (movieId) =>
-  `https://api.themoviedb.org/3/tv/${movieId}/credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
+  `https://api.themoviedb.org/3/tv/${movieId}/aggregate_credits?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
 
 export const getTvSeasonDetails = (movieId, seasonNum) =>
   `https://api.themoviedb.org/3/tv/${movieId}/season/${seasonNum}?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US`;
