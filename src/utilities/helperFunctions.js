@@ -44,3 +44,15 @@ export const runTime = (movieDetails) => {
   if (hours > 0 && minutes === 0) return `${hours}h`;
   return `${hours}h ${minutes}m`;
 };
+
+export const getDateHumanReadble = (date) => {
+  const dateObject = new Date(Date.parse(date));
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC'
+  };
+
+  return dateObject.toLocaleDateString('en-US', options);
+};
