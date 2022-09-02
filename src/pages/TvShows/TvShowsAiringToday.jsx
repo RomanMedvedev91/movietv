@@ -20,7 +20,7 @@ import {
   StyledMoviesList,
   StyledPaginationWrapper,
   StyledFilterContainer
-} from '../MoviesPreview/moviesPreview.style';
+} from '../Movies/Movies.style';
 
 import { filterYear } from '../../utilities/helperFunctions';
 

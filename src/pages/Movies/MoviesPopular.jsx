@@ -20,14 +20,14 @@ import {
   StyledMoviesList,
   StyledPaginationWrapper,
   StyledFilterContainer
-} from './moviesPreview.style';
+} from './Movies.style';
 
 const currentYear = new Date().getFullYear();
 const filterYear = new Array(currentYear - 1899)
   .fill({})
   .map((obj, indx) => ({ key: indx + 1, text: currentYear - indx, value: currentYear - indx }));
 
-function MoviesPreview() {
+function MoviesPopular() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [moviesPreview, setMoviespreview] = useState(null);
@@ -171,4 +171,4 @@ function MoviesPreview() {
   );
 }
 
-export default MoviesPreview;
+export default MoviesPopular;

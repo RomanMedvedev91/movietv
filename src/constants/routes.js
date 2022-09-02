@@ -1,12 +1,16 @@
 export const HOME = '/';
 export const MOVIES = '/movie/*';
-export const VIEW_MOVIES = '/movie';
-export const UPCOMING = 'upcoming';
+export const MOVIE_ID = ':movieId';
 
-export const TVSHOWS = 'tv/*';
+export const VIEW_MOVIES = '/movie';
+
+export const NOW_PLAYING = 'now-playing';
+export const UPCOMING = 'upcoming';
 export const TOP_RATED = 'top-rated';
 export const AIRING_TODAY = 'airing-today';
 export const ON_TV = 'on-the-air';
+
+export const TVSHOWS = 'tv/*';
 export const TVSHOW_ID = ':tvShowId';
 export const TVSHOW_SEASONS = 'seasons';
 export const TVSHOW_SEASON = 'season';
