@@ -8,10 +8,10 @@ import { Icon, Pagination, Card, Dropdown, Button, Placeholder, Image } from 'se
 import getData from '../../utilities/getData';
 
 import {
-  popularMovieUrl,
+  onTheAirTvUrl,
   TMDB_POSTER_PATH,
-  getMovieFilterUrl,
-  filterMovieGenres,
+  getTvShowsFilterUrl,
+  filterTvShowsGenres,
   filterSortBy
 } from '../../constants/apiUrls';
 
@@ -20,25 +20,20 @@ import {
   StyledMoviesList,
   StyledPaginationWrapper,
   StyledFilterContainer
-} from './moviesPreview.style';
+} from '../MoviesPreview/moviesPreview.style';
 
-const currentYear = new Date().getFullYear();
-const filterYear = new Array(currentYear - 1899)
-  .fill({})
-  .map((obj, indx) => ({ key: indx + 1, text: currentYear - indx, value: currentYear - indx }));
+import { filterYear } from '../../utilities/helperFunctions';
 
-function MoviesPreview() {
+function TvShowsPopular() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [moviesPreview, setMoviespreview] = useState(null);
   const [activePage, setActivePage] = useState(1);
-
   const [filterTempState, setFilterTempState] = useState({
     sortBy: null,
-    genres: [],
+    genres: null,
     year: null
   });
-
   const [filterState, setFilterState] = useState(null);
 
   const navigate = useNavigate();
@@ -50,11 +45,11 @@ function MoviesPreview() {
     const loadMovies = async () => {
       setIsLoading(true);
       const movieUrl = !filterState
-        ? popularMovieUrl(activePage)
-        : getMovieFilterUrl(filterState, activePage);
+        ? onTheAirTvUrl(activePage)
+        : getTvShowsFilterUrl(filterState, activePage);
 
       const res = await getData(movieUrl);
-      setMoviespreview(res.results);
+      setMoviespreview(res);
 
       setTimeout(() => {
         setIsLoading(false);
@@ -80,19 +75,19 @@ function MoviesPreview() {
       <StyledMoviesList>
         {moviesPreview && (
           <>
-            <h1>Popular Movies</h1>
+            <h1>Currently Airing TV Shows</h1>
             <StyledFilterContainer>
               <Dropdown
                 clearable
                 options={filterSortBy}
                 selection
-                placeholder="Select Filter"
+                placeholder="Sort By"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'sortBy')}
               />
               <Dropdown
-                options={filterMovieGenres}
+                options={filterTvShowsGenres}
+                clearable
                 selection
-                multiple
                 placeholder="Genres"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'genres')}
               />
@@ -108,7 +103,7 @@ function MoviesPreview() {
               <Button
                 content="Filter"
                 disabled={
-                  !filterTempState.sortBy && !filterTempState.genres[0] && !filterTempState.year
+                  !filterTempState.sortBy && !filterTempState.genres && !filterTempState.year
                 }
                 primary
                 onClick={setNewFilter}
@@ -116,8 +111,8 @@ function MoviesPreview() {
             </StyledFilterContainer>
 
             <Card.Group itemsPerRow={5}>
-              {moviesPreview.map((movie) => (
-                <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+              {moviesPreview.results.map((movie) => (
+                <Card key={movie.id} onClick={() => cardHandleClick('tv', movie.id)}>
                   {isLoading ? (
                     <Placeholder inverted style={{ height: 300, width: 200 }}>
                       <Placeholder.Image rectangular />
@@ -143,8 +138,8 @@ function MoviesPreview() {
                       </Placeholder>
                     ) : (
                       <>
-                        <Card.Header>{movie.title}</Card.Header>
-                        <Card.Meta>{movie.release_date}</Card.Meta>
+                        <Card.Header>{movie.name}</Card.Header>
+                        <Card.Meta>{movie.first_air_date}</Card.Meta>
                       </>
                     )}
                   </Card.Content>
@@ -159,7 +154,7 @@ function MoviesPreview() {
                 lastItem={{ content: <Icon name="angle double right" />, icon: true }}
                 prevItem={{ content: <Icon name="angle left" />, icon: true }}
                 nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={500}
+                totalPages={moviesPreview.totalPages < 500 ? moviesPreview.totalPages : 500}
                 onPageChange={onChangePage}
                 inverted
               />
@@ -171,4 +166,4 @@ function MoviesPreview() {
   );
 }
 
-export default MoviesPreview;
+export default TvShowsPopular;

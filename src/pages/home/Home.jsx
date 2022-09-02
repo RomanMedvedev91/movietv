@@ -21,6 +21,7 @@ import {
   nowPlayingMovieUrl,
   upcommingMovieUrl,
   videoUrl,
+  popularTvUrl,
   TMDB_POSTER_PATH,
   tmdbPosterPath
 } from '../../constants/apiUrls';
@@ -42,6 +43,7 @@ function Homepage() {
   const [nowPlayingMovies, setnowPlayingMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [upcomingdMovies, setUpcomingMovies] = useState([]);
+  const [popularTvShoes, setPopularTvShoes] = useState(null);
   const [open, setOpen] = useState(false);
   const [currentTrailer, setCurrentTrailer] = useState();
 
@@ -50,10 +52,11 @@ function Homepage() {
   useEffect(() => {
     const renderMainMovieCards = async () => {
       setIsLoading(true);
-      const popularMoviesResult = await getData(popularMovieUrl);
-      const topRateMoviesResult = await getData(topRatedMovieUrl);
-      const playingNowMoviesResult = await getData(nowPlayingMovieUrl);
-      const upcomingMoviesResult = await getData(upcommingMovieUrl);
+      const popularMoviesResult = await getData(popularMovieUrl());
+      const topRateMoviesResult = await getData(topRatedMovieUrl());
+      const playingNowMoviesResult = await getData(nowPlayingMovieUrl());
+      const upcomingMoviesResult = await getData(upcommingMovieUrl());
+      const popularTvShoesResult = await getData(popularTvUrl());
 
       const upcomingMoviesWithTrailer = await Promise.all(
         upcomingMoviesResult.results.map(async (movie) => {
@@ -69,6 +72,7 @@ function Homepage() {
       setTopRatedMovies(topRateMoviesResult.results);
       setnowPlayingMovies(playingNowMoviesResult.results);
       setUpcomingMovies(upcomingMoviesWithTrailer);
+      setPopularTvShoes(popularTvShoesResult.results);
 
       setIsLoading(false);
     };
@@ -113,11 +117,33 @@ function Homepage() {
           <Card.Group itemsPerRow={5}>{renderMovieCards(popularMovies)}</Card.Group>
         )}
       </PopularMoviesContainer>
+      {console.log('popularTvShoes', popularTvShoes)}
+      {popularTvShoes && (
+        <CardCarousel
+          title
+          titleHeader="Popular TV Shoes"
+          titleLink={`${route.TVSHOWS}`}
+          totalSlides={topRatedMovies.length}>
+          {popularTvShoes.map((movie) => (
+            <Card
+              key={movie.id}
+              image={
+                movie.backdrop_path
+                  ? `${TMDB_POSTER_PATH + movie.poster_path}`
+                  : 'https://react.semantic-ui.com/images/wireframe/image.png'
+              }
+              header={movie.name}
+              meta={movie.first_air_date}
+              onClick={() => cardHandleClick('tv', movie.id)}
+            />
+          ))}
+        </CardCarousel>
+      )}
 
       {topRatedMovies && (
         <CardCarousel
           title
-          titleHeader="Top Rated"
+          titleHeader="Top Rated Movies"
           titleLink={`${route.MOVIES}`}
           totalSlides={topRatedMovies.length}>
           {topRatedMovies.map((movie) => (
@@ -139,7 +165,7 @@ function Homepage() {
       {nowPlayingMovies && (
         <CardCarousel
           title
-          titleHeader="Playing now"
+          titleHeader="Playing now Movies"
           titleLink={`${route.MOVIES}`}
           totalSlides={nowPlayingMovies.length}>
           {nowPlayingMovies.map((movie) => (
@@ -158,13 +184,13 @@ function Homepage() {
         </CardCarousel>
       )}
 
-      {console.log('upcomingdMovies', upcomingdMovies)}
+      {console.log('upcomingMovies', upcomingdMovies)}
       {/* {console.log('upcomingTrailers', upcomingTrailers)} */}
 
       {upcomingdMovies && (
         <CardCarousel
           title
-          titleHeader="Upcoming Trailers"
+          titleHeader="Upcoming Movies Trailers"
           titleLink={`${route.MOVIES}`}
           totalSlides={upcomingdMovies.length}
           naturalSlideWidth={1}
