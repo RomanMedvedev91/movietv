@@ -87,6 +87,7 @@ function TvShowsPopular() {
               <Dropdown
                 options={filterTvShowsGenres}
                 selection
+                clearable
                 placeholder="Genres"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'genres')}
               />

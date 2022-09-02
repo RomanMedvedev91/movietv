@@ -87,6 +87,7 @@ function MoviesUpcoming() {
               <Dropdown
                 options={filterMovieGenres}
                 selection
+                clearable
                 placeholder="Genres"
                 onChange={(e, obj) => sortHandleChange(e, obj, 'genres')}
               />
