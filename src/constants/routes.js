@@ -23,7 +23,7 @@ export const VIEW_TVSHOWS_ON_TV = '/tv/on-the-air';
 
 export const PERSON = '/person/:personId';
 // export const MOVIE_DETAILS = '/:category/:movieId';
-export const SEARCH = '/search/:query';
+export const SEARCH = '/search';
 // export const SEARCH = '/search/*';
 
 // /tv/tvshowsID/season/seasonId

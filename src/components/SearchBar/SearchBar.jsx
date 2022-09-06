@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { Input, Form, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
+// import { useNavigate, useSearchParams } from 'react-router-dom';
 import { SearchContext } from '../../context/Search.context';
 
 import { SearchFormContainer, ButtonContainer } from './SearchBar.style';
@@ -8,17 +9,31 @@ import { SearchFormContainer, ButtonContainer } from './SearchBar.style';
 function SearchBar() {
   const [currentInput, setCurrentInput] = useState('');
   const { setCurrentSearch } = useContext(SearchContext);
+  // const [searchParams, setSearchParams] = useSearchParams({ search: null });
 
   const navigate = useNavigate();
 
   const onInputChangeHandle = (e) => {
     setCurrentInput(e.target.value);
+
+    // const search = e.target.value;
+    // if (search) {
+    //   setSearchParams({ search });
+    // } else {
+    //   setSearchParams({});
+    // }
+
+    // setSearchParams(search, { replace: true });
   };
 
   const search = () => {
     setCurrentSearch(currentInput);
     // link to search page
-    navigate(`/search/${currentInput}`);
+    navigate({
+      pathname: '/search',
+      search: `?query=${currentInput}` // inject code value into template
+    });
+    // navigate(`/search/${currentInput}`);
     // navigate(`/search?query=${currentInput}`);
   };
 
@@ -34,8 +49,10 @@ function SearchBar() {
           iconPosition="left"
           placeholder="Movie, artist, genre"
           value={currentInput}
-          onChange={(e) => onInputChangeHandle(e)}
+          // value={searchParams.get('search') || ''}
+          onChange={onInputChangeHandle}
         />
+        {/* {console.log(searchParams)} */}
         <ButtonContainer>
           <Button primary onSubmit={(e) => e.preventDefault()} onClick={search}>
             Search
