@@ -162,3 +162,34 @@ export const filterSortBy = [
 
 // filter by vote range
 // https://api.themoviedb.org/3/discover/movie?api_key=###&vote_average.gte=2.0&vote_average.lte=8.0
+
+// ==============================
+// const a = new URLSearchParams({
+//   movie: 'thor',
+//   tags: ['part 2', 'part 1']
+// });
+
+// console.log(a.toString());
+// const query = `?movie=${movie}&tags=${tags}`;
+
+// const buildUrl = ({ baseUrl, path, query }) => {
+//   let url = baseUrl + path;
+//   if (query) {
+//     url += '?' + (new URLSearchParams(query)).toString();
+//   }
+//   return url;
+// };
+
+// buildUrl({
+//   baseUrl: 'http://localhost:3000',
+//   path: '/movies'
+// });
+
+// buildUrl({
+//   baseUrl: 'http://localhost:3000',
+//   path: '/movies',
+//   query: {
+//     filter: 'popular',
+//     tags: ['foo 1', 'bar']
+//   }
+// });
