@@ -1,7 +1,106 @@
+/* eslint-disable no-async-promise-executor */
 /* eslint-disable implicit-arrow-linebreak */
 // eslint-disable-next-line import/prefer-default-export
-export const getSearchMovieUrl = (query) =>
-  `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&query=${query}&include_adult=false`;
+import axios from 'axios';
+
+const tmdb = 'https://api.themoviedb.org/3';
+const tmdbKey = process.env.REACT_APP_OPENAI_API_KEY;
+const params = {
+  api_key: tmdbKey,
+  language: 'en-US',
+  page: 1
+};
+
+export const pathList = {
+  search: {
+    multi: '/search/multi',
+    movie: 'search/movie',
+    tv: 'search/tv',
+    person: 'search/person'
+  },
+  movie: {
+    popular: '/movie/popular',
+    upcoming: 'movie/upcoming',
+    topRated: '/movie/top_rated',
+    nowPlaying: '/movie/now_playing',
+    movieDetails: (movieId) => `/movie/${movieId}`, // append_to_response=videos,images
+    recommendations: (movieId) => `/movie/${movieId}/recommendations`,
+    credits: (movieId) => `/movie/${movieId}/credits`
+  },
+  tv: {
+    popular: '/tv/popular',
+    onTheAir: '/tv/on_the_air',
+    topRated: '/tv/top_rated',
+    airingToday: '/tv/airing_today',
+    tvDetails: (tvShowId) => `/tv/${tvShowId}`, // append_to_response=videos,images
+    recommendations: (tvShowId) => `/tv/${tvShowId}/recommendations`,
+    aggregateCredits: (tvShowId) => `/tv/${tvShowId}/aggregate_credits`,
+    tvSeasons: {
+      tvSeasonDetails: (tvShowId, seasonNumber) => `/tv/${tvShowId}/season/${seasonNumber}`
+    }
+  },
+
+  person: {
+    popular: 'person/popular',
+    personDetails: (personId) => `/person/${personId}`,
+    combinedCredits: (personId) => `/person/${personId}/combined_credits`,
+    externalIds: (personId) => `/person/${personId}/external_ids`
+  },
+  discover: {
+    movie: '/discover/movie',
+    tv: '/discover/tv'
+  }
+};
+
+// pre build URL
+const buildUrl = ({ path, query }) => {
+  const baseUrl = tmdb;
+  const baseQuery = { ...params, ...query };
+  let url = baseUrl + path;
+
+  url += `?${new URLSearchParams(baseQuery).toString()}`;
+
+  return url;
+};
+
+export const getUrl = (path, query) => buildUrl({ path, query });
+
+// AXIOS variant pre build URL
+const axiosClient = axios.create({ baseURL: tmdb });
+axiosClient.interceptors.request.use((config) => {
+  const conf = config;
+  conf.baseURL = tmdb;
+  conf.method = 'GET';
+  conf.params = {
+    api_key: tmdbKey,
+    language: 'en-US',
+    ...config.params
+  };
+  return conf;
+});
+
+const httpRequest = (req) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const request = await axiosClient(req);
+      resolve(request);
+    } catch (e) {
+      reject(e?.response || {});
+    }
+  });
+
+export const getMultiSearch = (query, page = 1) =>
+  httpRequest({
+    url: '/search/multi',
+    params: {
+      page,
+      query: new URLSearchParams(query).toString()
+    }
+  });
+
+// ==== SEARCH ==== ////
+export const getSearchMovieUrl = (query, page = 1) =>
+  `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&query=${query}&page=${page}&include_adult=false`;
 
 // ========  MOVIES lists =======
 
@@ -17,8 +116,8 @@ https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_O
 export const upcommingMovieUrl = (page = 1) => `
 https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
-export const latestMovieUrl = (page = 1) => `
-https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
+// export const latestMovieUrl = (page = 1) => `
+// https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_OPENAI_API_KEY}&language=en-US&page=${page}`;
 
 export const getMovieFilterUrl = (state, page = 1) => {
   const sortBy = state.sortBy ? `&sort_by=${state.sortBy}` : '';
@@ -175,7 +274,7 @@ export const filterSortBy = [
 // const buildUrl = ({ baseUrl, path, query }) => {
 //   let url = baseUrl + path;
 //   if (query) {
-//     url += '?' + (new URLSearchParams(query)).toString();
+//     url += '?' + new URLSearchParams(query).toString();
 //   }
 //   return url;
 // };
