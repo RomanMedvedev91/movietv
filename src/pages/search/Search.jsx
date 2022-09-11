@@ -10,7 +10,13 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import { getDateHumanReadble } from '../../utilities/helperFunctions';
 import getData from '../../utilities/getData';
 
-import { getSearchMovieUrl, TMDB_POSTER_PATH } from '../../constants/apiUrls';
+import {
+  // getSearchMovieUrl,
+  TMDB_POSTER_PATH,
+  getMultiSearch,
+  getUrl,
+  pathList
+} from '../../constants/apiUrls';
 
 import { StyledSearchContainer, StyledSearchList, StyledPaginationWrapper } from './Search.style';
 
@@ -28,7 +34,10 @@ function Search() {
     const loadMovies = async () => {
       setIsLoading(true);
 
-      const searchUrl = getSearchMovieUrl(query);
+      const axiosResult = await getMultiSearch(query, activePage);
+      console.log('axiosResult', axiosResult);
+      // const searchUrl = getSearchMovieUrl(query);
+      const searchUrl = getUrl(pathList.search.multi, { query, page: activePage });
       const res = await getData(searchUrl);
       console.log('getSearchMovie', res.results);
       setMoviespreview(res);
@@ -38,13 +47,14 @@ function Search() {
       }, 1000);
     };
     loadMovies();
-  }, [query]);
+  }, [activePage, query]);
 
   const onChangePage = (e, pageInfo) => {
     setActivePage(pageInfo.activePage);
   };
-  const cardHandleClick = (category, id) => {
-    navigate(`/${category}/${id}`);
+  const cardHandleClick = (movie, id) => {
+    const cat = movie.media_type || 'movie';
+    navigate(`/${cat}/${id}`);
   };
 
   return (
@@ -57,9 +67,9 @@ function Search() {
               <SearchBar />
             </div>
             {isLoading ? <h4>loadiing</h4> : ''}
-            <Item.Group>
+            <Item.Group relaxed divided>
               {moviesPreview.results.map((movie) => (
-                <Item key={movie.id} onClick={() => cardHandleClick(movie.media_type, movie.id)}>
+                <Item key={movie.id} onClick={() => cardHandleClick(movie, movie.id)}>
                   {isLoading ? (
                     <>
                       <Placeholder inverted style={{ height: 225, width: 150 }}>
