@@ -17,6 +17,7 @@ function SearchBar() {
     // link to search page
     // use navigate function template
     // https://blog.webdevsimplified.com/2022-07/react-router/
+    if (!currentInput.length) return;
     navigate({
       pathname: '/search',
       search: createSearchParams({
