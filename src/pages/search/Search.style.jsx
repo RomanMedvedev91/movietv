@@ -35,10 +35,33 @@ export const StyledSearchList = styled.section`
   margin-top: 4.8em;
 `;
 
-export const StyledPaginationWrapper = styled.div`
-  margin-top: 4.5em;
-  display: block;
-  text-align: center;
+export const StyledTabsContainer = styled.div`
+  margin-top: 6em;
+
+  h2 {
+    margin-bottom: 1em;
+  }
+  /* .ui.card {
+  padding: 10px;
+} */
+  .ui.segment {
+    min-height: 300px;
+    background: none;
+    border: none;
+    border-radius: 0%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ui.text.menu .item {
+    color: rgba(255, 255, 255, 0.6);
+    margin-right: 1em;
+  }
+
+  .ui.text.menu .active.item {
+    color: rgba(255, 255, 255, 0.95);
+    border-bottom: 2px solid #3c64b1;
+  }
 `;
 
 export const StyledFilterContainer = styled.div`
