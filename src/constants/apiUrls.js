@@ -15,8 +15,8 @@ export const pathList = {
   search: {
     multi: '/search/multi',
     movie: 'search/movie',
-    tv: 'search/tv',
-    person: 'search/person'
+    tv: '/search/tv',
+    person: '/search/person'
   },
   movie: {
     popular: '/movie/popular',
