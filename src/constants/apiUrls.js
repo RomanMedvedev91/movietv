@@ -14,13 +14,13 @@ const params = {
 export const pathList = {
   search: {
     multi: '/search/multi',
-    movie: 'search/movie',
+    movie: '/search/movie',
     tv: '/search/tv',
     person: '/search/person'
   },
   movie: {
     popular: '/movie/popular',
-    upcoming: 'movie/upcoming',
+    upcoming: '/movie/upcoming',
     topRated: '/movie/top_rated',
     nowPlaying: '/movie/now_playing',
     movieDetails: (movieId) => `/movie/${movieId}`, // append_to_response=videos,images
@@ -41,7 +41,7 @@ export const pathList = {
   },
 
   person: {
-    popular: 'person/popular',
+    popular: '/person/popular',
     personDetails: (personId) => `/person/${personId}`,
     combinedCredits: (personId) => `/person/${personId}/combined_credits`,
     externalIds: (personId) => `/person/${personId}/external_ids`
