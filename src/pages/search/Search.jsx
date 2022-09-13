@@ -116,7 +116,7 @@ function Search() {
 
   const panes = [
     {
-      menuItem: 'Movies',
+      menuItem: `Movies (${moviesPreview.total_results})`,
       render: () => (
         <Tab.Pane loading={isLoading} attached={false}>
           {currentSearchPreview.results && (
@@ -133,7 +133,7 @@ function Search() {
       )
     },
     {
-      menuItem: 'TV Shows',
+      menuItem: `TV Shows (${tvShowsPreview.total_results})`,
       render: () => (
         <Tab.Pane loading={isLoading} attached={false}>
           {currentSearchPreview.results && (
@@ -150,7 +150,7 @@ function Search() {
       )
     },
     {
-      menuItem: 'Persons',
+      menuItem: `Persons (${personsPrevivew.total_results})`,
       render: () => (
         <Tab.Pane loading={isLoading} attached={false}>
           {currentSearchPreview.results && (
