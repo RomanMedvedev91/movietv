@@ -6,13 +6,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Tab } from 'semantic-ui-react';
 
-// import SearchBar from '../../components/SearchBar/SearchBar';
 import getData from '../../utilities/getData';
-
 import ItemsList from '../../components/ItemsList/ItemsList';
-
 import { TMDB_POSTER_PATH, getUrl, pathList } from '../../constants/apiUrls';
-
 import { StyledSearchContainer, StyledSearchList, StyledTabsContainer } from './Search.style';
 
 function Search() {
@@ -27,7 +23,6 @@ function Search() {
   };
   const [defaultTab, setDefaultTab] = useState(null);
   const [currentSearchPreview, setCurrentSearchPreview] = useState(null);
-  // const [multiSearchPreview, setMultiSearchPreview] = useState(null);
 
   const [moviesPreview, setMoviespreview] = useState(null);
   const [tvShowsPreview, setTvShowsPreview] = useState(null);
@@ -59,7 +54,6 @@ function Search() {
       const TvShowsRes = await getData(searchTvShowsUrl);
       const PersonsRes = await getData(searchPersonUrl);
 
-      // console.log('getSearchMovie', res.results);
       setMoviespreview(moviesRes);
       setTvShowsPreview(TvShowsRes);
       setPersonsPrevivew(PersonsRes);
@@ -70,7 +64,6 @@ function Search() {
     };
     loadMovies();
     return () => {
-      console.log('hey'); // set all to null
       setMoviespreview(null);
       setTvShowsPreview(null);
       setPersonsPrevivew(null);
@@ -205,29 +198,18 @@ function Search() {
   }
 
   return (
-    <>
-      {console.log('query', query)}
-      {console.log('moviesPreview', moviesPreview)}
-      {console.log('tvShowsPreview', tvShowsPreview)}
-      {console.log('personsPrevivew', personsPrevivew)}
-      {console.log('defaultTab', defaultTab)}
-      {console.log('currentPreviewTab', currentPreviewTab)}
-      <StyledSearchContainer>
-        <StyledSearchList>
-          {console.log('currentSearchPreview', currentSearchPreview)}
-
-          {/* {currentSearchPreview?.results && ( */}
-          <StyledTabsContainer>
-            <h2>
-              Search Results:
-              <span>{query}</span>
-            </h2>
-            {TabExampleSecondaryPointing()}
-          </StyledTabsContainer>
-          {/* )} */}
-        </StyledSearchList>
-      </StyledSearchContainer>
-    </>
+    <StyledSearchContainer>
+      <StyledSearchList>
+        <StyledTabsContainer>
+          <h2>
+            Search Results:
+            <span>{query}</span>
+          </h2>
+          {TabExampleSecondaryPointing()}
+        </StyledTabsContainer>
+        {/* )} */}
+      </StyledSearchList>
+    </StyledSearchContainer>
   );
 }
 
