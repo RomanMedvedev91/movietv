@@ -94,4 +94,7 @@ export const HeaderContainer = styled.header`
   padding: 1em 0 1em 0;
 `;
 
-export const AuthContainer = styled.div``;
+export const AuthContainer = styled.div`
+  display: flex;
+  gap: 2em;
+`;

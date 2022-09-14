@@ -121,7 +121,7 @@ function TvShowsPopular() {
                     <Image
                       style={{ height: 300, width: 200 }}
                       src={
-                        movie.backdrop_path
+                        movie.poster_path
                           ? `${TMDB_POSTER_PATH + movie.poster_path}`
                           : 'https://react.semantic-ui.com/images/wireframe/image.png'
                       }

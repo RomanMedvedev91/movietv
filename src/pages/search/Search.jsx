@@ -1,38 +1,215 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import MovieList from '../../components/MovieList/MovieList';
-import { SearchContext } from '../../context/Search.context';
-import SearchBar from '../../components/SearchBar/SearchBar';
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/jsx-no-comment-textnodes */
+import { useEffect, useState } from 'react';
+
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Tab } from 'semantic-ui-react';
 
 import getData from '../../utilities/getData';
-import getSearchMovieUrl from '../../utilities/helperFunctions';
+import ItemsList from '../../components/ItemsList/ItemsList';
+import { TMDB_POSTER_PATH, getUrl, pathList } from '../../constants/apiUrls';
+import { StyledSearchContainer, StyledSearchList, StyledTabsContainer } from './Search.style';
 
 function Search() {
   const [isLoading, setIsLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
 
-  const { query } = useParams();
-  const { currentSearch, currentSearchMovies, setSearchMovies } = useContext(SearchContext);
+  const [currentPreviewTab, setCurrentPreviewTab] = useState(null);
+  const defaultTabsData = {
+    movie: 0,
+    tv: 1,
+    person: 2
+  };
+  const [defaultTab, setDefaultTab] = useState(null);
+  const [currentSearchPreview, setCurrentSearchPreview] = useState(null);
+
+  const [moviesPreview, setMoviespreview] = useState(null);
+  const [tvShowsPreview, setTvShowsPreview] = useState(null);
+  const [personsPrevivew, setPersonsPrevivew] = useState(null);
+
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('query');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadMovies = async () => {
       setIsLoading(true);
-      const searchUrl = getSearchMovieUrl(query || currentSearch);
-      const res = await getData(searchUrl);
-      setSearchMovies(res.results);
-      setIsLoading(false);
+
+      // get multi search url to define type of current category
+      const searchUrl = getUrl(pathList.search.multi, { query });
+      const multiSearchRes = await getData(searchUrl);
+      // get category type of first item from multi search
+      const currentCategory = multiSearchRes?.results[0]?.media_type || 'movie';
+      // setMultiSearchPreview(multiSearchRes);
+      setCurrentPreviewTab(currentCategory);
+      setDefaultTab(defaultTabsData[currentCategory]);
+
+      const searcMovieshUrl = getUrl(pathList.search.movie, { query });
+      const searchTvShowsUrl = getUrl(pathList.search.tv, { query });
+      const searchPersonUrl = getUrl(pathList.search.person, { query });
+
+      // get url for movie, tv, person to get total result for each tab
+      const moviesRes = await getData(searcMovieshUrl);
+      const TvShowsRes = await getData(searchTvShowsUrl);
+      const PersonsRes = await getData(searchPersonUrl);
+
+      setMoviespreview(moviesRes);
+      setTvShowsPreview(TvShowsRes);
+      setPersonsPrevivew(PersonsRes);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     };
     loadMovies();
-  }, [currentSearch, query, setSearchMovies]);
+    return () => {
+      setMoviespreview(null);
+      setTvShowsPreview(null);
+      setPersonsPrevivew(null);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    const loadMovies = async () => {
+      setIsLoading(true);
+
+      const getCurrentCategoryUrl = getUrl(pathList.search[currentPreviewTab], {
+        query,
+        page: activePage
+      });
+      const currentPreivewRes = await getData(getCurrentCategoryUrl);
+      setCurrentSearchPreview(currentPreivewRes);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    };
+    loadMovies();
+    return () => {
+      setCurrentSearchPreview(null);
+    };
+  }, [activePage, currentPreviewTab]);
+
+  const onChangePage = (e, pageInfo) => {
+    setActivePage(pageInfo.activePage);
+  };
+  const cardHandleClick = (movie, id) => {
+    let cat;
+    if (!movie.media_type && movie.first_air_date) {
+      cat = 'tv';
+    } else if (!movie.media_type && movie.known_for_department) {
+      cat = 'person';
+    } else {
+      cat = movie.media_type;
+    }
+    navigate(`/${cat}/${id}`);
+  };
+
+  const getImageUrl = (item) => {
+    if (item.poster_path) {
+      return `${TMDB_POSTER_PATH + item.poster_path}`;
+    }
+    if (item.profile_path) {
+      return `${TMDB_POSTER_PATH + item.profile_path}`;
+    }
+
+    return 'https://react.semantic-ui.com/images/wireframe/image.png';
+  };
+
+  const panes = [
+    {
+      menuItem: `Movies (${moviesPreview && moviesPreview.total_results})`,
+      render: () => (
+        <Tab.Pane loading={isLoading} attached={false}>
+          {currentSearchPreview && (
+            <ItemsList
+              moviesPreview={currentSearchPreview}
+              cardHandleClick={cardHandleClick}
+              getImageUrl={getImageUrl}
+              isLoading={isLoading}
+              onChangePage={onChangePage}
+              activePage={activePage}
+            />
+          )}
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: `TV Shows (${tvShowsPreview && tvShowsPreview.total_results})`,
+      render: () => (
+        <Tab.Pane loading={isLoading} attached={false}>
+          {currentSearchPreview && (
+            <ItemsList
+              moviesPreview={currentSearchPreview}
+              cardHandleClick={cardHandleClick}
+              getImageUrl={getImageUrl}
+              isLoading={isLoading}
+              onChangePage={onChangePage}
+              activePage={activePage}
+            />
+          )}
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: `Persons (${personsPrevivew && personsPrevivew.total_results})`,
+      render: () => (
+        <Tab.Pane loading={isLoading} attached={false}>
+          {currentSearchPreview && (
+            <ItemsList
+              moviesPreview={currentSearchPreview}
+              cardHandleClick={cardHandleClick}
+              getImageUrl={getImageUrl}
+              isLoading={isLoading}
+              onChangePage={onChangePage}
+              activePage={activePage}
+            />
+          )}
+        </Tab.Pane>
+      )
+    }
+  ];
+
+  const onTabChangeHandler = (e, data) => {
+    // set active page = 1
+    const tabsData = {
+      0: 'movie',
+      1: 'tv',
+      2: 'person'
+    };
+    const activeTabIndex = data.activeIndex;
+    setCurrentPreviewTab(tabsData[activeTabIndex]);
+    setDefaultTab(defaultTabsData[defaultTab]);
+    setActivePage(1);
+  };
+
+  // eslint-disable-next-line max-len
+  // eslint-disable-next-line react/no-unstable-nested-components
+  function TabExampleSecondaryPointing() {
+    return (
+      <Tab
+        activeIndex={defaultTab}
+        onTabChange={onTabChangeHandler}
+        menu={{ text: true }}
+        panes={panes}
+      />
+    );
+  }
 
   return (
-    <div>
-      Search
-      <div>
-        <SearchBar />
-      </div>
-      {isLoading ? <h4>loadiing</h4> : ''}
-      {currentSearchMovies ? <MovieList movies={currentSearchMovies} category="movies" /> : ''}
-    </div>
+    <StyledSearchContainer>
+      <StyledSearchList>
+        <StyledTabsContainer>
+          <h2>
+            Search Results:
+            <span>{query}</span>
+          </h2>
+          {TabExampleSecondaryPointing()}
+        </StyledTabsContainer>
+        {/* )} */}
+      </StyledSearchList>
+    </StyledSearchContainer>
   );
 }
 

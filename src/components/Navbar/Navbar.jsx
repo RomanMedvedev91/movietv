@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
@@ -15,10 +15,14 @@ import {
   ItemLink,
   SubMenuItem
 } from './Navbar.style';
+import SearchNavbar from '../SearchBar/SearchNavbar';
 
 function Navbar() {
+  const location = useLocation();
+
   return (
     <>
+      {console.log('location', location)}
       <HeaderContainer>
         <NavContainer>
           <LogoLink to="/">
@@ -44,7 +48,6 @@ function Navbar() {
                 </SubMenuItem>
               </NavSubMenuContainer>
             </NavItem>
-
             <NavItem>
               <NavLink to={route.TVSHOWS}>Tv Shoes</NavLink>
             </NavItem>
@@ -52,6 +55,7 @@ function Navbar() {
         </NavContainer>
 
         <AuthContainer>
+          {location.pathname !== '/' && <SearchNavbar />}
           <Button primary>Sign in</Button>
         </AuthContainer>
       </HeaderContainer>
