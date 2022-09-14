@@ -62,6 +62,12 @@ export const StyledTabsContainer = styled.div`
     color: rgba(255, 255, 255, 0.95);
     border-bottom: 2px solid #3c64b1;
   }
+
+  span {
+    margin-left: 0.5em;
+    font-weight: 400;
+    font-size: 20px;
+  }
 `;
 
 export const StyledFilterContainer = styled.div`

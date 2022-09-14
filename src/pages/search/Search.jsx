@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-no-comment-textnodes */
 import { useEffect, useState } from 'react';
@@ -5,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Tab } from 'semantic-ui-react';
 
-import SearchBar from '../../components/SearchBar/SearchBar';
+// import SearchBar from '../../components/SearchBar/SearchBar';
 import getData from '../../utilities/getData';
 
 import ItemsList from '../../components/ItemsList/ItemsList';
@@ -68,6 +69,12 @@ function Search() {
       }, 500);
     };
     loadMovies();
+    return () => {
+      console.log('hey'); // set all to null
+      setMoviespreview(null);
+      setTvShowsPreview(null);
+      setPersonsPrevivew(null);
+    };
   }, [query]);
 
   useEffect(() => {
@@ -86,6 +93,9 @@ function Search() {
       }, 1000);
     };
     loadMovies();
+    return () => {
+      setCurrentSearchPreview(null);
+    };
   }, [activePage, currentPreviewTab]);
 
   const onChangePage = (e, pageInfo) => {
@@ -116,10 +126,10 @@ function Search() {
 
   const panes = [
     {
-      menuItem: `Movies (${moviesPreview.total_results})`,
+      menuItem: `Movies (${moviesPreview && moviesPreview.total_results})`,
       render: () => (
         <Tab.Pane loading={isLoading} attached={false}>
-          {currentSearchPreview.results && (
+          {currentSearchPreview && (
             <ItemsList
               moviesPreview={currentSearchPreview}
               cardHandleClick={cardHandleClick}
@@ -133,10 +143,10 @@ function Search() {
       )
     },
     {
-      menuItem: `TV Shows (${tvShowsPreview.total_results})`,
+      menuItem: `TV Shows (${tvShowsPreview && tvShowsPreview.total_results})`,
       render: () => (
         <Tab.Pane loading={isLoading} attached={false}>
-          {currentSearchPreview.results && (
+          {currentSearchPreview && (
             <ItemsList
               moviesPreview={currentSearchPreview}
               cardHandleClick={cardHandleClick}
@@ -150,10 +160,10 @@ function Search() {
       )
     },
     {
-      menuItem: `Persons (${personsPrevivew.total_results})`,
+      menuItem: `Persons (${personsPrevivew && personsPrevivew.total_results})`,
       render: () => (
         <Tab.Pane loading={isLoading} attached={false}>
-          {currentSearchPreview.results && (
+          {currentSearchPreview && (
             <ItemsList
               moviesPreview={currentSearchPreview}
               cardHandleClick={cardHandleClick}
@@ -204,18 +214,17 @@ function Search() {
       {console.log('currentPreviewTab', currentPreviewTab)}
       <StyledSearchContainer>
         <StyledSearchList>
-          <div>
-            <SearchBar />
-          </div>
-          {isLoading ? <h4>loadiing</h4> : ''}
           {console.log('currentSearchPreview', currentSearchPreview)}
 
-          {currentSearchPreview?.results && (
-            <StyledTabsContainer>
-              <h2>Search Results</h2>
-              {TabExampleSecondaryPointing()}
-            </StyledTabsContainer>
-          )}
+          {/* {currentSearchPreview?.results && ( */}
+          <StyledTabsContainer>
+            <h2>
+              Search Results:
+              <span>{query}</span>
+            </h2>
+            {TabExampleSecondaryPointing()}
+          </StyledTabsContainer>
+          {/* )} */}
         </StyledSearchList>
       </StyledSearchContainer>
     </>
