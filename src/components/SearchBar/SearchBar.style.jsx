@@ -15,17 +15,30 @@ export const SearchFormContainer = styled.section`
   }
 `;
 
-// export const Title = styled.div`
-//   margin: 7em 0 3.8em 0;
-//   color: #fff;
-//   p {
-//     font-family: 'Mulish', sans-serif;
-//     font-weight: 800;
-//     font-size: 2.3em;
-//     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-//   }
-// `;
-
 export const ButtonContainer = styled.div`
   margin-left: 1.2em;
+`;
+
+export const StyledSearchNavbarContainer = styled.div`
+  width: 200px;
+  /* .ui.form input {
+    background: none;
+  } */
+
+  form {
+    display: flex;
+    div.input {
+      opacity: 85%;
+      width: 100%;
+    }
+  }
+
+  i.circular.icon {
+    box-shadow: 0 0 0 0.1emrgba (0, 0, 0, 0.9) inset;
+  }
+  i.circular.icon:hover {
+    background-color: #2185d0 !important;
+    box-shadow: none;
+    color: #fff;
+  }
 `;

@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-closing-bracket-location */
+/* eslint-disable object-curly-newline */
 import { useState } from 'react';
-import { Input, Form, Button } from 'semantic-ui-react';
+import { Input, Form, Icon } from 'semantic-ui-react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
-import { SearchFormContainer, ButtonContainer } from './SearchBar.style';
+import { StyledSearchNavbarContainer } from './SearchBar.style';
 
-function SearchBar() {
+function SearchNavbar() {
   const [currentInput, setCurrentInput] = useState('');
 
   const navigate = useNavigate();
@@ -27,29 +29,22 @@ function SearchBar() {
   };
 
   return (
-    <SearchFormContainer>
+    <StyledSearchNavbarContainer>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
           search();
-          // eslint-disable-next-line react/jsx-closing-bracket-location
         }}>
         <Input
           fluid
-          icon="search"
-          iconPosition="left"
+          icon={<Icon name="search" onClick={search} circular link />}
           placeholder="Movie, artist, genre"
           value={currentInput}
           onChange={onInputChangeHandle}
         />
-        <ButtonContainer>
-          <Button primary type="submit">
-            Search
-          </Button>
-        </ButtonContainer>
       </Form>
-    </SearchFormContainer>
+    </StyledSearchNavbarContainer>
   );
 }
 
-export default SearchBar;
+export default SearchNavbar;
