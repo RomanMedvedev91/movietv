@@ -101,9 +101,9 @@ function Search() {
     } else if (!movie.media_type && movie.known_for_department) {
       cat = 'person';
     } else {
-      cat = movie.media_type;
+      cat = movie.media_type || 'movie';
     }
-    navigate(`/${cat}/${id}`);
+    navigate(`/${cat}/${id}`, { state: { id, category: cat } });
   };
 
   const getImageUrl = (item) => {
@@ -121,7 +121,7 @@ function Search() {
     {
       menuItem: `Movies (${moviesPreview && moviesPreview.total_results})`,
       render: () => (
-        <Tab.Pane loading={isLoading} attached={false}>
+        <Tab.Pane attached={false}>
           {currentSearchPreview && (
             <ItemsList
               moviesPreview={currentSearchPreview}
@@ -138,7 +138,7 @@ function Search() {
     {
       menuItem: `TV Shows (${tvShowsPreview && tvShowsPreview.total_results})`,
       render: () => (
-        <Tab.Pane loading={isLoading} attached={false}>
+        <Tab.Pane attached={false}>
           {currentSearchPreview && (
             <ItemsList
               moviesPreview={currentSearchPreview}
@@ -155,7 +155,7 @@ function Search() {
     {
       menuItem: `Persons (${personsPrevivew && personsPrevivew.total_results})`,
       render: () => (
-        <Tab.Pane loading={isLoading} attached={false}>
+        <Tab.Pane attached={false}>
           {currentSearchPreview && (
             <ItemsList
               moviesPreview={currentSearchPreview}

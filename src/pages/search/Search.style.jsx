@@ -68,6 +68,10 @@ export const StyledTabsContainer = styled.div`
     font-weight: 400;
     font-size: 20px;
   }
+
+  .ui.items > .item > .image {
+    cursor: pointer;
+  }
 `;
 
 export const StyledFilterContainer = styled.div`

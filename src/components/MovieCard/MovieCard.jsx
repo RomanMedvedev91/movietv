@@ -9,7 +9,7 @@ function MovieCard({ movie, id, image, header, modalHadler, trailer, category })
 
   const cardHandleClick = () => {
     console.log(movie);
-    navigate(`/${category}/${id}`);
+    navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
   return (

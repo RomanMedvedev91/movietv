@@ -38,7 +38,7 @@ function MoviesNowPlaying() {
 
   const navigate = useNavigate();
   const cardHandleClick = (category, id) => {
-    navigate(`/${category}/${id}`);
+    navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
   useEffect(() => {

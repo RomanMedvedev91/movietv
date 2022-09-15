@@ -5,6 +5,7 @@ import MoviesPopular from './MoviesPopular';
 import MoviesTopRated from './MoviesTopRated';
 import MoviesNowPlaying from './MoviesNowPlaying';
 import MoviesUpcoming from './MoviesUpcoming';
+import NotFound from '../Error/NotFound';
 
 function MoviesRoutes() {
   return (
@@ -14,6 +15,7 @@ function MoviesRoutes() {
       <Route path={route.UPCOMING} element={<MoviesUpcoming />} />
       <Route path={route.NOW_PLAYING} element={<MoviesNowPlaying />} />
       <Route path={route.MOVIE_ID} element={<Movie />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

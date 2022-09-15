@@ -4,7 +4,7 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-closing-bracket-location */
 import { useState, useEffect } from 'react';
-import { Outlet, useParams, useNavigate } from 'react-router-dom';
+import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Icon, Card, Button, Table, Tab } from 'semantic-ui-react';
 
 import {
@@ -42,6 +42,7 @@ function Person() {
   const [showMoreBio, setShowMoreBio] = useState(false);
   const { personId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const getSortedCreditList = (list) => {
     const sortedList = list.sort((a, b) => {
@@ -59,40 +60,44 @@ function Person() {
 
   useEffect(() => {
     const loadMovie = async () => {
-      setIsLoading(true);
-      const personDetailsUrl = getPersonDetails(personId);
-      const personCreditsUrl = getPersonMoviesCredits(personId);
-      const personExternalIdsUrl = getPersonExternalIds(personId);
+      if (!location.state?.id) {
+        navigate('/404');
+      } else {
+        setIsLoading(true);
+        const personDetailsUrl = getPersonDetails(personId);
+        const personCreditsUrl = getPersonMoviesCredits(personId);
+        const personExternalIdsUrl = getPersonExternalIds(personId);
 
-      const resPersonDetails = await getData(personDetailsUrl);
-      const resPersonCredits = await getData(personCreditsUrl);
-      const resPersonExternalIds = await getData(personExternalIdsUrl);
+        const resPersonDetails = await getData(personDetailsUrl);
+        const resPersonCredits = await getData(personCreditsUrl);
+        const resPersonExternalIds = await getData(personExternalIdsUrl);
 
-      const knownForMovies = resPersonCredits.cast.filter((el) => el.backdrop_path !== null);
+        const knownForMovies = resPersonCredits.cast.filter((el) => el.backdrop_path !== null);
 
-      const sortedCastList = getSortedCreditList(resPersonCredits.cast);
-      const sortedCrewList = getSortedCreditList(resPersonCredits.crew);
+        const sortedCastList = getSortedCreditList(resPersonCredits.cast);
+        const sortedCrewList = getSortedCreditList(resPersonCredits.crew);
 
-      const sortedKnownForMovies = knownForMovies
-        .sort((a, b) => b.popularity - a.popularity)
-        .slice(0, 10);
+        const sortedKnownForMovies = knownForMovies
+          .sort((a, b) => b.popularity - a.popularity)
+          .slice(0, 10);
 
-      setPersonDetails(resPersonDetails);
-      setPersonCredits(sortedCastList);
-      setPersonCreditsCrew(sortedCrewList);
-      // setPersonCredits(resPersonCredits);
-      setPersonExternalIds(resPersonExternalIds);
-      setPersonKnownForMovies(sortedKnownForMovies);
+        setPersonDetails(resPersonDetails);
+        setPersonCredits(sortedCastList);
+        setPersonCreditsCrew(sortedCrewList);
+        // setPersonCredits(resPersonCredits);
+        setPersonExternalIds(resPersonExternalIds);
+        setPersonKnownForMovies(sortedKnownForMovies);
 
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 300);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
+      }
     };
     loadMovie();
   }, [personId]);
 
   const cardHandleClick = (category, id) => {
-    navigate(`/${category}/${id}`);
+    navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
   const getPersonBiography = () => {
@@ -148,7 +153,11 @@ function Person() {
             </Table.Cell>
 
             <Table.Cell>
-              <MovieCreditLink to={`/${el.media_type}/${el.id}`}>
+              {/* <MovieCreditLink to={cardHandleClick(el.media_type, el.id)}> */}
+              {/* <MovieCreditLink to={`/${el.media_type}/${el.id}`}> */}
+              <MovieCreditLink
+                to={`/${el.media_type}/${el.id}`}
+                state={{ id: el.id, category: el.media_type }}>
                 {el.title || el.name}
               </MovieCreditLink>
               {(el.character && ` as ${el.character}`) ||
