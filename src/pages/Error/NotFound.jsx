@@ -1,6 +1,7 @@
-import { useNavigate } from 'react';
+/* eslint-disable object-curly-newline */
+import { useNavigate } from 'react-router-dom';
 
-import { Button, Container, Divider } from 'semantic-ui-react';
+import { Button, Container, Divider, Header } from 'semantic-ui-react';
 
 function NotFound() {
   const navigate = useNavigate();
@@ -9,11 +10,14 @@ function NotFound() {
   };
 
   return (
-    <Container>
-      <Header as="h1">The Page You Requested Could Not Be Found</Header>
+    <Container textAlign="center">
+      <Header inverted as="h1">
+        Requested Page Could Not Be Found
+      </Header>
       <Divider />
-      <Button color="red" onClick={returnHome}>
-        Okay
+
+      <Button primary onClick={returnHome}>
+        to Homepage
       </Button>
     </Container>
   );

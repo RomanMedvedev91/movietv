@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 /* eslint-disable implicit-arrow-linebreak */
 import { useState, useEffect } from 'react';
-import { Outlet, useParams, useNavigate } from 'react-router-dom';
+import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
@@ -43,26 +43,33 @@ function Movie() {
   const [open, setOpen] = useState(false);
   const { movieId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const loadMovie = async () => {
-      setIsLoading(true);
-      const movieDetailUrl = getMovieDetails(movieId);
-      const movieCreditUrl = getMovieCredits(movieId);
-      const recommendationsMoviesUrl = getRecommendationsMovies(movieId);
+      console.log('locationMOVIE', location);
+      if (!location.state?.id) {
+        navigate('/404');
+      } else {
+        setIsLoading(true);
+        const movieDetailUrl = getMovieDetails(movieId);
+        const movieCreditUrl = getMovieCredits(movieId);
+        const recommendationsMoviesUrl = getRecommendationsMovies(movieId);
 
-      const resMovieDetail = await getData(movieDetailUrl);
-      const resMovieCredit = await getData(movieCreditUrl);
-      const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
+        const resMovieDetail = await getData(movieDetailUrl);
+        const resMovieCredit = await getData(movieCreditUrl);
+        const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
 
-      setMovieDetails(resMovieDetail);
-      setMovieSetCredits(resMovieCredit);
-      setrecommendationsMovies(resrecommendationsMovies.results);
+        setMovieDetails(resMovieDetail);
+        setMovieSetCredits(resMovieCredit);
+        setrecommendationsMovies(resrecommendationsMovies.results);
 
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 300);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
+      }
     };
+
     loadMovie();
   }, [movieId]);
 
@@ -123,7 +130,7 @@ function Movie() {
   };
 
   const cardHandleClick = (category, id) => {
-    navigate(`/${category}/${id}`);
+    navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
   const panes = [

@@ -8,6 +8,7 @@ import TvShowsOnTheAir from './TvShowsOnTheAir';
 import TvShowsTopRated from './TvShowsTopRated';
 import Seasons from '../Seasons/Seasons';
 import Season from '../Season/Season';
+import NotFound from '../Error/NotFound';
 
 function TvShowsRoute() {
   return (
@@ -19,11 +20,11 @@ function TvShowsRoute() {
       <Route path={route.TVSHOW_ID}>
         <Route index element={<TvShow />} />
         <Route path={route.TVSHOW_SEASONS} element={<Seasons />} />
-
-        <Route path={route.TVSHOW_SEASON}>
+        <Route path={route.TVSHOW_SEASON} element={<Season />}>
           <Route path={route.TVSHOW_SEASON_ID} element={<Season />} />
         </Route>
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
