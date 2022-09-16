@@ -47,9 +47,11 @@ export const HeaderGradient = styled.div`
   position: absolute;
   z-index: -1;
   left: 0;
-  top: calc(100% - 85%);
+  /* top: calc(100% - 85%); */
+  top: calc(100vh - 40vh);
   width: 100%;
-  height: 800px;
+  height: calc(100vh - 50vh);
+  /* height: 800px; */
   background: linear-gradient(to top, #141313, 80%, transparent);
 `;
 

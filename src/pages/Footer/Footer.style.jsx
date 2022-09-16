@@ -18,13 +18,19 @@ export const FooterContainer = styled.footer`
   }
 `;
 export const FooterGradient = styled.div`
+  /* display: none; */
   position: absolute;
   z-index: -1;
   left: 0;
-  bottom: 100px;
+  /* bottom: 100px; */
   width: 100%;
-  height: 600px;
-  background: linear-gradient(#141313, 80%, transparent);
+  /* height: 600px; */
+  bottom: calc(100vh - 50vh);
+  height: calc(100vh - 30vh);
+  /* width: 100%; */
+  /* height: 800px; */
+  background: linear-gradient(to bottom, #141313, 80%, transparent);
+  /* background: linear-gradient(#141313, 80%, transparent); */
 `;
 
 export const LinksContainer = styled.div`
@@ -49,6 +55,7 @@ export const BackgroundImg = styled.div`
 
   img {
     width: 100%;
+    height: 100%;
     display: block;
   }
 `;
