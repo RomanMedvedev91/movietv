@@ -66,16 +66,32 @@ export const Title = styled.div`
 `;
 
 export const PopularMoviesContainer = styled.section`
-  margin-top: -20em;
+  margin-top: -33em;
   /* margin-top: 12em; */
+  .ui.card > .content,
+  .ui.cards > .card > .content {
+    opacity: 0;
+    transition: display 0.2s ease-in-out;
+  }
   a.ui.card {
     padding: 0;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
       background: none;
       box-shadow: none;
       cursor: pointer;
+      transform: scale(1.1);
     }
+  }
+
+  a.ui.card:hover > .content {
+    -webkit-transition: opacity 0.5s ease-in;
+    -moz-transition: opacity 0.5s ease-in;
+    -o-transition: opacity 0.5s ease-in;
+    opacity: 1;
+    /* position: absolute; */
+    /* bottom: 0; */
   }
 `;
 

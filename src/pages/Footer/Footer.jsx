@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 
-import footerBackground from '../../assets/footer3.jpg';
+// import footerBackground from '../../assets/footer3.jpg';
+import footerBackground from '../../assets/footerBackground.jpg';
 
 // eslint-disable-next-line object-curly-newline
 import {
