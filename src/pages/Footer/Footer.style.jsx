@@ -36,11 +36,13 @@ export const FooterGradient = styled.div`
 export const LinksContainer = styled.div`
   display: flex;
   z-index: 1;
+  gap: 10em;
 `;
 
 export const NavigationContainer = styled.div`
   display: flex;
   padding-top: 1.4em;
+  gap: 10em;
 `;
 
 export const BackgroundImg = styled.div`
@@ -61,7 +63,7 @@ export const BackgroundImg = styled.div`
 `;
 
 export const NavItemContainer = styled.ul`
-  margin-left: 6em;
+  /* margin-left: 6em; */
   display: flex;
   flex-direction: column;
   a {
