@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 // eslint-disable-next-line import/prefer-default-export
+
+export const StyledSearchSection = styled.section`
+  height: calc(100vh - 65px);
+`;
+
 export const HomepageContainer = styled.main`
   max-width: 1172px;
   margin: auto;
@@ -31,28 +36,29 @@ export const BackgroundImgContainer = styled.div`
   left: 0;
   width: 100%;
   margin: auto;
-  opacity: 0.5;
+  /* opacity: 0.5; */
+`;
+
+export const BackgroundImage = styled.img`
+  height: 100%;
 `;
 
 export const HeaderGradient = styled.div`
   position: absolute;
   z-index: -1;
   left: 0;
-  top: 100px;
+  /* top: calc(100% - 85%); */
+  top: calc(100vh - 40vh);
   width: 100%;
-  height: 1000px;
-  background: linear-gradient(0deg, #141313, 80%, transparent);
-`;
-
-export const BackgroundImage = styled.img`
-  width: 100%;
+  height: calc(100vh - 50vh);
+  /* height: 800px; */
+  background: linear-gradient(to top, #141313, 80%, transparent);
 `;
 
 export const Title = styled.div`
   max-width: 590px;
-
   font-family: 'Mulish', sans-serif;
-  margin: 7em 0 3.8em 0;
+  padding: 7em 0 3.8em 0;
   color: #fff;
   p {
     font-weight: 800;
@@ -62,15 +68,32 @@ export const Title = styled.div`
 `;
 
 export const PopularMoviesContainer = styled.section`
-  margin-top: 12em;
+  margin-top: -33em;
+  /* margin-top: 12em; */
+  .ui.card > .content,
+  .ui.cards > .card > .content {
+    opacity: 0;
+    transition: display 0.2s ease-in-out;
+  }
   a.ui.card {
     padding: 0;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
       background: none;
       box-shadow: none;
       cursor: pointer;
+      transform: scale(1.1);
     }
+  }
+
+  a.ui.card:hover > .content {
+    -webkit-transition: opacity 0.5s ease-in;
+    -moz-transition: opacity 0.5s ease-in;
+    -o-transition: opacity 0.5s ease-in;
+    opacity: 1;
+    /* position: absolute; */
+    /* bottom: 0; */
   }
 `;
 
