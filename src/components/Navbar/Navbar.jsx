@@ -35,21 +35,45 @@ function Navbar() {
             </NavItem>
 
             <NavItem>
-              <NavLink to={route.MOVIES}>Movies</NavLink>
+              <NavLink to={route.VIEW_MOVIES}>Movies</NavLink>
               <NavSubMenuContainer>
                 <SubMenuItem>
-                  <ItemLink to={route.MOVIES}>Top Movies</ItemLink>
+                  <ItemLink to={route.VIEW_MOVIES_NOW_PLAYING}>Playing Now</ItemLink>
                 </SubMenuItem>
+
                 <SubMenuItem>
-                  <ItemLink to={route.MOVIES}>Popular</ItemLink>
+                  <ItemLink to={route.VIEW_MOVIES_UPCOMING}>Upcomming</ItemLink>
                 </SubMenuItem>
+
                 <SubMenuItem>
-                  <ItemLink to={route.MOVIES}>Upcomming</ItemLink>
+                  <ItemLink to={route.VIEW_MOVIES}>Popular</ItemLink>
+                </SubMenuItem>
+
+                <SubMenuItem>
+                  <ItemLink to={route.VIEW_MOVIES_TOP_RATED}>Top Rated</ItemLink>
                 </SubMenuItem>
               </NavSubMenuContainer>
             </NavItem>
+
             <NavItem>
-              <NavLink to={route.TVSHOWS}>Tv Shoes</NavLink>
+              <NavLink to={route.VIEW_TVSHOWS}>Tv Shoes</NavLink>
+              <NavSubMenuContainer>
+                <SubMenuItem>
+                  <ItemLink to={route.VIEW_TVSHOWS_AIRING_TODAY}>Airing Today</ItemLink>
+                </SubMenuItem>
+
+                <SubMenuItem>
+                  <ItemLink to={route.VIEW_TVSHOWS_ON_TV}>On TV</ItemLink>
+                </SubMenuItem>
+
+                <SubMenuItem>
+                  <ItemLink to={route.VIEW_TVSHOWS}>Popular</ItemLink>
+                </SubMenuItem>
+
+                <SubMenuItem>
+                  <ItemLink to={route.VIEW_TVSHOWS_TOP_RATED}>Top Rated</ItemLink>
+                </SubMenuItem>
+              </NavSubMenuContainer>
             </NavItem>
           </NavItemContainer>
         </NavContainer>

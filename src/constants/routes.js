@@ -3,6 +3,9 @@ export const MOVIES = '/movie/*';
 export const MOVIE_ID = ':movieId';
 
 export const VIEW_MOVIES = '/movie';
+export const VIEW_MOVIES_TOP_RATED = '/movie/top-rated';
+export const VIEW_MOVIES_UPCOMING = '/movie/upcoming';
+export const VIEW_MOVIES_NOW_PLAYING = '/movie/now-playing';
 
 export const NOW_PLAYING = 'now-playing';
 export const UPCOMING = 'upcoming';

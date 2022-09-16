@@ -16,7 +16,7 @@ export const SubMenuItem = styled.li`
   margin: 0.5em;
   &:hover {
     background: rgba(#000, 0.1);
-    font-weight: 800;
+    /* font-weight: 800; */
   }
 `;
 
@@ -41,7 +41,7 @@ export const NavItemContainer = styled.ul`
     color: #fff;
     &:hover {
       color: #3c64b1;
-      font-weight: 800;
+      /* font-weight: 800; */
     }
   }
 `;
