@@ -235,9 +235,6 @@ function TvShow() {
 
   return (
     <>
-      {console.log('recommendationsMovies', recommendationsMovies)}
-      {console.log('movieCredits', movieCredits)}
-      {console.log('movieDetails', movieDetails)}
       {isLoading && (
         <Dimmer active>
           <Loader size="medium">Loading...</Loader>

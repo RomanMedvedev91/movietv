@@ -5,7 +5,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 import { useState, useEffect } from 'react';
 import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
-import { Icon, Card, Button, Table, Tab } from 'semantic-ui-react';
+import { Icon, Card, Button, Table, Tab, Dimmer, Loader } from 'semantic-ui-react';
 
 import {
   getPersonDetails,
@@ -196,9 +196,12 @@ function Person() {
 
   return (
     <>
-      {isLoading && <div>Loading...</div>}
-      {console.log('personCredits', personCredits)}
-      {console.log('personCreditsCrew', personCreditsCrew)}
+      {isLoading && (
+        <Dimmer active>
+          <Loader size="medium">Loading...</Loader>
+        </Dimmer>
+      )}
+
       {!isLoading && personDetails && (
         <PersonContainer>
           <PersonDetail>
@@ -300,7 +303,6 @@ function Person() {
             </PersonDataContainer>
             <HeaderGradient />
           </PersonDetail>
-          {console.log('personKnownForMovies', personKnownForMovies)}
           {personKnownForMovies && (
             <CardCarousel
               title

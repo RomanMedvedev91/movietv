@@ -22,7 +22,6 @@ function Navbar() {
 
   return (
     <>
-      {console.log('location', location)}
       <HeaderContainer>
         <NavContainer>
           <LogoLink to="/">

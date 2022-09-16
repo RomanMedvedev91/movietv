@@ -47,7 +47,6 @@ function Movie() {
 
   useEffect(() => {
     const loadMovie = async () => {
-      console.log('locationMOVIE', location);
       if (!location.state?.id) {
         navigate('/404');
       } else {
@@ -224,9 +223,6 @@ function Movie() {
 
   return (
     <>
-      {console.log('recommendationsMovies', recommendationsMovies)}
-      {console.log('movieCredits', movieCredits)}
-      {console.log('movieDetails', movieDetails)}
       {isLoading && (
         <Dimmer active>
           <Loader size="medium">Loading...</Loader>

@@ -8,7 +8,6 @@ function MovieCard({ movie, id, image, header, modalHadler, trailer, category })
   const navigate = useNavigate();
 
   const cardHandleClick = () => {
-    console.log(movie);
     navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
