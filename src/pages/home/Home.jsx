@@ -5,12 +5,12 @@
 /* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import 'pure-react-carousel/dist/react-carousel.es.css';
 import { Card, Embed, Modal } from 'semantic-ui-react';
+// import 'pure-react-carousel/dist/react-carousel.es.css';
 import * as route from '../../constants/routes';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
-import MovieCard from '../../components/MovieCard/MovieCard';
+// import MovieCard from '../../components/MovieCard/MovieCard';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 
 import getData from '../../utilities/getData';
@@ -25,7 +25,8 @@ import {
   TMDB_POSTER_PATH,
   tmdbPosterPath
 } from '../../constants/apiUrls';
-import mainBackground from '../../assets/mainBackground.png';
+import { getDateHumanReadble } from '../../utilities/helperFunctions';
+import mainBackground from '../../assets/homepageSection1Bachground.png';
 
 import {
   HomepageContainer,
@@ -47,6 +48,8 @@ function Homepage() {
   const [open, setOpen] = useState(false);
   const [currentTrailer, setCurrentTrailer] = useState();
 
+  // const [activeSlide, setActiveSlide] = useState(null);
+  const [backgroundSlides, setBackgroundSlides] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,19 +77,24 @@ function Homepage() {
       setUpcomingMovies(upcomingMoviesWithTrailer);
       setPopularTvShoes(popularTvShoesResult.results);
 
+      // add backdrop_path for background slider
+      popularMoviesResult.results
+        .slice(0, 5)
+        .map((movie) => setBackgroundSlides((prev) => [...prev, movie.backdrop_path]));
+
       setIsLoading(false);
     };
 
     renderMainMovieCards();
   }, []);
 
-  const renderMovieCards = (moviesCards) =>
-    // eslint-disable-next-line implicit-arrow-linebreak
-    moviesCards
-      .slice(0, 5)
-      .map((movie) => (
-        <MovieCard key={movie.id} id={movie.id} image={movie.poster_path} category="movie" />
-      ));
+  // const renderMovieCards = (moviesCards) =>
+  //   // eslint-disable-next-line implicit-arrow-linebreak
+  //   moviesCards
+  //     .slice(0, 5)
+  //     .map((movie) => (
+  //       <MovieCard key={movie.id} id={movie.id} image={movie.poster_path} category="movie" />
+  //     ));
 
   const modalHandler = (movie) => {
     console.log('hit', movie);
@@ -114,7 +122,23 @@ function Homepage() {
       <PopularMoviesContainer>
         {isLoading ? <div>Loading</div> : ''}
         {popularMovies && (
-          <Card.Group itemsPerRow={5}>{renderMovieCards(popularMovies)}</Card.Group>
+          <Card.Group itemsPerRow={5}>
+            {/* {renderMovieCards(popularMovies)} */}
+            {console.log(backgroundSlides)}
+            {popularMovies.slice(0, 5).map((movie) => (
+              <Card
+                key={movie.id}
+                image={
+                  movie.poster_path
+                    ? `${TMDB_POSTER_PATH + movie.poster_path}`
+                    : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                }
+                header={movie.title}
+                meta={movie.release_date && getDateHumanReadble(movie.release_date)}
+                onClick={() => cardHandleClick('movie', movie.id)}
+              />
+            ))}
+          </Card.Group>
         )}
       </PopularMoviesContainer>
       {console.log('popularTvShoes', popularTvShoes)}
@@ -133,7 +157,7 @@ function Homepage() {
                   : 'https://react.semantic-ui.com/images/wireframe/image.png'
               }
               header={movie.name}
-              meta={movie.first_air_date}
+              meta={movie.first_air_date && getDateHumanReadble(movie.first_air_date)}
               onClick={() => cardHandleClick('tv', movie.id)}
             />
           ))}
@@ -155,7 +179,7 @@ function Homepage() {
                   : 'https://react.semantic-ui.com/images/wireframe/image.png'
               }
               header={movie.title}
-              meta={movie.release_date}
+              meta={movie.release_date && getDateHumanReadble(movie.release_date)}
               onClick={() => cardHandleClick('movie', movie.id)}
             />
           ))}
@@ -177,7 +201,7 @@ function Homepage() {
                   : 'https://react.semantic-ui.com/images/wireframe/image.png'
               }
               header={movie.title}
-              meta={movie.release_date}
+              meta={movie.release_date && getDateHumanReadble(movie.release_date)}
               onClick={() => cardHandleClick('movie', movie.id)}
             />
           ))}
