@@ -35,7 +35,8 @@ import {
   Title,
   PopularMoviesContainer,
   HeaderGradient,
-  TrailerContainer
+  TrailerContainer,
+  StyledSearchSection
 } from './Home.style';
 
 function Homepage() {
@@ -108,7 +109,7 @@ function Homepage() {
 
   return (
     <HomepageContainer>
-      <section>
+      <StyledSearchSection>
         <BackgroundImgContainer>
           <BackgroundImage src={mainBackground} alt="mainBackground" />
         </BackgroundImgContainer>
@@ -118,7 +119,7 @@ function Homepage() {
           <p>Millions of movies, TV shows and people to discover. Explore now</p>
         </Title>
         <SearchBar />
-      </section>
+      </StyledSearchSection>
       <PopularMoviesContainer>
         {isLoading ? <div>Loading</div> : ''}
         {popularMovies && (

@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 // eslint-disable-next-line import/prefer-default-export
+
+export const StyledSearchSection = styled.section`
+  height: calc(100vh - 65px);
+`;
+
 export const HomepageContainer = styled.main`
   max-width: 1172px;
   margin: auto;
@@ -31,28 +36,27 @@ export const BackgroundImgContainer = styled.div`
   left: 0;
   width: 100%;
   margin: auto;
-  opacity: 0.5;
+  /* opacity: 0.5; */
+`;
+
+export const BackgroundImage = styled.img`
+  height: 100%;
 `;
 
 export const HeaderGradient = styled.div`
   position: absolute;
   z-index: -1;
   left: 0;
-  top: 100px;
+  top: calc(100% - 85%);
   width: 100%;
-  height: 1000px;
-  background: linear-gradient(0deg, #141313, 80%, transparent);
-`;
-
-export const BackgroundImage = styled.img`
-  width: 100%;
+  height: 800px;
+  background: linear-gradient(to top, #141313, 80%, transparent);
 `;
 
 export const Title = styled.div`
   max-width: 590px;
-
   font-family: 'Mulish', sans-serif;
-  margin: 7em 0 3.8em 0;
+  padding: 7em 0 3.8em 0;
   color: #fff;
   p {
     font-weight: 800;
@@ -62,7 +66,8 @@ export const Title = styled.div`
 `;
 
 export const PopularMoviesContainer = styled.section`
-  margin-top: 12em;
+  margin-top: -20em;
+  /* margin-top: 12em; */
   a.ui.card {
     padding: 0;
 
