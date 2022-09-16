@@ -5,7 +5,7 @@
 /* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Card, Embed, Modal } from 'semantic-ui-react';
+import { Card, Embed, Modal, Placeholder, Image } from 'semantic-ui-react';
 // import 'pure-react-carousel/dist/react-carousel.es.css';
 import * as route from '../../constants/routes';
 
@@ -50,7 +50,7 @@ function Homepage() {
   const [currentTrailer, setCurrentTrailer] = useState();
 
   // const [activeSlide, setActiveSlide] = useState(null);
-  const [backgroundSlides, setBackgroundSlides] = useState([]);
+  // const [backgroundSlides, setBackgroundSlides] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,26 +79,19 @@ function Homepage() {
       setPopularTvShoes(popularTvShoesResult.results);
 
       // add backdrop_path for background slider
-      popularMoviesResult.results
-        .slice(0, 5)
-        .map((movie) => setBackgroundSlides((prev) => [...prev, movie.backdrop_path]));
+      // popularMoviesResult.results
+      //   .slice(0, 5)
+      //   .map((movie) => setBackgroundSlides((prev) => [...prev, movie.backdrop_path]));
 
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     };
 
     renderMainMovieCards();
   }, []);
 
-  // const renderMovieCards = (moviesCards) =>
-  //   // eslint-disable-next-line implicit-arrow-linebreak
-  //   moviesCards
-  //     .slice(0, 5)
-  //     .map((movie) => (
-  //       <MovieCard key={movie.id} id={movie.id} image={movie.poster_path} category="movie" />
-  //     ));
-
   const modalHandler = (movie) => {
-    console.log('hit', movie);
     setCurrentTrailer(movie);
     setOpen(true);
   };
@@ -121,28 +114,46 @@ function Homepage() {
         <SearchBar />
       </StyledSearchSection>
       <PopularMoviesContainer>
-        {isLoading ? <div>Loading</div> : ''}
         {popularMovies && (
           <Card.Group itemsPerRow={5}>
-            {/* {renderMovieCards(popularMovies)} */}
-            {console.log(backgroundSlides)}
             {popularMovies.slice(0, 5).map((movie) => (
-              <Card
-                key={movie.id}
-                image={
-                  movie.poster_path
-                    ? `${TMDB_POSTER_PATH + movie.poster_path}`
-                    : 'https://react.semantic-ui.com/images/wireframe/image.png'
-                }
-                header={movie.title}
-                meta={movie.release_date && getDateHumanReadble(movie.release_date)}
-                onClick={() => cardHandleClick('movie', movie.id)}
-              />
+              <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+                {isLoading ? (
+                  <Placeholder inverted style={{ height: 300, width: 200 }}>
+                    <Placeholder.Image rectangular />
+                  </Placeholder>
+                ) : (
+                  <Image
+                    style={{ height: 326, width: 217 }}
+                    src={
+                      movie.poster_path
+                        ? `${TMDB_POSTER_PATH + movie.poster_path}`
+                        : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                    }
+                  />
+                )}
+                <Card.Content>
+                  {isLoading ? (
+                    <Placeholder inverted>
+                      <Placeholder.Header>
+                        <Placeholder.Line length="long" />
+                        <Placeholder.Line length="medium" />
+                      </Placeholder.Header>
+                    </Placeholder>
+                  ) : (
+                    <>
+                      <Card.Header>{movie.title && movie.title}</Card.Header>
+                      <Card.Meta>
+                        {movie.release_date && getDateHumanReadble(movie.release_date)}
+                      </Card.Meta>
+                    </>
+                  )}
+                </Card.Content>
+              </Card>
             ))}
           </Card.Group>
         )}
       </PopularMoviesContainer>
-      {console.log('popularTvShoes', popularTvShoes)}
       {popularTvShoes && (
         <CardCarousel
           title
@@ -150,17 +161,39 @@ function Homepage() {
           titleLink={`${route.VIEW_TVSHOWS}`}
           totalSlides={topRatedMovies.length}>
           {popularTvShoes.map((movie) => (
-            <Card
-              key={movie.id}
-              image={
-                movie.backdrop_path
-                  ? `${TMDB_POSTER_PATH + movie.poster_path}`
-                  : 'https://react.semantic-ui.com/images/wireframe/image.png'
-              }
-              header={movie.name}
-              meta={movie.first_air_date && getDateHumanReadble(movie.first_air_date)}
-              onClick={() => cardHandleClick('tv', movie.id)}
-            />
+            <Card key={movie.id} onClick={() => cardHandleClick('tv', movie.id)}>
+              {isLoading ? (
+                <Placeholder inverted style={{ height: 409, width: 273 }}>
+                  <Placeholder.Image rectangular />
+                </Placeholder>
+              ) : (
+                <Image
+                  style={{ height: 409, width: 273 }}
+                  src={
+                    movie.poster_path
+                      ? `${TMDB_POSTER_PATH + movie.poster_path}`
+                      : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                  }
+                />
+              )}
+              <Card.Content>
+                {isLoading ? (
+                  <Placeholder inverted>
+                    <Placeholder.Header>
+                      <Placeholder.Line length="long" />
+                      <Placeholder.Line length="medium" />
+                    </Placeholder.Header>
+                  </Placeholder>
+                ) : (
+                  <>
+                    <Card.Header>{movie.name && movie.name}</Card.Header>
+                    <Card.Meta>
+                      {movie.first_air_date && getDateHumanReadble(movie.first_air_date)}
+                    </Card.Meta>
+                  </>
+                )}
+              </Card.Content>
+            </Card>
           ))}
         </CardCarousel>
       )}
@@ -172,17 +205,39 @@ function Homepage() {
           titleLink={`${route.VIEW_MOVIES_TOP_RATED}`}
           totalSlides={topRatedMovies.length}>
           {topRatedMovies.map((movie) => (
-            <Card
-              key={movie.id}
-              image={
-                movie.backdrop_path
-                  ? `${TMDB_POSTER_PATH + movie.poster_path}`
-                  : 'https://react.semantic-ui.com/images/wireframe/image.png'
-              }
-              header={movie.title}
-              meta={movie.release_date && getDateHumanReadble(movie.release_date)}
-              onClick={() => cardHandleClick('movie', movie.id)}
-            />
+            <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+              {isLoading ? (
+                <Placeholder inverted style={{ height: 409, width: 273 }}>
+                  <Placeholder.Image rectangular />
+                </Placeholder>
+              ) : (
+                <Image
+                  style={{ height: 409, width: 273 }}
+                  src={
+                    movie.poster_path
+                      ? `${TMDB_POSTER_PATH + movie.poster_path}`
+                      : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                  }
+                />
+              )}
+              <Card.Content>
+                {isLoading ? (
+                  <Placeholder inverted>
+                    <Placeholder.Header>
+                      <Placeholder.Line length="long" />
+                      <Placeholder.Line length="medium" />
+                    </Placeholder.Header>
+                  </Placeholder>
+                ) : (
+                  <>
+                    <Card.Header>{movie.title && movie.title}</Card.Header>
+                    <Card.Meta>
+                      {movie.release_date && getDateHumanReadble(movie.release_date)}
+                    </Card.Meta>
+                  </>
+                )}
+              </Card.Content>
+            </Card>
           ))}
         </CardCarousel>
       )}
@@ -194,24 +249,42 @@ function Homepage() {
           titleLink={`${route.VIEW_MOVIES_NOW_PLAYING}`}
           totalSlides={nowPlayingMovies.length}>
           {nowPlayingMovies.map((movie) => (
-            <Card
-              key={movie.id}
-              image={
-                movie.backdrop_path
-                  ? `${TMDB_POSTER_PATH + movie.poster_path}`
-                  : 'https://react.semantic-ui.com/images/wireframe/image.png'
-              }
-              header={movie.title}
-              meta={movie.release_date && getDateHumanReadble(movie.release_date)}
-              onClick={() => cardHandleClick('movie', movie.id)}
-            />
+            <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+              {isLoading ? (
+                <Placeholder inverted style={{ height: 409, width: 273 }}>
+                  <Placeholder.Image rectangular />
+                </Placeholder>
+              ) : (
+                <Image
+                  style={{ height: 409, width: 273 }}
+                  src={
+                    movie.poster_path
+                      ? `${TMDB_POSTER_PATH + movie.poster_path}`
+                      : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                  }
+                />
+              )}
+              <Card.Content>
+                {isLoading ? (
+                  <Placeholder inverted>
+                    <Placeholder.Header>
+                      <Placeholder.Line length="long" />
+                      <Placeholder.Line length="medium" />
+                    </Placeholder.Header>
+                  </Placeholder>
+                ) : (
+                  <>
+                    <Card.Header>{movie.title && movie.title}</Card.Header>
+                    <Card.Meta>
+                      {movie.release_date && getDateHumanReadble(movie.release_date)}
+                    </Card.Meta>
+                  </>
+                )}
+              </Card.Content>
+            </Card>
           ))}
         </CardCarousel>
       )}
-
-      {console.log('upcomingMovies', upcomingdMovies)}
-      {/* {console.log('upcomingTrailers', upcomingTrailers)} */}
-
       {upcomingdMovies && (
         <CardCarousel
           title
