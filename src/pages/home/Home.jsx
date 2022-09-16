@@ -147,7 +147,7 @@ function Homepage() {
         <CardCarousel
           title
           titleHeader="Popular TV Shoes"
-          titleLink={`${route.TVSHOWS}`}
+          titleLink={`${route.VIEW_TVSHOWS}`}
           totalSlides={topRatedMovies.length}>
           {popularTvShoes.map((movie) => (
             <Card
@@ -169,7 +169,7 @@ function Homepage() {
         <CardCarousel
           title
           titleHeader="Top Rated Movies"
-          titleLink={`${route.MOVIES}`}
+          titleLink={`${route.VIEW_MOVIES_TOP_RATED}`}
           totalSlides={topRatedMovies.length}>
           {topRatedMovies.map((movie) => (
             <Card
@@ -191,7 +191,7 @@ function Homepage() {
         <CardCarousel
           title
           titleHeader="Playing now Movies"
-          titleLink={`${route.MOVIES}`}
+          titleLink={`${route.VIEW_MOVIES_NOW_PLAYING}`}
           totalSlides={nowPlayingMovies.length}>
           {nowPlayingMovies.map((movie) => (
             <Card
@@ -216,7 +216,7 @@ function Homepage() {
         <CardCarousel
           title
           titleHeader="Upcoming Movies Trailers"
-          titleLink={`${route.MOVIES}`}
+          titleLink={`${route.VIEW_MOVIES_UPCOMING}`}
           totalSlides={upcomingdMovies.length}
           naturalSlideWidth={1}
           naturalSlideHeight={0.75}
