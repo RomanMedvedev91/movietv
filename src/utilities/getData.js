@@ -2,8 +2,10 @@ import axios from 'axios';
 
 async function getData(query) {
   try {
-    const res = await axios.get(query).then((response) => response);
-    console.log(res);
+    const res = await axios.get(query).then((response) => {
+      console.log(response);
+      return response;
+    });
     return res.data;
   } catch (error) {
     throw new Error(error);

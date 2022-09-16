@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-closing-bracket-location */
+/* eslint-disable prettier/prettier */
+/* eslint-disable indent */
 /* eslint-disable operator-linebreak */
 /* eslint-disable object-curly-newline */
 
@@ -20,7 +23,7 @@ function ItemsList({
       <Item.Group relaxed divided>
         {moviesPreview.results &&
           moviesPreview.results.map((movie) => (
-            <Item key={movie.id} onClick={() => cardHandleClick(movie, movie.id)}>
+            <Item key={movie.id}>
               {isLoading ? (
                 <>
                   <Placeholder inverted style={{ height: 225, width: 150 }}>
@@ -39,6 +42,7 @@ function ItemsList({
                   style={{ height: 225, width: 150 }}
                   size="small"
                   src={getImageUrl(movie)}
+                  onClick={() => cardHandleClick(movie, movie.id)}
                 />
               )}
 
@@ -53,13 +57,19 @@ function ItemsList({
                 ) : (
                   <>
                     <Item.Header>
-                      <Link to={`/${movie.media_type}/${movie.id}`}>
+                      <Link
+                        to={`/${movie.media_type}/${movie.id}`}
+                        state={{ id: movie.id, category: movie.media_type }}>
                         {movie.title || movie.name}
                       </Link>
                     </Item.Header>
 
                     <Item.Meta>
-                      {getDateHumanReadble(movie.release_date || movie.air_date)}
+                      {movie.known_for_department
+                        ? movie.known_for_department
+                        : getDateHumanReadble(
+                            movie.release_date || movie.air_date || movie.first_air_date
+                          )}
                     </Item.Meta>
                     <Item.Description>{movie.overview}</Item.Description>
                   </>

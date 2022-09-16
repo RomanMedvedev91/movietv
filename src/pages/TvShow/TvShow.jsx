@@ -5,7 +5,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 /* eslint-disable implicit-arrow-linebreak */
 import { useState, useEffect } from 'react';
-import { Outlet, useParams, useNavigate, Link } from 'react-router-dom';
+import { Outlet, useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 
 import {
   Button,
@@ -77,33 +77,38 @@ function TvShow() {
 
   const { tvShowId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const loadMovie = async () => {
-      setIsLoading(true);
-      const movieDetailUrl = getTvShowDetails(tvShowId);
-      const movieCreditUrl = getTvShowCredits(tvShowId);
-      const recommendationsMoviesUrl = getRecommendationsTvShows(tvShowId);
+      if (!location.state?.id) {
+        navigate('/404');
+      } else {
+        setIsLoading(true);
+        const movieDetailUrl = getTvShowDetails(tvShowId);
+        const movieCreditUrl = getTvShowCredits(tvShowId);
+        const recommendationsMoviesUrl = getRecommendationsTvShows(tvShowId);
 
-      const resMovieDetail = await getData(movieDetailUrl);
-      const resMovieCredit = await getData(movieCreditUrl);
-      const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
+        const resMovieDetail = await getData(movieDetailUrl);
+        const resMovieCredit = await getData(movieCreditUrl);
+        const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
 
-      setMovieDetails(resMovieDetail);
-      setMovieSetCredits(resMovieCredit);
-      setrecommendationsMovies(resrecommendationsMovies.results);
+        setMovieDetails(resMovieDetail);
+        setMovieSetCredits(resMovieCredit);
+        setrecommendationsMovies(resrecommendationsMovies.results);
 
-      const seasonDetailUrl = getTvSeasonDetails(
-        tvShowId,
-        resMovieDetail?.last_episode_to_air?.season_number
-      );
-      const seasonDetailsRes = await getData(seasonDetailUrl);
+        const seasonDetailUrl = getTvSeasonDetails(
+          tvShowId,
+          resMovieDetail?.last_episode_to_air?.season_number
+        );
+        const seasonDetailsRes = await getData(seasonDetailUrl);
 
-      setSeasonDetails(seasonDetailsRes);
+        setSeasonDetails(seasonDetailsRes);
 
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 300);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
+      }
     };
     loadMovie();
   }, [tvShowId]);
@@ -136,7 +141,7 @@ function TvShow() {
   };
 
   const cardHandleClick = (category, id) => {
-    navigate(`/${category}/${id}`);
+    navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
   const panes = [

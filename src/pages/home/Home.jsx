@@ -104,7 +104,7 @@ function Homepage() {
   };
 
   const cardHandleClick = (category, id) => {
-    navigate(`/${category}/${id}`);
+    navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
   return (
