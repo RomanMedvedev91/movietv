@@ -25,7 +25,7 @@ import {
   PersonCreditsTable,
   MovieCreditLink
 } from './Person.style';
-import * as route from '../../constants/routes';
+// import * as route from '../../constants/routes';
 
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 import { HeaderGradient } from '../home/Home.style';
@@ -305,7 +305,7 @@ function Person() {
             <CardCarousel
               title
               titleHeader="Known For"
-              titleLink={`${route.MOVIES}`}
+              // titleLink={`${route.MOVIES}`}
               totalSlides={personKnownForMovies.length}
               visibleSlides={5}>
               {personKnownForMovies.map((movie) => (

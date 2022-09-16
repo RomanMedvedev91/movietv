@@ -24,10 +24,12 @@ function CardCarousel({
       {title && (
         <MoviesTitle>
           <h2>{titleHeader}</h2>
-          <Link to={titleLink}>
-            See more
-            <Icon name="angle right" size="small" />
-          </Link>
+          {titleLink && (
+            <Link to={titleLink}>
+              See more
+              <Icon name="angle right" size="small" />
+            </Link>
+          )}
         </MoviesTitle>
       )}
 

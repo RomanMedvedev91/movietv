@@ -24,6 +24,8 @@ export const VIEW_TVSHOWS_TOP_RATED = '/tv/top-rated';
 export const VIEW_TVSHOWS_AIRING_TODAY = '/tv/airing-today';
 export const VIEW_TVSHOWS_ON_TV = '/tv/on-the-air';
 
+export const VIEW_CASTS = '/casts';
+
 export const PERSON = '/person/:personId';
 // export const MOVIE_DETAILS = '/:category/:movieId';
 export const SEARCH = '/search';

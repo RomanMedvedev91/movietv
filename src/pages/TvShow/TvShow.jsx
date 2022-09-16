@@ -20,7 +20,7 @@ import {
   Item
 } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
-import * as route from '../../constants/routes';
+// import * as route from '../../constants/routes';
 
 import {
   getTvShowDetails,
@@ -338,7 +338,7 @@ function TvShow() {
             <CardCarousel
               title
               titleHeader="Casts"
-              titleLink={`${route.MOVIES}`}
+              // titleLink={`${route.MOVIES}`}
               visibleSlides={6}
               totalSlides={movieCredits.cast.length > 10 ? 10 : movieCredits.cast.length}
               naturalSlideWidth={1}
@@ -410,7 +410,7 @@ function TvShow() {
             <CardCarousel
               title
               titleHeader="Recomended TV Shows"
-              titleLink={`${route.MOVIES}`}
+              // titleLink={`${route.MOVIES}`}
               visibleSlides={3}
               totalSlides={recommendationsMovies.length > 10 ? 10 : recommendationsMovies.length}
               naturalSlideWidth={1.8}

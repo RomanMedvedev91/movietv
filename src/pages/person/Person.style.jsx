@@ -15,6 +15,7 @@ export const PersonContainer = styled.main`
 `;
 
 export const PersonDetail = styled.section`
+  height: calc(50vh - 65px);
   width: 100%;
   // img background full height
   /* height: 100vh; */
@@ -23,29 +24,32 @@ export const PersonDetail = styled.section`
 `;
 
 export const BackgroundImage = styled.div`
+  height: calc(100vh - 65px);
   position: absolute;
   top: 0;
   left: 0;
-  /* margin: auto; */
+  margin: auto;
   width: 100%;
   z-index: -1;
+  opacity: 0.7;
   img {
-    /* opacity: 0.2; */
-    max-width: 100%;
-    max-height: 100%;
-    margin: auto;
-    display: block;
+    width: 100%;
+    height: 100%;
+    /* margin: auto;
+    display: block; */
   }
 `;
 
 export const HeaderGradient = styled.div`
   position: absolute;
-  z-index: -1;
+  z-index: -2;
   left: 0;
-  top: 100px;
+  /* top: calc(100% - 85%); */
+  top: calc(100vh - 10vh);
   width: 100%;
-  height: 1000px;
-  background: linear-gradient(0deg, #141313, 80%, transparent);
+  height: calc(100vh - 20vh);
+  /* height: 800px; */
+  background: linear-gradient(to top, #141313, 80%, transparent);
 `;
 
 export const PosterContainer = styled.div`

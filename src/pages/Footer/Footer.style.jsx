@@ -20,7 +20,7 @@ export const FooterContainer = styled.footer`
 export const FooterGradient = styled.div`
   /* display: none; */
   position: absolute;
-  z-index: -1;
+  z-index: -5;
   left: 0;
   /* bottom: 100px; */
   width: 100%;
@@ -52,7 +52,7 @@ export const BackgroundImg = styled.div`
   left: 0;
   right: 0;
   width: 100%;
-  opacity: 50%;
+  opacity: 30%;
   /* height: 572px; */
 
   img {
