@@ -20,7 +20,7 @@ export const FooterContainer = styled.footer`
 export const FooterGradient = styled.div`
   /* display: none; */
   position: absolute;
-  z-index: -1;
+  z-index: -5;
   left: 0;
   /* bottom: 100px; */
   width: 100%;
@@ -36,11 +36,13 @@ export const FooterGradient = styled.div`
 export const LinksContainer = styled.div`
   display: flex;
   z-index: 1;
+  gap: 10em;
 `;
 
 export const NavigationContainer = styled.div`
   display: flex;
   padding-top: 1.4em;
+  gap: 10em;
 `;
 
 export const BackgroundImg = styled.div`
@@ -50,7 +52,7 @@ export const BackgroundImg = styled.div`
   left: 0;
   right: 0;
   width: 100%;
-  opacity: 50%;
+  opacity: 30%;
   /* height: 572px; */
 
   img {
@@ -61,7 +63,7 @@ export const BackgroundImg = styled.div`
 `;
 
 export const NavItemContainer = styled.ul`
-  margin-left: 6em;
+  /* margin-left: 6em; */
   display: flex;
   flex-direction: column;
   a {

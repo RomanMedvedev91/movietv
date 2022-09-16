@@ -5,7 +5,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 import { useState, useEffect } from 'react';
 import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
-import { Icon, Card, Button, Table, Tab } from 'semantic-ui-react';
+import { Icon, Card, Button, Table, Tab, Dimmer, Loader } from 'semantic-ui-react';
 
 import {
   getPersonDetails,
@@ -25,7 +25,7 @@ import {
   PersonCreditsTable,
   MovieCreditLink
 } from './Person.style';
-import * as route from '../../constants/routes';
+// import * as route from '../../constants/routes';
 
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 import { HeaderGradient } from '../home/Home.style';
@@ -196,9 +196,12 @@ function Person() {
 
   return (
     <>
-      {isLoading && <div>Loading...</div>}
-      {console.log('personCredits', personCredits)}
-      {console.log('personCreditsCrew', personCreditsCrew)}
+      {isLoading && (
+        <Dimmer active>
+          <Loader size="medium">Loading...</Loader>
+        </Dimmer>
+      )}
+
       {!isLoading && personDetails && (
         <PersonContainer>
           <PersonDetail>
@@ -300,12 +303,11 @@ function Person() {
             </PersonDataContainer>
             <HeaderGradient />
           </PersonDetail>
-          {console.log('personKnownForMovies', personKnownForMovies)}
           {personKnownForMovies && (
             <CardCarousel
               title
               titleHeader="Known For"
-              titleLink={`${route.MOVIES}`}
+              // titleLink={`${route.MOVIES}`}
               totalSlides={personKnownForMovies.length}
               visibleSlides={5}>
               {personKnownForMovies.map((movie) => (

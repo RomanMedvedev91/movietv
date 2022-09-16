@@ -7,7 +7,7 @@ import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
-import * as route from '../../constants/routes';
+// import * as route from '../../constants/routes';
 
 import {
   getMovieDetails,
@@ -47,7 +47,6 @@ function Movie() {
 
   useEffect(() => {
     const loadMovie = async () => {
-      console.log('locationMOVIE', location);
       if (!location.state?.id) {
         navigate('/404');
       } else {
@@ -224,9 +223,6 @@ function Movie() {
 
   return (
     <>
-      {console.log('recommendationsMovies', recommendationsMovies)}
-      {console.log('movieCredits', movieCredits)}
-      {console.log('movieDetails', movieDetails)}
       {isLoading && (
         <Dimmer active>
           <Loader size="medium">Loading...</Loader>
@@ -301,7 +297,7 @@ function Movie() {
             <CardCarousel
               title
               titleHeader="Casts"
-              titleLink={`${route.MOVIES}`}
+              // titleLink={`${route.VIEW_CASTS}`}
               visibleSlides={6}
               totalSlides={movieCredits.cast.length > 10 ? 10 : movieCredits.cast.length}
               naturalSlideWidth={1}
@@ -331,7 +327,7 @@ function Movie() {
             <CardCarousel
               title
               titleHeader="Recomended movies"
-              titleLink={`${route.MOVIES}`}
+              // titleLink={`${route.MOVIES}`}
               visibleSlides={3}
               totalSlides={recommendationsMovies.length > 10 ? 10 : recommendationsMovies.length}
               naturalSlideWidth={1.8}

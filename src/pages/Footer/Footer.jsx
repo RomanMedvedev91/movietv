@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-closing-bracket-location */
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
@@ -34,46 +35,37 @@ function Footer() {
         <NavigationContainer>
           <NavItemContainer>
             <NavItem>
-              <Link to={route.MOVIES}>Movies</Link>
+              <Link to={route.VIEW_MOVIES}>Movies</Link>
             </NavItem>
             <NavItem>
-              <Link to={route.MOVIES}>Popular</Link>
+              <Link to={route.VIEW_MOVIES_NOW_PLAYING}>Playing Now</Link>
             </NavItem>
             <NavItem>
-              <Link to={route.MOVIES}>Upcomming</Link>
+              <Link to={route.VIEW_MOVIES_UPCOMING}>Upcomming</Link>
             </NavItem>
             <NavItem>
-              <Link to={route.MOVIES}>Top rated</Link>
-            </NavItem>
-          </NavItemContainer>
-
-          <NavItemContainer>
-            <NavItem>
-              <Link to={route.MOVIES}>Movies</Link>
+              <Link to={route.VIEW_MOVIES}>Popular</Link>
             </NavItem>
             <NavItem>
-              <Link to={route.MOVIES}>Popular</Link>
-            </NavItem>
-            <NavItem>
-              <Link to={route.MOVIES}>Upcomming</Link>
-            </NavItem>
-            <NavItem>
-              <Link to={route.MOVIES}>Top rated</Link>
+              <Link to={route.VIEW_MOVIES_TOP_RATED}>Top rated</Link>
             </NavItem>
           </NavItemContainer>
 
           <NavItemContainer>
             <NavItem>
-              <Link to={route.MOVIES}>Movies</Link>
+              <Link to={route.VIEW_TVSHOWS}>TV Shows</Link>
             </NavItem>
             <NavItem>
-              <Link to={route.MOVIES}>Popular</Link>
+              <Link to={route.VIEW_TVSHOWS_AIRING_TODAY}>Airing Today</Link>
             </NavItem>
             <NavItem>
-              <Link to={route.MOVIES}>Upcomming</Link>
+              <Link to={route.VIEW_TVSHOWS_ON_TV}>On TV</Link>
             </NavItem>
             <NavItem>
-              <Link to={route.MOVIES}>Top rated</Link>
+              <Link to={route.VIEW_TVSHOWS}>Popular</Link>
+            </NavItem>
+            <NavItem>
+              <Link to={route.VIEW_TVSHOWS_TOP_RATED}>Top rated</Link>
             </NavItem>
           </NavItemContainer>
         </NavigationContainer>
@@ -81,26 +73,38 @@ function Footer() {
 
       <FooterDownContainer>
         <div>
-          <p>© 2022 MovieTV, Canada, Toronto, 185 Roehampton Ave </p>
+          <p>© 2022 MovieTV, Canada, Toronto, 185 Roehampton Avenue</p>
         </div>
         <SocialsContainer>
           <p>Social media</p>
           <div>
-            <Link className="github" to="/">
+            <a
+              className="github"
+              href="https://github.com/RomanMedvedev91/movietv"
+              target="_blank"
+              rel="noreferrer">
               <Icon size="big" name="github" />
-            </Link>
-            <Link className="facebook" to="/">
+            </a>
+            <a
+              className="facebook"
+              href="https://www.facebook.com/themoviedb"
+              target="_blank"
+              rel="noreferrer">
               <Icon size="big" name="facebook f" />
-            </Link>
-            <Link className="instagram" to="/">
+            </a>
+            <a className="instagram" to="/">
               <Icon size="big" name="instagram" />
-            </Link>
-            <Link className="twitter" to="/">
+            </a>
+            <a
+              className="twitter"
+              href="https://twitter.com/themoviedb"
+              target="_blank"
+              rel="noreferrer">
               <Icon size="big" name="twitter" />
-            </Link>
-            <Link className="youtube" to="/">
+            </a>
+            <a className="youtube" to="/">
               <Icon size="big" name="youtube" />
-            </Link>
+            </a>
           </div>
         </SocialsContainer>
       </FooterDownContainer>
