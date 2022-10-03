@@ -112,48 +112,49 @@ function Homepage() {
           <p>Millions of movies, TV shows and people to discover. Explore now</p>
         </Title>
         <SearchBar />
-      </StyledSearchSection>
-      <PopularMoviesContainer>
-        {popularMovies && (
-          <Card.Group itemsPerRow={5}>
-            {popularMovies.slice(0, 5).map((movie) => (
-              <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
-                {isLoading ? (
-                  <Placeholder inverted style={{ height: 300, width: 200 }}>
-                    <Placeholder.Image rectangular />
-                  </Placeholder>
-                ) : (
-                  <Image
-                    style={{ height: 326, width: 217 }}
-                    src={
-                      movie.poster_path
-                        ? `${TMDB_POSTER_PATH + movie.poster_path}`
-                        : 'https://react.semantic-ui.com/images/wireframe/image.png'
-                    }
-                  />
-                )}
-                <Card.Content>
+
+        <PopularMoviesContainer>
+          {popularMovies && (
+            <Card.Group itemsPerRow={5}>
+              {popularMovies.slice(0, 5).map((movie) => (
+                <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
                   {isLoading ? (
-                    <Placeholder inverted>
-                      <Placeholder.Header>
-                        <Placeholder.Line length="long" />
-                        <Placeholder.Line length="medium" />
-                      </Placeholder.Header>
+                    <Placeholder inverted style={{ height: 300, width: 200 }}>
+                      <Placeholder.Image rectangular />
                     </Placeholder>
                   ) : (
-                    <>
-                      <Card.Header>{movie.title && movie.title}</Card.Header>
-                      <Card.Meta>
-                        {movie.release_date && getDateHumanReadble(movie.release_date)}
-                      </Card.Meta>
-                    </>
+                    <Image
+                      style={{ height: 326, width: 217 }}
+                      src={
+                        movie.poster_path
+                          ? `${TMDB_POSTER_PATH + movie.poster_path}`
+                          : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                      }
+                    />
                   )}
-                </Card.Content>
-              </Card>
-            ))}
-          </Card.Group>
-        )}
-      </PopularMoviesContainer>
+                  <Card.Content>
+                    {isLoading ? (
+                      <Placeholder inverted>
+                        <Placeholder.Header>
+                          <Placeholder.Line length="long" />
+                          <Placeholder.Line length="medium" />
+                        </Placeholder.Header>
+                      </Placeholder>
+                    ) : (
+                      <>
+                        <Card.Header>{movie.title && movie.title}</Card.Header>
+                        <Card.Meta>
+                          {movie.release_date && getDateHumanReadble(movie.release_date)}
+                        </Card.Meta>
+                      </>
+                    )}
+                  </Card.Content>
+                </Card>
+              ))}
+            </Card.Group>
+          )}
+        </PopularMoviesContainer>
+      </StyledSearchSection>
       {popularTvShoes && (
         <CardCarousel
           title

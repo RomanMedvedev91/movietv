@@ -4,6 +4,9 @@ import styled from 'styled-components';
 
 export const StyledSearchSection = styled.section`
   height: calc(100vh - 65px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const HomepageContainer = styled.main`
@@ -15,8 +18,8 @@ export const HomepageContainer = styled.main`
   justify-content: center; */
   /* background-color: bisque; */
   /* padding: 20px 80px; */
-  /* .
-  ui.card,
+  /* 
+  .ui.card,
   .ui.cards > .card {
     box-shadow: none;
     transition: transform 0.5s ease;
@@ -30,6 +33,7 @@ export const HomepageContainer = styled.main`
 `;
 
 export const BackgroundImgContainer = styled.div`
+  height: calc(100vh - 65px);
   position: absolute;
   z-index: -10;
   top: 0;
@@ -41,6 +45,8 @@ export const BackgroundImgContainer = styled.div`
 
 export const BackgroundImage = styled.img`
   height: 100%;
+  width: 100%;
+  display: block;
 `;
 
 export const HeaderGradient = styled.div`
@@ -48,9 +54,9 @@ export const HeaderGradient = styled.div`
   z-index: -1;
   left: 0;
   /* top: calc(100% - 85%); */
-  top: calc(100vh - 40vh);
+  top: calc(100vh - 50vh);
   width: 100%;
-  height: calc(100vh - 50vh);
+  height: calc(100vh - 20vh);
   /* height: 800px; */
   background: linear-gradient(to top, #141313, 80%, transparent);
 `;
@@ -67,9 +73,8 @@ export const Title = styled.div`
   }
 `;
 
-export const PopularMoviesContainer = styled.section`
-  margin-top: -33em;
-  /* margin-top: 12em; */
+export const PopularMoviesContainer = styled.div`
+  margin-top: 12em;
   .ui.card > .content,
   .ui.cards > .card > .content {
     opacity: 0;
