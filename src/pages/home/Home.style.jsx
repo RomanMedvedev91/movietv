@@ -3,10 +3,10 @@ import styled from 'styled-components';
 // eslint-disable-next-line import/prefer-default-export
 
 export const StyledSearchSection = styled.section`
-  height: calc(100vh - 65px);
+  /* height: calc(100vh - 65px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; */
 `;
 
 export const HomepageContainer = styled.main`
