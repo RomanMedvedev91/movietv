@@ -7,27 +7,43 @@ It was designed from scratched in figma and developed utilizing Axios, React rou
 
 During the project, I faced several obstacles such as dynamic nested routs, useUrlParams structure with axios, showing placeholders while fetching data and many more. I resolved them all, which made me feel more confident with react, APIs, react-router, axios, css.
 
-## Screenshots
+## GIFs & Screenshots
 
 ### Homepage
 
-!["GIF of scheduler project"]()
+!["Homepage of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/homepage_low.gif?raw=true)
 
-### screenshoot #1
+### movie details
 
-!["screenshoot#1 of scheduler project"]()
+!["gif movie details of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/movie_detalils_low.gif?raw=true)
 
-### screenshoot #2
+### popular tv-shows
 
-!["screenshoot#2 of scheduler project"]()
+!["gif popular tv-shows of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/popular_tvshows_low.gif?raw=true)
 
-### screenshoot #3
+### search & person details
 
-!["screenshoot#3 of scheduler project"]()
+!["gif search & person details of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/search_personDetails_low.gif?raw=true)
 
-### screenshoot #4
+### watch trailer
 
-!["screenshoot#4 of scheduler project"]()
+!["gif watch trailer of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/trailer_low.gif?raw=true)
+
+### screenshot #1
+
+!["screenshot#1 of movietv project"]()
+
+### screenshot #2
+
+!["screenshot#2 of movietv project"]()
+
+### screenshot #3
+
+!["screenshot#3 of movietv project"]()
+
+### screenshot #4
+
+!["screenshot#4 of movietv project"]()
 
 ## Setup
 
