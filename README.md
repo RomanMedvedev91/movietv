@@ -31,19 +31,19 @@ During the project, I faced several obstacles such as dynamic nested routs, useU
 
 ### screenshot #1
 
-!["screenshot#1 of movietv project"]()
+!["screenshot#1 of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/screenshot%231.png?raw=true)
 
 ### screenshot #2
 
-!["screenshot#2 of movietv project"]()
+!["screenshot#2 of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/screenshot%232.png?raw=true)
 
 ### screenshot #3
 
-!["screenshot#3 of movietv project"]()
+!["screenshot#3 of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/screenshot%233.png?raw=true)
 
 ### screenshot #4
 
-!["screenshot#4 of movietv project"]()
+!["screenshot#4 of movietv project"](https://github.com/RomanMedvedev91/movietv/blob/main/src/assets/gifs/screenshot%234.png?raw=true)
 
 ## Setup
 
