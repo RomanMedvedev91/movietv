@@ -6,6 +6,7 @@ async function getData(query) {
     return res.data;
   } catch (error) {
     throw new Error(error);
+    // return console.log('Error', error);
   }
 }
 

@@ -85,25 +85,29 @@ function TvShow() {
         navigate('/404');
       } else {
         setIsLoading(true);
-        const movieDetailUrl = getTvShowDetails(tvShowId);
-        const movieCreditUrl = getTvShowCredits(tvShowId);
-        const recommendationsMoviesUrl = getRecommendationsTvShows(tvShowId);
+        try {
+          const movieDetailUrl = getTvShowDetails(tvShowId);
+          const movieCreditUrl = getTvShowCredits(tvShowId);
+          const recommendationsMoviesUrl = getRecommendationsTvShows(tvShowId);
 
-        const resMovieDetail = await getData(movieDetailUrl);
-        const resMovieCredit = await getData(movieCreditUrl);
-        const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
+          const resMovieDetail = await getData(movieDetailUrl);
+          const resMovieCredit = await getData(movieCreditUrl);
+          const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
 
-        setMovieDetails(resMovieDetail);
-        setMovieSetCredits(resMovieCredit);
-        setrecommendationsMovies(resrecommendationsMovies.results);
+          setMovieDetails(resMovieDetail);
+          setMovieSetCredits(resMovieCredit);
+          setrecommendationsMovies(resrecommendationsMovies.results);
 
-        const seasonDetailUrl = getTvSeasonDetails(
-          tvShowId,
-          resMovieDetail?.last_episode_to_air?.season_number
-        );
-        const seasonDetailsRes = await getData(seasonDetailUrl);
+          const seasonDetailUrl = getTvSeasonDetails(
+            tvShowId,
+            resMovieDetail?.last_episode_to_air?.season_number
+          );
+          const seasonDetailsRes = await getData(seasonDetailUrl);
 
-        setSeasonDetails(seasonDetailsRes);
+          setSeasonDetails(seasonDetailsRes);
+        } catch (err) {
+          throw new Error(err);
+        }
 
         setTimeout(() => {
           setIsLoading(false);
@@ -358,7 +362,6 @@ function TvShow() {
 
           {seasonDetails && (
             <LastSeasonContainerStyle>
-              {console.log(seasonDetails)}
               {movieDetails.in_production ? <h2>Current Season</h2> : <h2>Last Season</h2>}
 
               <Item.Group>

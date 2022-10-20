@@ -15,7 +15,7 @@ export const PersonContainer = styled.main`
 `;
 
 export const PersonDetail = styled.section`
-  height: calc(50vh - 65px);
+  height: calc(100% - 65px);
   width: 100%;
   // img background full height
   /* height: 100vh; */
