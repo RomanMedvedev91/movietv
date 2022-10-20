@@ -3,7 +3,7 @@
 Find out your favourite movies, tv-shows or actors and discover details about it by seeing trailers, posters. Read the overview, find out movie's budget, tvshow's creators and networks, person's credits, recomended movies or tv-shows.
 
 This project is React based front-end application using [MovieDB API](https://www.themoviedb.org/documentation/api)
-It was designed from scratched in figma and developed utilizing Axios, React router 6, reusable components, CSS, styling components, react semantic UI library, eslint.
+It was designed from scratched in figma and developed utilizing Axios, React router 6, reusable components, CSS, styled components, react semantic UI library, eslint.
 
 During the project, I faced several obstacles such as dynamic nested routs, useUrlParams structure with axios, showing placeholders while fetching data and many more. I resolved them all, which made me feel more confident with react, APIs, react-router, axios, css.
 
