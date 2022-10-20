@@ -51,17 +51,21 @@ function Movie() {
         navigate('/404');
       } else {
         setIsLoading(true);
-        const movieDetailUrl = getMovieDetails(movieId);
-        const movieCreditUrl = getMovieCredits(movieId);
-        const recommendationsMoviesUrl = getRecommendationsMovies(movieId);
+        try {
+          const movieDetailUrl = getMovieDetails(movieId);
+          const movieCreditUrl = getMovieCredits(movieId);
+          const recommendationsMoviesUrl = getRecommendationsMovies(movieId);
 
-        const resMovieDetail = await getData(movieDetailUrl);
-        const resMovieCredit = await getData(movieCreditUrl);
-        const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
+          const resMovieDetail = await getData(movieDetailUrl);
+          const resMovieCredit = await getData(movieCreditUrl);
+          const resrecommendationsMovies = await getData(recommendationsMoviesUrl);
 
-        setMovieDetails(resMovieDetail);
-        setMovieSetCredits(resMovieCredit);
-        setrecommendationsMovies(resrecommendationsMovies.results);
+          setMovieDetails(resMovieDetail);
+          setMovieSetCredits(resMovieCredit);
+          setrecommendationsMovies(resrecommendationsMovies.results);
+        } catch (err) {
+          throw new Error(err);
+        }
 
         setTimeout(() => {
           setIsLoading(false);

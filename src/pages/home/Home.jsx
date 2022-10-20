@@ -56,27 +56,30 @@ function Homepage() {
   useEffect(() => {
     const renderMainMovieCards = async () => {
       setIsLoading(true);
-      const popularMoviesResult = await getData(popularMovieUrl());
-      const topRateMoviesResult = await getData(topRatedMovieUrl());
-      const playingNowMoviesResult = await getData(nowPlayingMovieUrl());
-      const upcomingMoviesResult = await getData(upcommingMovieUrl());
-      const popularTvShoesResult = await getData(popularTvUrl());
+      try {
+        const popularMoviesResult = await getData(popularMovieUrl());
+        const topRateMoviesResult = await getData(topRatedMovieUrl());
+        const playingNowMoviesResult = await getData(nowPlayingMovieUrl());
+        const upcomingMoviesResult = await getData(upcommingMovieUrl());
+        const popularTvShoesResult = await getData(popularTvUrl());
 
-      const upcomingMoviesWithTrailer = await Promise.all(
-        upcomingMoviesResult.results.map(async (movie) => {
-          const movieObj = { ...movie };
-          const trailerUrl = videoUrl(movie.id);
-          const trailerResponse = await getData(trailerUrl);
-          movieObj.trailer = trailerResponse.results;
-          return movieObj;
-        })
-      );
-
-      setPopularMovies(popularMoviesResult.results);
-      setTopRatedMovies(topRateMoviesResult.results);
-      setnowPlayingMovies(playingNowMoviesResult.results);
-      setUpcomingMovies(upcomingMoviesWithTrailer);
-      setPopularTvShoes(popularTvShoesResult.results);
+        const upcomingMoviesWithTrailer = await Promise.all(
+          upcomingMoviesResult.results.map(async (movie) => {
+            const movieObj = { ...movie };
+            const trailerUrl = videoUrl(movie.id);
+            const trailerResponse = await getData(trailerUrl);
+            movieObj.trailer = trailerResponse.results;
+            return movieObj;
+          })
+        );
+        setPopularMovies(popularMoviesResult.results);
+        setTopRatedMovies(topRateMoviesResult.results);
+        setnowPlayingMovies(playingNowMoviesResult.results);
+        setUpcomingMovies(upcomingMoviesWithTrailer);
+        setPopularTvShoes(popularTvShoesResult.results);
+      } catch (err) {
+        throw new Error(err);
+      }
 
       // add backdrop_path for background slider
       // popularMoviesResult.results
