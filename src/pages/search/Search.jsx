@@ -31,16 +31,36 @@ function Search() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query');
   const navigate = useNavigate();
-  console.log('CURRENT ', currentSearchPreview);
-  console.log('defaultTab ', defaultTab);
-  console.log('query1 ', query);
+
+  useEffect(() => {
+    const loadMovies = async () => {
+      setIsLoading(true);
+
+      const getCurrentCategoryUrl = getUrl(pathList.search[currentPreviewTab], {
+        query,
+        page: activePage
+      });
+      const currentPreivewRes = await getData(getCurrentCategoryUrl);
+      setCurrentSearchPreview(currentPreivewRes);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    };
+    loadMovies();
+    return () => {
+      setCurrentSearchPreview(null);
+      // setMoviespreview(null);
+      // setPersonsPrevivew(null);
+      // setTvShowsPreview(null);
+    };
+  }, [activePage, currentPreviewTab]);
 
   useEffect(() => {
     const loadMovies = async () => {
       if (!query) return;
 
       setIsLoading(true);
-      console.log('query2 ', query);
       // setCurrentSearchPreview(null);
       try {
         // get multi search url to define type of current category
@@ -54,21 +74,17 @@ function Search() {
 
         const searcMovieshUrl = getUrl(pathList.search.movie, { query });
         const searchTvShowsUrl = getUrl(pathList.search.tv, { query });
-        console.log('TVURL ', searchTvShowsUrl);
         const searchPersonUrl = getUrl(pathList.search.person, { query });
 
         // get url for movie, tv, person to get total result for each tab
         const moviesRes = await getData(searcMovieshUrl);
         const TvShowsRes = await getData(searchTvShowsUrl);
-        console.log('TvShowsRes ', TvShowsRes);
 
         const PersonsRes = await getData(searchPersonUrl);
 
         setMoviespreview(moviesRes);
         setTvShowsPreview(TvShowsRes);
         setPersonsPrevivew(PersonsRes);
-        console.log('CATEGORY ', currentCategory);
-        console.log('QUERY ', query);
 
         if (currentCategory === 'person') {
           setCurrentSearchPreview(PersonsRes);
@@ -94,30 +110,6 @@ function Search() {
       setCurrentSearchPreview(null);
     };
   }, [query]);
-
-  useEffect(() => {
-    const loadMovies = async () => {
-      setIsLoading(true);
-
-      const getCurrentCategoryUrl = getUrl(pathList.search[currentPreviewTab], {
-        query,
-        page: activePage
-      });
-      const currentPreivewRes = await getData(getCurrentCategoryUrl);
-      setCurrentSearchPreview(currentPreivewRes);
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    };
-    loadMovies();
-    return () => {
-      setCurrentSearchPreview(null);
-      // setMoviespreview(null);
-      // setPersonsPrevivew(null);
-      // setTvShowsPreview(null);
-    };
-  }, [activePage, currentPreviewTab]);
 
   const onChangePage = (e, pageInfo) => {
     setActivePage(pageInfo.activePage);

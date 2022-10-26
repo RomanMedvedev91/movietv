@@ -90,14 +90,22 @@ function Person() {
 
         setTimeout(() => {
           setIsLoading(false);
-        }, 300);
+        }, 1000);
       }
     };
     loadMovie();
   }, [personId]);
 
-  const cardHandleClick = (category, id) => {
-    navigate(`/${category}/${id}`, { state: { id, category } });
+  const cardHandleClick = (movie, id) => {
+    let cat;
+    if (!movie.media_type && movie.first_air_date) {
+      cat = 'tv';
+    } else if (!movie.media_type && movie.known_for_department) {
+      cat = 'person';
+    } else {
+      cat = movie.media_type || 'movie';
+    }
+    navigate(`/${cat}/${id}`, { state: { id, category: cat } });
   };
 
   const getPersonBiography = () => {
@@ -320,7 +328,7 @@ function Person() {
                   }
                   header={movie.title || movie.name}
                   meta={movie.release_date || movie.first_air_date}
-                  onClick={() => cardHandleClick(movie.media_type, movie.id)}
+                  onClick={() => cardHandleClick(movie, movie.id)}
                 />
               ))}
             </CardCarousel>
