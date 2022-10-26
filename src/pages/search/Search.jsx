@@ -31,42 +31,67 @@ function Search() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query');
   const navigate = useNavigate();
+  console.log('CURRENT ', currentSearchPreview);
+  console.log('defaultTab ', defaultTab);
+  console.log('query1 ', query);
 
   useEffect(() => {
     const loadMovies = async () => {
+      if (!query) return;
+
       setIsLoading(true);
+      console.log('query2 ', query);
+      // setCurrentSearchPreview(null);
+      try {
+        // get multi search url to define type of current category
+        const searchUrl = getUrl(pathList.search.multi, { query });
+        const multiSearchRes = await getData(searchUrl);
+        // get category type of first item from multi search
+        const currentCategory = multiSearchRes?.results[0]?.media_type || 'movie';
+        // setMultiSearchPreview(multiSearchRes);
+        setCurrentPreviewTab(currentCategory);
+        setDefaultTab(defaultTabsData[currentCategory]);
 
-      // get multi search url to define type of current category
-      const searchUrl = getUrl(pathList.search.multi, { query });
-      const multiSearchRes = await getData(searchUrl);
-      // get category type of first item from multi search
-      const currentCategory = multiSearchRes?.results[0]?.media_type || 'movie';
-      // setMultiSearchPreview(multiSearchRes);
-      setCurrentPreviewTab(currentCategory);
-      setDefaultTab(defaultTabsData[currentCategory]);
+        const searcMovieshUrl = getUrl(pathList.search.movie, { query });
+        const searchTvShowsUrl = getUrl(pathList.search.tv, { query });
+        console.log('TVURL ', searchTvShowsUrl);
+        const searchPersonUrl = getUrl(pathList.search.person, { query });
 
-      const searcMovieshUrl = getUrl(pathList.search.movie, { query });
-      const searchTvShowsUrl = getUrl(pathList.search.tv, { query });
-      const searchPersonUrl = getUrl(pathList.search.person, { query });
+        // get url for movie, tv, person to get total result for each tab
+        const moviesRes = await getData(searcMovieshUrl);
+        const TvShowsRes = await getData(searchTvShowsUrl);
+        console.log('TvShowsRes ', TvShowsRes);
 
-      // get url for movie, tv, person to get total result for each tab
-      const moviesRes = await getData(searcMovieshUrl);
-      const TvShowsRes = await getData(searchTvShowsUrl);
-      const PersonsRes = await getData(searchPersonUrl);
+        const PersonsRes = await getData(searchPersonUrl);
 
-      setMoviespreview(moviesRes);
-      setTvShowsPreview(TvShowsRes);
-      setPersonsPrevivew(PersonsRes);
+        setMoviespreview(moviesRes);
+        setTvShowsPreview(TvShowsRes);
+        setPersonsPrevivew(PersonsRes);
+        console.log('CATEGORY ', currentCategory);
+        console.log('QUERY ', query);
 
+        if (currentCategory === 'person') {
+          setCurrentSearchPreview(PersonsRes);
+        }
+        if (currentCategory === 'movie') {
+          setCurrentSearchPreview(moviesRes);
+        }
+        if (currentCategory === 'tv') {
+          setCurrentSearchPreview(TvShowsRes);
+        }
+      } catch (error) {
+        throw new Error();
+      }
       setTimeout(() => {
         setIsLoading(false);
-      }, 500);
+      }, 1000);
     };
     loadMovies();
     return () => {
       setMoviespreview(null);
       setTvShowsPreview(null);
       setPersonsPrevivew(null);
+      setCurrentSearchPreview(null);
     };
   }, [query]);
 
@@ -88,6 +113,9 @@ function Search() {
     loadMovies();
     return () => {
       setCurrentSearchPreview(null);
+      // setMoviespreview(null);
+      // setPersonsPrevivew(null);
+      // setTvShowsPreview(null);
     };
   }, [activePage, currentPreviewTab]);
 
