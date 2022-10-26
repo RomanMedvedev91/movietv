@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-closing-bracket-location */
-/* eslint-disable object-curly-newline */
 import { useState } from 'react';
 import { Input, Form, Icon } from 'semantic-ui-react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
@@ -15,7 +13,8 @@ function SearchNavbar() {
     setCurrentInput(e.target.value);
   };
 
-  const search = () => {
+  const search = (e) => {
+    e.preventDefault();
     // link to search page
     // use navigate function template
     // https://blog.webdevsimplified.com/2022-07/react-router/
@@ -26,15 +25,12 @@ function SearchNavbar() {
         query: currentInput
       }).toString()
     });
+    setCurrentInput('');
   };
 
   return (
     <StyledSearchNavbarContainer>
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          search();
-        }}>
+      <Form onSubmit={(e) => search(e)}>
         <Input
           fluid
           icon={<Icon name="search" onClick={search} circular link />}

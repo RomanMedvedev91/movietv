@@ -13,7 +13,8 @@ function SearchBar() {
     setCurrentInput(e.target.value);
   };
 
-  const search = () => {
+  const search = (e) => {
+    e.preventDefault();
     // link to search page
     // use navigate function template
     // https://blog.webdevsimplified.com/2022-07/react-router/
@@ -24,16 +25,12 @@ function SearchBar() {
         query: currentInput
       }).toString()
     });
+    setCurrentInput('');
   };
 
   return (
     <SearchFormContainer>
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          search();
-          // eslint-disable-next-line react/jsx-closing-bracket-location
-        }}>
+      <Form onSubmit={search}>
         <Input
           fluid
           icon="search"
