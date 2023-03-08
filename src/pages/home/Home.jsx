@@ -2,16 +2,13 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-closing-bracket-location */
-/* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Card, Embed, Modal, Placeholder, Image } from 'semantic-ui-react';
-// import 'pure-react-carousel/dist/react-carousel.es.css';
 import * as route from '../../constants/routes';
 
-// import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
 import SearchBar from '../../components/SearchBar/SearchBar';
-// import MovieCard from '../../components/MovieCard/MovieCard';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 
 import getData from '../../utilities/getData';
@@ -49,9 +46,7 @@ function Homepage() {
   const [popularTvShoes, setPopularTvShoes] = useState(null);
   const [open, setOpen] = useState(false);
   const [currentTrailer, setCurrentTrailer] = useState();
-  // const { isMobile } = useMediaQuery();
-  // const [activeSlide, setActiveSlide] = useState(null);
-  // const [backgroundSlides, setBackgroundSlides] = useState([]);
+  const { isMobile } = useMediaQuery();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -82,11 +77,6 @@ function Homepage() {
         throw new Error(err);
       }
 
-      // add backdrop_path for background slider
-      // popularMoviesResult.results
-      //   .slice(0, 5)
-      //   .map((movie) => setBackgroundSlides((prev) => [...prev, movie.backdrop_path]));
-
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
@@ -105,7 +95,7 @@ function Homepage() {
   };
 
   return (
-    <HomepageContainer>
+    <HomepageContainer isMobile={isMobile}>
       <StyledSearchSection>
         <BackgroundImgContainer>
           <BackgroundImage src={mainBackground} alt="mainBackground" />
@@ -120,8 +110,8 @@ function Homepage() {
         <PopularMoviesContainer>
           {popularMovies && (
             <Card.Group itemsPerRow={5}>
-              {popularMovies.slice(0, 5).map((movie) => (
-                <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+              {popularMovies.slice(0, isMobile ? 1 : 5).map((movie) => (
+                <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)} style={{ minWidth: isMobile ? '100%' : undefined }}>
                   {isLoading ? (
                     <Placeholder inverted style={{ height: 300, width: 200 }}>
                       <Placeholder.Image rectangular />

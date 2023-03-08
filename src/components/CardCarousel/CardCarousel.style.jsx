@@ -54,6 +54,7 @@ export const MoviesTitle = styled.div`
     margin: 0;
   }
   a {
+    padding-top: ${(props) => (props.isMobile ? '50px' : '0')};
     font-weight: 600;
     font-size: 1.2em;
     color: #fff;

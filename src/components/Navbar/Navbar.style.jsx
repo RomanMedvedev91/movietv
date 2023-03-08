@@ -91,7 +91,9 @@ export const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   /* margin-top: 1.5em; */
-  padding: 1em 0 1em 0;
+  padding: 1em;
+  /* padding: ${(props) => (props.isMobile ? '1em 1em' : '1em 0')}; */
+
 `;
 
 export const AuthContainer = styled.div`

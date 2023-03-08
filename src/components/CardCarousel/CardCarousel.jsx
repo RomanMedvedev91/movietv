@@ -21,11 +21,10 @@ function CardCarousel({
   children
 }) {
   const { isMobile } = useMediaQuery();
-
   return (
     <CarouselMoviesContainer>
       {title && (
-        <MoviesTitle>
+        <MoviesTitle isMobile={isMobile}>
           <h2>{titleHeader}</h2>
           {titleLink && (
             <Link to={titleLink}>
@@ -41,7 +40,7 @@ function CardCarousel({
           naturalSlideWidth={naturalSlideWidth}
           naturalSlideHeight={naturalSlideHeight}
           totalSlides={totalSlides}
-          visibleSlides={isMobile ? 2 : visibleSlides}
+          visibleSlides={isMobile ? 1 : visibleSlides}
           step={1}
         >
           <ButtonBack>
