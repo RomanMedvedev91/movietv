@@ -7,6 +7,7 @@ import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-re
 import { Icon } from 'semantic-ui-react';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { CarouselContainer, CarouselMoviesContainer, MoviesTitle } from './CardCarousel.style';
+import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
 
 function CardCarousel({
   // movies,
@@ -19,6 +20,8 @@ function CardCarousel({
   totalSlides,
   children
 }) {
+  const { isMobile } = useMediaQuery();
+
   return (
     <CarouselMoviesContainer>
       {title && (
@@ -38,9 +41,8 @@ function CardCarousel({
           naturalSlideWidth={naturalSlideWidth}
           naturalSlideHeight={naturalSlideHeight}
           totalSlides={totalSlides}
-          visibleSlides={visibleSlides}
+          visibleSlides={isMobile ? 2 : visibleSlides}
           step={1}
-          // eslint-disable-next-line react/jsx-closing-bracket-location
         >
           <ButtonBack>
             <Icon name="angle left" size="big" />

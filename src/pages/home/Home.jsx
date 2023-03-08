@@ -9,6 +9,7 @@ import { Card, Embed, Modal, Placeholder, Image } from 'semantic-ui-react';
 // import 'pure-react-carousel/dist/react-carousel.es.css';
 import * as route from '../../constants/routes';
 
+// import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
 import SearchBar from '../../components/SearchBar/SearchBar';
 // import MovieCard from '../../components/MovieCard/MovieCard';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
@@ -48,7 +49,7 @@ function Homepage() {
   const [popularTvShoes, setPopularTvShoes] = useState(null);
   const [open, setOpen] = useState(false);
   const [currentTrailer, setCurrentTrailer] = useState();
-
+  // const { isMobile } = useMediaQuery();
   // const [activeSlide, setActiveSlide] = useState(null);
   // const [backgroundSlides, setBackgroundSlides] = useState([]);
   const navigate = useNavigate();

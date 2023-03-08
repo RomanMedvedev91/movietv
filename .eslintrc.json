@@ -7,7 +7,6 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "prettier",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
     "airbnb"
@@ -27,7 +26,6 @@
     "comma-dangle": ["error", "only-multiline"],
     "react/prop-types": "off",
     "react/display-name": "off",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/label-has-associated-control": [
