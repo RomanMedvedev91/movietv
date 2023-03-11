@@ -3,9 +3,9 @@ import { Outlet, useLocation } from 'react-router-dom';
 import {
   Button,
   Menu,
-  // Container,
   Sidebar,
   Icon,
+  Container,
 } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
@@ -21,11 +21,12 @@ import {
   HeaderContainer,
   NavSubMenuContainer,
   ItemLink,
-  SubMenuItem
+  SubMenuItem,
+  MobileLogoLink,
 } from './Navbar.style';
 import SearchNavbar from '../SearchBar/SearchNavbar';
 
-const moviesLink = [{
+const moviesLinks = [{
   routeLink: route.VIEW_MOVIES_NOW_PLAYING,
   title: 'Playing Now',
   id: 'PlayingNow'
@@ -44,10 +45,6 @@ const moviesLink = [{
 }];
 
 const tvShowsLinks = [{
-  routeLink: route.VIEW_TVSHOWS,
-  title: 'Tv Shoes',
-  id: 'TvShoes'
-}, {
   routeLink: route.VIEW_TVSHOWS_AIRING_TODAY,
   title: 'Airing Today',
   id: 'iringToday'
@@ -78,9 +75,11 @@ function Navbar() {
     <>
       <HeaderContainer isMobile={isMobile}>
         <NavContainer>
-          {/* <LogoLink to="/">
-            <Logo />
-          </LogoLink> */}
+          {!isMobile && (
+            <LogoLink to="/">
+              <Logo />
+            </LogoLink>
+          )}
           {isMobile ? (
             <Menu.Item onClick={toggleBurger}>
               <Icon name="sidebar" size="big" />
@@ -94,50 +93,34 @@ function Navbar() {
               <NavItem>
                 <NavLink to={route.VIEW_MOVIES}>Movies</NavLink>
                 <NavSubMenuContainer>
-                  <SubMenuItem>
-                    <ItemLink to={route.VIEW_MOVIES_NOW_PLAYING}>Playing Now</ItemLink>
-                  </SubMenuItem>
-
-                  <SubMenuItem>
-                    <ItemLink to={route.VIEW_MOVIES_UPCOMING}>Upcomming</ItemLink>
-                  </SubMenuItem>
-
-                  <SubMenuItem>
-                    <ItemLink to={route.VIEW_MOVIES}>Popular</ItemLink>
-                  </SubMenuItem>
-
-                  <SubMenuItem>
-                    <ItemLink to={route.VIEW_MOVIES_TOP_RATED}>Top Rated</ItemLink>
-                  </SubMenuItem>
+                  {moviesLinks.map(({ id, title, routeLink }) => (
+                    <SubMenuItem key={id}>
+                      <ItemLink to={routeLink}>{title}</ItemLink>
+                    </SubMenuItem>
+                  ))}
                 </NavSubMenuContainer>
               </NavItem>
 
               <NavItem>
                 <NavLink to={route.VIEW_TVSHOWS}>Tv Shoes</NavLink>
                 <NavSubMenuContainer>
-                  <SubMenuItem>
-                    <ItemLink to={route.VIEW_TVSHOWS_AIRING_TODAY}>Airing Today</ItemLink>
-                  </SubMenuItem>
-
-                  <SubMenuItem>
-                    <ItemLink to={route.VIEW_TVSHOWS_ON_TV}>On TV</ItemLink>
-                  </SubMenuItem>
-
-                  <SubMenuItem>
-                    <ItemLink to={route.VIEW_TVSHOWS}>Popular</ItemLink>
-                  </SubMenuItem>
-
-                  <SubMenuItem>
-                    <ItemLink to={route.VIEW_TVSHOWS_TOP_RATED}>Top Rated</ItemLink>
-                  </SubMenuItem>
+                  {tvShowsLinks.map(({ id, title, routeLink }) => (
+                    <SubMenuItem key={id}>
+                      <ItemLink to={routeLink}>{title}</ItemLink>
+                    </SubMenuItem>
+                  ))}
                 </NavSubMenuContainer>
               </NavItem>
             </NavItemContainer>
           )}
         </NavContainer>
-        <LogoLink to="/">
-          <Logo />
-        </LogoLink>
+        {isMobile && (
+          <MobileLogoLink>
+            <LogoLink to="/">
+              <Logo />
+            </LogoLink>
+          </MobileLogoLink>
+        )}
 
         {!isMobile && (
           <AuthContainer>
@@ -158,19 +141,21 @@ function Navbar() {
           width="thin"
         >
           <Menu fixed="top" vertical inverted style={{ width: '100%' }}>
-            <Menu.Menu style={{ marginLeft: '6em' }}>
+            <Menu.Menu style={{ marginLeft: '6em', marginTop: '1em' }}>
               <Menu.Item onClick={toggleBurger}>
-                <Icon size="large" name="sidebar" />
+                <Icon size="large" name="close" />
               </Menu.Item>
             </Menu.Menu>
-            {/* <Menu.Item>
-              <NavLink to={route.HOME}>Home</NavLink>
-            </Menu.Item> */}
+            <Menu.Item>
+              <NavLink to={route.HOME}>
+                <Menu.Header>HOME</Menu.Header>
+              </NavLink>
+            </Menu.Item>
             <Menu.Item>
               <Menu.Header>MOVIES</Menu.Header>
               <Menu.Menu>
-                {moviesLink.map(({ id, title, routeLink }) => (
-                  <Menu.Item key={id} onClick={toggleBurger}>
+                {moviesLinks.map(({ id, title, routeLink }) => (
+                  <Menu.Item as={Container} key={id} onClick={toggleBurger}>
                     <ItemLink to={routeLink}>{title}</ItemLink>
                   </Menu.Item>
                 ))}
@@ -181,7 +166,7 @@ function Navbar() {
               <Menu.Header>TV SHOWS</Menu.Header>
               <Menu.Menu>
                 {tvShowsLinks.map(({ id, title, routeLink }) => (
-                  <Menu.Item key={id} onClick={toggleBurger}>
+                  <Menu.Item as={Container} key={id} onClick={toggleBurger}>
                     <ItemLink to={routeLink}>{title}</ItemLink>
                   </Menu.Item>
                 ))}
