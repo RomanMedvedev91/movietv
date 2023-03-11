@@ -66,12 +66,15 @@ export const NavItem = styled.li`
 
 export const NavLink = styled(Link)`
   transition: filter 300ms;
+  display: block;
+
 `;
 
 export const LogoLink = styled(Link)`
   margin-right: 5em;
   /* height: 100%; */
   display: flex;
+
   /* h1 {
     margin: 0;
     margin-left: 0.5em;
