@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Icon, Pagination, Card, Dropdown, Button, Placeholder, Image } from 'semantic-ui-react';
+import { Card, Dropdown, Button, Placeholder, Image } from 'semantic-ui-react';
 
 import getData from '../../utilities/getData';
+import PaginationComponent from '../../components/Pagination/Pagination';
+import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
 
 import {
   upcommingMovieUrl,
@@ -18,7 +20,6 @@ import {
 import {
   StyledMoviesContainer,
   StyledMoviesList,
-  StyledPaginationWrapper,
   StyledFilterContainer
 } from './Movies.style';
 
@@ -40,6 +41,7 @@ function MoviesUpcoming() {
   const cardHandleClick = (category, id) => {
     navigate(`/${category}/${id}`, { state: { id, category } });
   };
+  const { isMobile } = useMediaQuery();
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -70,13 +72,19 @@ function MoviesUpcoming() {
     setFilterState(filterTempState);
   };
 
+  const cardStyleMobile = {
+    margin: isMobile ? 'auto' : undefined,
+    width: isMobile ? 'auto' : undefined,
+    alignItems: isMobile ? 'center' : undefined
+  };
+
   return (
     <StyledMoviesContainer>
-      <StyledMoviesList>
+      <StyledMoviesList isMobile={isMobile}>
         {moviesPreview && (
           <>
             <h1>Upcoming Movies</h1>
-            <StyledFilterContainer>
+            <StyledFilterContainer isMobile={isMobile}>
               <Dropdown
                 clearable
                 options={filterSortBy}
@@ -112,7 +120,11 @@ function MoviesUpcoming() {
 
             <Card.Group itemsPerRow={5}>
               {moviesPreview.results.map((movie) => (
-                <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+                <Card
+                  key={movie.id}
+                  onClick={() => cardHandleClick('movie', movie.id)}
+                  style={cardStyleMobile}
+                >
                   {isLoading ? (
                     <Placeholder inverted style={{ height: 300, width: 200 }}>
                       <Placeholder.Image rectangular />
@@ -146,19 +158,11 @@ function MoviesUpcoming() {
                 </Card>
               ))}
             </Card.Group>
-            <StyledPaginationWrapper>
-              <Pagination
-                defaultActivePage={activePage}
-                ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
-                firstItem={{ content: <Icon name="angle double left" />, icon: true }}
-                lastItem={{ content: <Icon name="angle double right" />, icon: true }}
-                prevItem={{ content: <Icon name="angle left" />, icon: true }}
-                nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={moviesPreview.total_pages < 500 ? moviesPreview.total_pages : 500}
-                onPageChange={onChangePage}
-                inverted
-              />
-            </StyledPaginationWrapper>
+            <PaginationComponent
+              onChangePage={onChangePage}
+              moviesPreview={moviesPreview}
+              activePage={activePage}
+            />
           </>
         )}
       </StyledMoviesList>

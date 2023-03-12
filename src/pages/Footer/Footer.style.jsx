@@ -29,7 +29,7 @@ export const FooterGradient = styled.div`
 export const LinksContainer = styled.div`
   display: flex;
   z-index: 1;
-  gap: 10em;
+  gap: ${(props) => (props.isMobile ? undefined : '10em')};
   flex-direction: ${(props) => (props.isMobile ? 'column' : undefined)};
   align-items: ${(props) => (props.isMobile ? 'center' : undefined)};
 `;

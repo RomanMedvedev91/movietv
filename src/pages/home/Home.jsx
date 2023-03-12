@@ -94,6 +94,12 @@ function Homepage() {
     navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
+  const cardStyleMoile = {
+    margin: isMobile ? 'auto' : undefined,
+    width: isMobile ? 'auto' : undefined,
+    alignItems: isMobile ? 'center' : undefined
+  };
+
   return (
     <HomepageContainer isMobile={isMobile}>
       <StyledSearchSection>
@@ -111,7 +117,11 @@ function Homepage() {
           {popularMovies && (
             <Card.Group itemsPerRow={5}>
               {popularMovies.slice(0, isMobile ? 1 : 5).map((movie) => (
-                <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)} style={{ minWidth: isMobile ? '100%' : undefined }}>
+                <Card
+                  key={movie.id}
+                  onClick={() => cardHandleClick('movie', movie.id)}
+                  style={cardStyleMoile}
+                >
                   {isLoading ? (
                     <Placeholder inverted style={{ height: 300, width: 200 }}>
                       <Placeholder.Image rectangular />
@@ -156,7 +166,11 @@ function Homepage() {
           titleLink={`${route.VIEW_TVSHOWS}`}
           totalSlides={topRatedMovies.length}>
           {popularTvShoes.map((movie) => (
-            <Card key={movie.id} onClick={() => cardHandleClick('tv', movie.id)}>
+            <Card
+              key={movie.id}
+              onClick={() => cardHandleClick('tv', movie.id)}
+              style={cardStyleMoile}
+            >
               {isLoading ? (
                 <Placeholder inverted style={{ height: 409, width: 273 }}>
                   <Placeholder.Image rectangular />
@@ -200,7 +214,11 @@ function Homepage() {
           titleLink={`${route.VIEW_MOVIES_TOP_RATED}`}
           totalSlides={topRatedMovies.length}>
           {topRatedMovies.map((movie) => (
-            <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+            <Card
+              key={movie.id}
+              onClick={() => cardHandleClick('movie', movie.id)}
+              style={cardStyleMoile}
+            >
               {isLoading ? (
                 <Placeholder inverted style={{ height: 409, width: 273 }}>
                   <Placeholder.Image rectangular />
@@ -244,7 +262,11 @@ function Homepage() {
           titleLink={`${route.VIEW_MOVIES_NOW_PLAYING}`}
           totalSlides={nowPlayingMovies.length}>
           {nowPlayingMovies.map((movie) => (
-            <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+            <Card
+              key={movie.id}
+              onClick={() => cardHandleClick('movie', movie.id)}
+              style={cardStyleMoile}
+            >
               {isLoading ? (
                 <Placeholder inverted style={{ height: 409, width: 273 }}>
                   <Placeholder.Image rectangular />

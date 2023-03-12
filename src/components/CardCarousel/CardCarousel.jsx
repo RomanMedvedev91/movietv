@@ -35,7 +35,7 @@ function CardCarousel({
         </MoviesTitle>
       )}
 
-      <CarouselContainer>
+      <CarouselContainer isMobile={isMobile}>
         <CarouselProvider
           naturalSlideWidth={naturalSlideWidth}
           naturalSlideHeight={naturalSlideHeight}
