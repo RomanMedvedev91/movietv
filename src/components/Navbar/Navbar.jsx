@@ -75,16 +75,10 @@ function Navbar() {
     <>
       <HeaderContainer isMobile={isMobile}>
         <NavContainer>
+          <LogoLink to="/">
+            <Logo />
+          </LogoLink>
           {!isMobile && (
-            <LogoLink to="/">
-              <Logo />
-            </LogoLink>
-          )}
-          {isMobile ? (
-            <Menu.Item onClick={toggleBurger}>
-              <Icon name="sidebar" size="big" />
-            </Menu.Item>
-          ) : (
             <NavItemContainer>
               <NavItem>
                 <NavLink to={route.HOME}>Home</NavLink>
@@ -116,9 +110,9 @@ function Navbar() {
         </NavContainer>
         {isMobile && (
           <MobileLogoLink>
-            <LogoLink to="/">
-              <Logo />
-            </LogoLink>
+            <Menu.Item onClick={toggleBurger}>
+              <Icon name="sidebar" size="big" />
+            </Menu.Item>
           </MobileLogoLink>
         )}
 

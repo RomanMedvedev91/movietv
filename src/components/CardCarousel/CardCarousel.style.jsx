@@ -14,12 +14,12 @@ export const CarouselContainer = styled.div`
   position: relative;
   .carousel__back-button {
     position: absolute;
-    left: ${({ isMobile }) => (isMobile ? '0%' : '-7%')};
+    left: ${({ isMobile }) => (isMobile ? '-5%' : '-7%')};
     top: 35%;
   }
   .carousel__next-button {
     position: absolute;
-    right: ${({ isMobile }) => (isMobile ? '0%' : '-7%')};
+    right: ${({ isMobile }) => (isMobile ? '-5%' : '-7%')};
     top: 35%;
   }
   button {

@@ -4,10 +4,9 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { useState, useEffect } from 'react';
 import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
-
 import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
-// import * as route from '../../constants/routes';
+import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
 
 import {
   getMovieDetails,
@@ -44,6 +43,7 @@ function Movie() {
   const { movieId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const { isMobile } = useMediaQuery();
 
   useEffect(() => {
     const loadMovie = async () => {
@@ -143,15 +143,16 @@ function Movie() {
         <Tab.Pane loading={!movieDetails.videos.results} attached={false}>
           {movieDetails.videos.results && (
             <CardCarousel
-              // title
-              // titleHeader="Videos"
-              // titleLink={`${route.MOVIES}`}
               totalSlides={movieDetails.videos.results.length}
               naturalSlideWidth={1}
               naturalSlideHeight={0.75}
               visibleSlides={3}>
               {movieDetails.videos.results.map((video) => (
                 <TrailerCard
+                  style={{
+                    maxWidth: isMobile ? 350 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={video.id}
                   trailer={video}
                   modalHadler={modalHandler}
@@ -169,15 +170,16 @@ function Movie() {
         <Tab.Pane loading={!movieDetails.images.posters} attached={false}>
           {movieDetails.images.posters && (
             <CardCarousel
-              // title
-              // titleHeader="Posters"
-              // titleLink={`${route.MOVIES}`}
               totalSlides={movieDetails.images.posters.length}
               naturalSlideWidth={1}
-              naturalSlideHeight={1.5}
+              naturalSlideHeight={isMobile ? 1 : 1.5}
               visibleSlides={6}>
               {movieDetails.images.posters.map((image) => (
                 <Card
+                  style={{
+                    maxWidth: isMobile ? 250 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={image.file_path}
                   image={
                     image.file_path
@@ -197,15 +199,16 @@ function Movie() {
         <Tab.Pane loading={!movieDetails.images.backdrops} attached={false}>
           {movieDetails.images.backdrops && (
             <CardCarousel
-              // title
-              // titleHeader="Posters"
-              // titleLink={`${route.MOVIES}`}
               totalSlides={movieDetails.images.backdrops.length}
               naturalSlideWidth={1.8}
               naturalSlideHeight={1}
               visibleSlides={3}>
               {movieDetails.images.backdrops.map((image) => (
                 <Card
+                  style={{
+                    maxWidth: isMobile ? 350 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={image.file_path}
                   image={
                     image.file_path
@@ -234,7 +237,7 @@ function Movie() {
       )}
       {!isLoading && movieDetails && (
         <MovieContainer>
-          <MovieDetail>
+          <MovieDetail isMobile={isMobile}>
             <BackgroundImage>
               <img src={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`} alt="mainBackground" />
             </BackgroundImage>
@@ -290,7 +293,6 @@ function Movie() {
                   brandedUI
                   id={currentTrailer.key}
                   source="youtube"
-                  // placeholder={`https://image.tmdb.org/t/p/w500/${movieDetails.backdrop_path}`}
                 />
               </Modal>
             )}
@@ -301,13 +303,16 @@ function Movie() {
             <CardCarousel
               title
               titleHeader="Casts"
-              // titleLink={`${route.VIEW_CASTS}`}
               visibleSlides={6}
               totalSlides={movieCredits.cast.length > 10 ? 10 : movieCredits.cast.length}
               naturalSlideWidth={1}
-              naturalSlideHeight={2}>
+              naturalSlideHeight={isMobile ? 1.3 : 2}>
               {movieCredits.cast.slice(0, 10).map((person) => (
                 <Card
+                  style={{
+                    maxWidth: isMobile ? 250 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={person.id}
                   image={
                     person.profile_path
@@ -327,17 +332,20 @@ function Movie() {
             {TabExampleSecondaryPointing()}
           </MediaContainer>
 
-          <RecommendedContainer>
+          <RecommendedContainer isMobile={isMobile}>
             <CardCarousel
               title
               titleHeader="Recomended movies"
-              // titleLink={`${route.MOVIES}`}
               visibleSlides={3}
               totalSlides={recommendationsMovies.length > 10 ? 10 : recommendationsMovies.length}
               naturalSlideWidth={1.8}
               naturalSlideHeight={1.4}>
               {recommendationsMovies.slice(0, 10).map((movie) => (
                 <Card
+                  style={{
+                    maxWidth: isMobile ? 350 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={movie.id}
                   image={
                     movie.backdrop_path
