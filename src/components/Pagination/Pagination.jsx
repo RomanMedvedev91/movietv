@@ -1,6 +1,6 @@
 import { Icon, Pagination } from 'semantic-ui-react';
 import { StyledPaginationWrapper } from './Pagination.style';
-import { useMediaQuery } from '../../hooks/useMediaQuery.jsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 function PaginationComponent({ moviesPreview, activePage, onChangePage }) {
   const { isMobile } = useMediaQuery();

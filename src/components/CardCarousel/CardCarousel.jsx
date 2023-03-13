@@ -7,7 +7,7 @@ import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-re
 import { Icon } from 'semantic-ui-react';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { CarouselContainer, CarouselMoviesContainer, MoviesTitle } from './CardCarousel.style';
-import { useMediaQuery } from '../../hooks/useMediaQuery.jsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 function CardCarousel({
   // movies,
