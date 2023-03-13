@@ -14,12 +14,12 @@ export const CarouselContainer = styled.div`
   position: relative;
   .carousel__back-button {
     position: absolute;
-    left: -7%;
+    left: ${({ isMobile }) => (isMobile ? '-5%' : '-7%')};
     top: 35%;
   }
   .carousel__next-button {
     position: absolute;
-    right: -7%;
+    right: ${({ isMobile }) => (isMobile ? '-5%' : '-7%')};
     top: 35%;
   }
   button {
@@ -54,6 +54,7 @@ export const MoviesTitle = styled.div`
     margin: 0;
   }
   a {
+    padding-top: ${(props) => (props.isMobile ? '50px' : '0')};
     font-weight: 600;
     font-size: 1.2em;
     color: #fff;

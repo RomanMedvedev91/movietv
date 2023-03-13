@@ -20,7 +20,6 @@ import {
   Item
 } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
-// import * as route from '../../constants/routes';
 
 import {
   getTvShowDetails,
@@ -65,6 +64,8 @@ import {
   getDateHumanReadble
 } from '../../utilities/helperFunctions';
 
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+
 function TvShow() {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
@@ -78,6 +79,7 @@ function TvShow() {
   const { tvShowId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const { isMobile } = useMediaQuery();
 
   useEffect(() => {
     const loadMovie = async () => {
@@ -115,6 +117,7 @@ function TvShow() {
       }
     };
     loadMovie();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tvShowId]);
 
   const getPersonBiography = () => {
@@ -155,15 +158,16 @@ function TvShow() {
         <Tab.Pane loading={!movieDetails.videos.results} attached={false}>
           {movieDetails.videos.results && (
             <CardCarousel
-              // title
-              // titleHeader="Videos"
-              // titleLink={`${route.MOVIES}`}
               totalSlides={movieDetails.videos.results.length}
               naturalSlideWidth={1}
               naturalSlideHeight={0.75}
               visibleSlides={3}>
               {movieDetails.videos.results.map((video) => (
                 <TrailerCard
+                  style={{
+                    maxWidth: isMobile ? 350 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={video.id}
                   trailer={video}
                   modalHadler={modalHandler}
@@ -181,15 +185,16 @@ function TvShow() {
         <Tab.Pane loading={!movieDetails.images.posters} attached={false}>
           {movieDetails.images.posters && (
             <CardCarousel
-              // title
-              // titleHeader="Posters"
-              // titleLink={`${route.MOVIES}`}
               totalSlides={movieDetails.images.posters.length}
               naturalSlideWidth={1}
               naturalSlideHeight={1.5}
               visibleSlides={6}>
               {movieDetails.images.posters.map((image) => (
                 <Card
+                  style={{
+                    maxWidth: isMobile ? 250 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={image.file_path}
                   image={
                     image.file_path
@@ -209,15 +214,16 @@ function TvShow() {
         <Tab.Pane loading={!movieDetails.images.backdrops} attached={false}>
           {movieDetails.images.backdrops && (
             <CardCarousel
-              // title
-              // titleHeader="Posters"
-              // titleLink={`${route.MOVIES}`}
               totalSlides={movieDetails.images.backdrops.length}
               naturalSlideWidth={1.8}
               naturalSlideHeight={1}
               visibleSlides={3}>
               {movieDetails.images.backdrops.map((image) => (
                 <Card
+                  style={{
+                    maxWidth: isMobile ? 350 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={image.file_path}
                   image={
                     image.file_path
@@ -246,7 +252,7 @@ function TvShow() {
       )}
       {!isLoading && movieDetails && (
         <MovieContainer>
-          <MovieDetail>
+          <MovieDetail isMobile={isMobile}>
             <BackgroundImage>
               <img src={`${TMDB_POSTER_BASE + movieDetails.backdrop_path}`} alt="mainBackground" />
             </BackgroundImage>
@@ -255,7 +261,7 @@ function TvShow() {
               <PosterContainer>
                 <img src={`${TMDB_POSTER_PATH + movieDetails.poster_path}`} alt="poster" />
               </PosterContainer>
-              <TvShowsLinksStyle>
+              <TvShowsLinksStyle isMobile={isMobile}>
                 <Button primary onClick={playTrailer}>
                   <Icon name="play" />
                   Play Trailer
@@ -273,7 +279,7 @@ function TvShow() {
               </TvShowsLinksStyle>
             </MovieDetailWrapperStyle>
 
-            <MovieDataContainer>
+            <MovieDataContainer isMobile={isMobile}>
               <h2>{movieDetails.name}</h2>
               <p>
                 <span>{getReleaseDateAndCountry(movieDetails)}</span>
@@ -281,9 +287,6 @@ function TvShow() {
                 <span>{runTime(movieDetails)}</span>
               </p>
               {movieDetails.tagline && <h5 className="tvshow-tagline">{movieDetails.tagline}</h5>}
-
-              {/* <p>{movieDetails.overview}</p> */}
-
               <p>
                 {getPersonBiography()}
                 <Button className="show-more" onClick={() => setShowMoreBio(!showMoreBio)}>
@@ -291,7 +294,7 @@ function TvShow() {
                 </Button>
               </p>
 
-              <MovieDataTable>
+              <MovieDataTable isMobile={isMobile}>
                 <div>
                   <span>Type</span>
                   <span>{movieDetails.type}</span>
@@ -339,13 +342,16 @@ function TvShow() {
             <CardCarousel
               title
               titleHeader="Casts"
-              // titleLink={`${route.MOVIES}`}
               visibleSlides={6}
               totalSlides={movieCredits.cast.length > 10 ? 10 : movieCredits.cast.length}
               naturalSlideWidth={1}
-              naturalSlideHeight={2}>
+              naturalSlideHeight={isMobile ? 1.3 : 2}>
               {movieCredits.cast.slice(0, 10).map((person) => (
                 <Card
+                  style={{
+                    maxWidth: isMobile ? 250 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={person.id}
                   image={
                     person.profile_path
@@ -361,7 +367,7 @@ function TvShow() {
           </CastContainer>
 
           {seasonDetails && (
-            <LastSeasonContainerStyle>
+            <LastSeasonContainerStyle isMobile={isMobile}>
               {movieDetails.in_production ? <h2>Current Season</h2> : <h2>Last Season</h2>}
 
               <Item.Group>
@@ -387,9 +393,8 @@ function TvShow() {
                     <Item.Description>
                       {seasonDetails.overview
                         ? seasonDetails.overview
-                        : `Season ${movieDetails.last_episode_to_air.season_number} of ${
-                            movieDetails.name
-                          } premiered on ${getDateHumanReadble(seasonDetails.air_date)}`}
+                        : `Season ${movieDetails.last_episode_to_air.season_number} of ${movieDetails.name
+                        } premiered on ${getDateHumanReadble(seasonDetails.air_date)}`}
                     </Item.Description>
                   </Item.Content>
                 </Item>
@@ -406,17 +411,20 @@ function TvShow() {
             {TabExampleSecondaryPointing()}
           </MediaContainer>
 
-          <RecommendedContainer>
+          <RecommendedContainer isMobile={isMobile}>
             <CardCarousel
               title
               titleHeader="Recomended TV Shows"
-              // titleLink={`${route.MOVIES}`}
               visibleSlides={3}
               totalSlides={recommendationsMovies.length > 10 ? 10 : recommendationsMovies.length}
               naturalSlideWidth={1.8}
               naturalSlideHeight={1.4}>
               {recommendationsMovies.slice(0, 10).map((movie) => (
                 <Card
+                  style={{
+                    maxWidth: isMobile ? 350 : undefined,
+                    margin: isMobile ? 'auto' : undefined
+                  }}
                   key={movie.id}
                   image={
                     movie.backdrop_path
@@ -443,7 +451,6 @@ function TvShow() {
             brandedUI
             id={currentTrailer.key}
             source="youtube"
-            // placeholder={`https://image.tmdb.org/t/p/w500/${movieDetails.backdrop_path}`}
           />
         </Modal>
       )}

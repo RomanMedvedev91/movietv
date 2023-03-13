@@ -1,11 +1,10 @@
 /* eslint-disable object-curly-newline */
 import { Embed } from 'semantic-ui-react';
 import { TrailerContainer } from './TrailerCard.style';
-// import { tmdbPosterPath } from '../../constants/apiUrls';
 
-function TrailerCard({ trailer, modalHadler }) {
+function TrailerCard({ trailer, modalHadler, ...props }) {
   return (
-    <TrailerContainer>
+    <TrailerContainer {...props}>
       <Embed
         onClick={() => modalHadler(trailer)}
         icon="play"

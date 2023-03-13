@@ -2,41 +2,36 @@
 import styled from 'styled-components';
 
 export const FooterContainer = styled.footer`
-  /* position: relative; */
 
   max-width: 1172px;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: end;
-  padding-bottom: 2em;
-  /* padding-top: 12em; */
+  /* padding-bottom: 2em; */
   height: 676px;
   li:first-child {
     font-weight: 600;
     font-size: 1.2em;
   }
+  padding: ${(props) => (props.isMobile ? '2em' : '2em 1.5em')};
 `;
 export const FooterGradient = styled.div`
-  /* display: none; */
   position: absolute;
   z-index: -2;
   left: 0;
-  /* bottom: 100px; */
   width: 100%;
-  /* height: 600px; */
   bottom: calc(100vh - 50vh);
   height: calc(100vh - 30vh);
-  /* width: 100%; */
-  /* height: 800px; */
   background: linear-gradient(to bottom, #141313, 80%, transparent);
-  /* background: linear-gradient(#141313, 80%, transparent); */
 `;
 
 export const LinksContainer = styled.div`
   display: flex;
   z-index: 1;
-  gap: 10em;
+  gap: ${(props) => (props.isMobile ? undefined : '10em')};
+  flex-direction: ${(props) => (props.isMobile ? 'column' : undefined)};
+  align-items: ${(props) => (props.isMobile ? 'center' : undefined)};
 `;
 
 export const NavigationContainer = styled.div`
@@ -53,7 +48,6 @@ export const BackgroundImg = styled.div`
   right: 0;
   width: 100%;
   opacity: 30%;
-  /* height: 572px; */
 
   img {
     width: 100%;
@@ -63,7 +57,6 @@ export const BackgroundImg = styled.div`
 `;
 
 export const NavItemContainer = styled.ul`
-  /* margin-left: 6em; */
   display: flex;
   flex-direction: column;
   a {
@@ -76,8 +69,6 @@ export const NavItemContainer = styled.ul`
 `;
 
 export const NavItem = styled.li`
-  /* width: calc(90px * 0.8); */
-  /* display: flex; */
   margin-bottom: 1em;
   display: inline-block;
   position: relative;
@@ -94,7 +85,7 @@ export const SocialsContainer = styled.div`
     font-weight: 600;
     font-size: 1.2em;
     display: flex;
-    justify-content: end;
+    justify-content: ${(props) => (props.isMobile ? 'center' : 'end')};
   }
 
   .facebook {
@@ -142,6 +133,8 @@ export const FooterDownContainer = styled.div`
 
   div:first-of-type {
     display: flex;
-    align-self: end;
+    align-self: ${(props) => (props.isMobile ? 'center' : 'end')};
   }
+  flex-direction: ${(props) => (props.isMobile ? 'column' : undefined)};
+
 `;

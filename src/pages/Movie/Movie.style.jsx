@@ -4,7 +4,6 @@ export const MovieContainer = styled.main`
   color: #fff;
   max-width: 1172px;
   margin: auto;
-  /* z-index: 2; */
   font-family: 'Mulish', sans-serif;
   h2 {
     font-weight: 800;
@@ -15,17 +14,16 @@ export const MovieContainer = styled.main`
 
 export const MovieDetail = styled.section`
   width: 100%;
-  // img background full height
-  /* height: 100vh; */
   display: flex;
   margin-top: 4.8em;
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : undefined)};
+  align-items: ${({ isMobile }) => (isMobile ? 'center' : undefined)};
 `;
 
 export const BackgroundImage = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  /* margin: auto; */
   width: 100%;
   z-index: -1;
   img {
@@ -59,8 +57,8 @@ export const PosterContainer = styled.div`
 `;
 
 export const MovieDataContainer = styled.div`
-  width: 800px;
-  padding: 0 55px 0 20px;
+  max-width: 800px;
+  padding: ${({ isMobile }) => (isMobile ? '0 25px' : '0 55px 0 20px')};
   p {
     margin: 0;
   }
@@ -92,9 +90,12 @@ export const MovieDataTable = styled.div`
       font-weight: 600;
     }
   }
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : undefined)};
+
 `;
 
 export const CastContainer = styled.section`
+  padding: 0 1.25em;
   .ui.card {
     padding: 10px;
   }
@@ -102,13 +103,10 @@ export const CastContainer = styled.section`
 
 export const MediaContainer = styled.section`
   margin-top: 6em;
-
+  padding: 0 1.25em;
   h2 {
     margin-bottom: 1em;
   }
-  /* .ui.card {
-    padding: 10px;
-  } */
   .ui.segment {
     min-height: 300px;
     background: none;
@@ -129,4 +127,6 @@ export const MediaContainer = styled.section`
   }
 `;
 
-export const RecommendedContainer = styled.section``;
+export const RecommendedContainer = styled.section`
+padding: ${({ isMobile }) => (isMobile ? '0 20px' : undefined)};
+`;

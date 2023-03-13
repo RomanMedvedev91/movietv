@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
+
 import * as route from '../../constants/routes';
 
-// import footerBackground from '../../assets/footer3.jpg';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import footerBackground from '../../assets/footerBackground.jpg';
 
 // eslint-disable-next-line object-curly-newline
@@ -21,14 +22,16 @@ import {
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 
 function Footer() {
+  const { isMobile } = useMediaQuery();
+
   return (
-    <FooterContainer>
+    <FooterContainer isMobile={isMobile}>
       <FooterGradient />
       <BackgroundImg>
         <img src={footerBackground} alt="footerImg" />
       </BackgroundImg>
 
-      <LinksContainer>
+      <LinksContainer isMobile={isMobile}>
         <Link to="/">
           <Logo />
         </Link>
@@ -71,13 +74,13 @@ function Footer() {
         </NavigationContainer>
       </LinksContainer>
 
-      <FooterDownContainer>
+      <FooterDownContainer isMobile={isMobile}>
         <div>
-          <p>© 2022 MovieTV, Canada, Toronto, 185 Roehampton Avenue</p>
+          <p>© 2023 MovieTV, Canada, Toronto</p>
         </div>
-        <SocialsContainer>
+        <SocialsContainer isMobile={isMobile}>
           <p>Social media</p>
-          <div>
+          <div style={{ justifyContent: isMobile ? 'center' : undefined }}>
             <a
               className="github"
               href="https://github.com/RomanMedvedev91/movietv"

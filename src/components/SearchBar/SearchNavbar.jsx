@@ -3,10 +3,11 @@ import { Input, Form, Icon } from 'semantic-ui-react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import { StyledSearchNavbarContainer } from './SearchBar.style';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 function SearchNavbar() {
   const [currentInput, setCurrentInput] = useState('');
-
+  const { isMobile } = useMediaQuery();
   const navigate = useNavigate();
 
   const onInputChangeHandle = (e) => {
@@ -29,7 +30,7 @@ function SearchNavbar() {
   };
 
   return (
-    <StyledSearchNavbarContainer>
+    <StyledSearchNavbarContainer isMobile={isMobile}>
       <Form onSubmit={(e) => search(e)}>
         <Input
           fluid

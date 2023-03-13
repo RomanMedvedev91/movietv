@@ -2,15 +2,13 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-closing-bracket-location */
-/* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Card, Embed, Modal, Placeholder, Image } from 'semantic-ui-react';
-// import 'pure-react-carousel/dist/react-carousel.es.css';
 import * as route from '../../constants/routes';
 
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import SearchBar from '../../components/SearchBar/SearchBar';
-// import MovieCard from '../../components/MovieCard/MovieCard';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 
 import getData from '../../utilities/getData';
@@ -48,9 +46,7 @@ function Homepage() {
   const [popularTvShoes, setPopularTvShoes] = useState(null);
   const [open, setOpen] = useState(false);
   const [currentTrailer, setCurrentTrailer] = useState();
-
-  // const [activeSlide, setActiveSlide] = useState(null);
-  // const [backgroundSlides, setBackgroundSlides] = useState([]);
+  const { isMobile } = useMediaQuery();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -81,11 +77,6 @@ function Homepage() {
         throw new Error(err);
       }
 
-      // add backdrop_path for background slider
-      // popularMoviesResult.results
-      //   .slice(0, 5)
-      //   .map((movie) => setBackgroundSlides((prev) => [...prev, movie.backdrop_path]));
-
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
@@ -103,8 +94,14 @@ function Homepage() {
     navigate(`/${category}/${id}`, { state: { id, category } });
   };
 
+  const cardStyleMoile = {
+    margin: isMobile ? 'auto' : undefined,
+    width: isMobile ? 'auto' : undefined,
+    alignItems: isMobile ? 'center' : undefined
+  };
+
   return (
-    <HomepageContainer>
+    <HomepageContainer isMobile={isMobile}>
       <StyledSearchSection>
         <BackgroundImgContainer>
           <BackgroundImage src={mainBackground} alt="mainBackground" />
@@ -119,8 +116,12 @@ function Homepage() {
         <PopularMoviesContainer>
           {popularMovies && (
             <Card.Group itemsPerRow={5}>
-              {popularMovies.slice(0, 5).map((movie) => (
-                <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+              {popularMovies.slice(0, isMobile ? 1 : 5).map((movie) => (
+                <Card
+                  key={movie.id}
+                  onClick={() => cardHandleClick('movie', movie.id)}
+                  style={cardStyleMoile}
+                >
                   {isLoading ? (
                     <Placeholder inverted style={{ height: 300, width: 200 }}>
                       <Placeholder.Image rectangular />
@@ -165,7 +166,11 @@ function Homepage() {
           titleLink={`${route.VIEW_TVSHOWS}`}
           totalSlides={topRatedMovies.length}>
           {popularTvShoes.map((movie) => (
-            <Card key={movie.id} onClick={() => cardHandleClick('tv', movie.id)}>
+            <Card
+              key={movie.id}
+              onClick={() => cardHandleClick('tv', movie.id)}
+              style={cardStyleMoile}
+            >
               {isLoading ? (
                 <Placeholder inverted style={{ height: 409, width: 273 }}>
                   <Placeholder.Image rectangular />
@@ -209,7 +214,11 @@ function Homepage() {
           titleLink={`${route.VIEW_MOVIES_TOP_RATED}`}
           totalSlides={topRatedMovies.length}>
           {topRatedMovies.map((movie) => (
-            <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+            <Card
+              key={movie.id}
+              onClick={() => cardHandleClick('movie', movie.id)}
+              style={cardStyleMoile}
+            >
               {isLoading ? (
                 <Placeholder inverted style={{ height: 409, width: 273 }}>
                   <Placeholder.Image rectangular />
@@ -253,7 +262,11 @@ function Homepage() {
           titleLink={`${route.VIEW_MOVIES_NOW_PLAYING}`}
           totalSlides={nowPlayingMovies.length}>
           {nowPlayingMovies.map((movie) => (
-            <Card key={movie.id} onClick={() => cardHandleClick('movie', movie.id)}>
+            <Card
+              key={movie.id}
+              onClick={() => cardHandleClick('movie', movie.id)}
+              style={cardStyleMoile}
+            >
               {isLoading ? (
                 <Placeholder inverted style={{ height: 409, width: 273 }}>
                   <Placeholder.Image rectangular />

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 // eslint-disable-next-line import/prefer-default-export
 
 export const StyledSearchSection = styled.section`
@@ -12,6 +11,10 @@ export const StyledSearchSection = styled.section`
 export const HomepageContainer = styled.main`
   max-width: 1172px;
   margin: auto;
+  padding: ${(props) => (props.isMobile ? '0 20px' : '0 25px')};
+
+  
+  // eslint-disable-next-line arrow-parens, no-confusing-arrow, arrow-parens
   /* display: flex;
   flex-direction: column;
   align-items: center;

@@ -18,6 +18,11 @@ export const StyledMoviesList = styled.section`
   /* height: 100vh; */
   /* display: flex; */
   margin-top: 4.8em;
+  padding: 0 1.25em;
+
+  h1 {
+    text-align: ${({ isMobile }) => (isMobile ? 'center' : undefined)};
+  }
 `;
 
 export const StyledPaginationWrapper = styled.div`
@@ -32,4 +37,8 @@ export const StyledFilterContainer = styled.div`
   margin-bottom: 3em;
   gap: 1.25em;
   justify-content: end;
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : undefined)};
+  max-width: ${({ isMobile }) => (isMobile ? '300px' : undefined)};
+  margin-left: ${({ isMobile }) => (isMobile ? 'auto' : undefined)};
+  margin-right: ${({ isMobile }) => (isMobile ? 'auto' : undefined)};
 `;

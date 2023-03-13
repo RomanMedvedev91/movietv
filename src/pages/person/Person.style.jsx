@@ -5,7 +5,6 @@ export const PersonContainer = styled.main`
   color: #fff;
   max-width: 1172px;
   margin: auto;
-  /* z-index: 2; */
   font-family: 'Mulish', sans-serif;
   h2 {
     font-weight: 800;
@@ -17,10 +16,10 @@ export const PersonContainer = styled.main`
 export const PersonDetail = styled.section`
   height: calc(100% - 65px);
   width: 100%;
-  // img background full height
-  /* height: 100vh; */
   display: flex;
   margin-top: 4.8em;
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : undefined)};
+  align-items: ${({ isMobile }) => (isMobile ? 'center' : undefined)};
 `;
 
 export const BackgroundImage = styled.div`
@@ -35,8 +34,6 @@ export const BackgroundImage = styled.div`
   img {
     width: 100%;
     height: 100%;
-    /* margin: auto;
-    display: block; */
   }
 `;
 
@@ -44,11 +41,9 @@ export const HeaderGradient = styled.div`
   position: absolute;
   z-index: -2;
   left: 0;
-  /* top: calc(100% - 85%); */
   top: calc(100vh - 10vh);
   width: 100%;
   height: calc(100vh - 20vh);
-  /* height: 800px; */
   background: linear-gradient(to top, #141313, 80%, transparent);
 `;
 
@@ -64,8 +59,8 @@ export const PosterContainer = styled.div`
 `;
 
 export const PersonDataContainer = styled.div`
-  width: 800px;
-  padding: 0 55px 0 20px;
+  max-width: 800px;
+  padding: ${({ isMobile }) => (isMobile ? '0 25px' : '0 55px 0 20px')};
   .ui.button.show-more {
     padding: 0;
     margin-left: 1.2em;
@@ -110,6 +105,7 @@ export const PersonDataTable = styled.div`
   justify-content: space-between;
   margin-top: 3.2em;
   margin-bottom: 2.2em;
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : undefined)};
 
   div {
     display: flex;
@@ -123,15 +119,12 @@ export const PersonDataTable = styled.div`
 `;
 
 export const PersonCreditsTable = styled.section`
-  //from movie.style
   margin-top: 6em;
+  padding: ${({ isMobile }) => (isMobile ? '0 25px' : '0')};
 
   h2 {
     margin-bottom: 1em;
   }
-  /* .ui.card {
-  padding: 10px;
-} */
   .ui.segment {
     min-height: 300px;
     background: none;
