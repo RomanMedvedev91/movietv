@@ -1,11 +1,8 @@
 /* eslint-disable object-curly-newline */
 import { Embed } from 'semantic-ui-react';
 import { TrailerContainer } from './TrailerCard.style';
-// import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
 
 function TrailerCard({ trailer, modalHadler, ...props }) {
-  // const { isMobile } = useMediaQuery();
-
   return (
     <TrailerContainer {...props}>
       <Embed

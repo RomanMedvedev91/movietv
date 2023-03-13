@@ -9,7 +9,7 @@ import {
 } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
-import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 import {
   NavContainer,
@@ -23,6 +23,7 @@ import {
   ItemLink,
   SubMenuItem,
   MobileLogoLink,
+  SearchContainer
 } from './Navbar.style';
 import SearchNavbar from '../SearchBar/SearchNavbar';
 
@@ -64,11 +65,16 @@ const tvShowsLinks = [{
 
 function Navbar() {
   const [burgerVisible, setBurgerVisible] = useState(false);
+  const [searchBarVisible, setSearchBarVisible] = useState(false);
   const location = useLocation();
   const { isMobile } = useMediaQuery();
 
   const toggleBurger = () => {
     setBurgerVisible((prev) => !prev);
+  };
+
+  const toogleSearchBar = () => {
+    setSearchBarVisible((prev) => !prev);
   };
 
   return (
@@ -110,6 +116,9 @@ function Navbar() {
         </NavContainer>
         {isMobile && (
           <MobileLogoLink>
+            <Menu.Item style={{ padding: '0 20px' }} onClick={toogleSearchBar}>
+              <Icon name="search" size="big" />
+            </Menu.Item>
             <Menu.Item onClick={toggleBurger}>
               <Icon name="sidebar" size="big" />
             </Menu.Item>
@@ -169,6 +178,11 @@ function Navbar() {
 
           </Menu>
         </Sidebar>
+      )}
+      {searchBarVisible && isMobile && location.pathname !== '/' && (
+        <SearchContainer>
+          <SearchNavbar />
+        </SearchContainer>
       )}
       <Outlet />
     </>

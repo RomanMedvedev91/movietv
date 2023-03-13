@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Icon, Modal, Embed, Loader, Dimmer, Tab, Card } from 'semantic-ui-react';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
-import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 import {
   getMovieDetails,
@@ -74,6 +74,7 @@ function Movie() {
     };
 
     loadMovie();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieId]);
 
   const getGenres = () => {
@@ -252,7 +253,7 @@ function Movie() {
                 <span>{runTime()}</span>
               </p>
               <p>{movieDetails.overview}</p>
-              <MovieDataTable>
+              <MovieDataTable isMobile={isMobile}>
                 <div>
                   <span>Status</span>
                   <span>{movieDetails.status}</span>

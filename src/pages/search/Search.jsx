@@ -10,6 +10,7 @@ import getData from '../../utilities/getData';
 import ItemsList from '../../components/ItemsList/ItemsList';
 import { TMDB_POSTER_PATH, getUrl, pathList } from '../../constants/apiUrls';
 import { StyledSearchContainer, StyledSearchList, StyledTabsContainer } from './Search.style';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 function Search() {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +32,7 @@ function Search() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query');
   const navigate = useNavigate();
+  const { isMobile } = useMediaQuery();
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -50,10 +52,8 @@ function Search() {
     loadMovies();
     return () => {
       setCurrentSearchPreview(null);
-      // setMoviespreview(null);
-      // setPersonsPrevivew(null);
-      // setTvShowsPreview(null);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePage, currentPreviewTab]);
 
   useEffect(() => {
@@ -61,14 +61,12 @@ function Search() {
       if (!query) return;
 
       setIsLoading(true);
-      // setCurrentSearchPreview(null);
       try {
         // get multi search url to define type of current category
         const searchUrl = getUrl(pathList.search.multi, { query });
         const multiSearchRes = await getData(searchUrl);
         // get category type of first item from multi search
         const currentCategory = multiSearchRes?.results[0]?.media_type || 'movie';
-        // setMultiSearchPreview(multiSearchRes);
         setCurrentPreviewTab(currentCategory);
         setDefaultTab(defaultTabsData[currentCategory]);
 
@@ -109,6 +107,7 @@ function Search() {
       setPersonsPrevivew(null);
       setCurrentSearchPreview(null);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const onChangePage = (e, pageInfo) => {
@@ -219,15 +218,14 @@ function Search() {
 
   return (
     <StyledSearchContainer>
-      <StyledSearchList>
-        <StyledTabsContainer>
+      <StyledSearchList isMobile={isMobile}>
+        <StyledTabsContainer isMobile={isMobile}>
           <h2>
             Search Results:
             <span>{query}</span>
           </h2>
           {TabExampleSecondaryPointing()}
         </StyledTabsContainer>
-        {/* )} */}
       </StyledSearchList>
     </StyledSearchContainer>
   );

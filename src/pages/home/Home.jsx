@@ -7,7 +7,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { Card, Embed, Modal, Placeholder, Image } from 'semantic-ui-react';
 import * as route from '../../constants/routes';
 
-import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 

@@ -90,6 +90,8 @@ export const MovieDataTable = styled.div`
       font-weight: 600;
     }
   }
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : undefined)};
+
 `;
 
 export const CastContainer = styled.section`

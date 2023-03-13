@@ -7,7 +7,7 @@ import { Card, Dropdown, Button, Placeholder, Image } from 'semantic-ui-react';
 
 import getData from '../../utilities/getData';
 import PaginationComponent from '../../components/Pagination/Pagination';
-import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 import {
   upcommingMovieUrl,

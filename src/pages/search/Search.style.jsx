@@ -33,6 +33,7 @@ export const StyledSearchContainer = styled.main`
 
 export const StyledSearchList = styled.section`
   margin-top: 4.8em;
+  padding: ${({ isMobile }) => (isMobile ? '0 1.25em' : undefined)};
 `;
 
 export const StyledTabsContainer = styled.div`
@@ -55,7 +56,7 @@ export const StyledTabsContainer = styled.div`
 
   .ui.text.menu .item {
     color: rgba(255, 255, 255, 0.6);
-    margin-right: 1em;
+    margin-right: ${({ isMobile }) => (isMobile ? 0 : '1em')};
   }
 
   .ui.text.menu .active.item {

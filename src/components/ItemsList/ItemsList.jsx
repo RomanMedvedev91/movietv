@@ -9,6 +9,7 @@ import { Item, Placeholder } from 'semantic-ui-react';
 import PaginationComponent from '../Pagination/Pagination';
 
 import { getDateHumanReadble } from '../../utilities/helperFunctions';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 function ItemsList({
   moviesPreview,
@@ -18,6 +19,8 @@ function ItemsList({
   onChangePage,
   activePage
 }) {
+  const { isMobile } = useMediaQuery();
+
   return (
     <>
       <Item.Group relaxed divided>
@@ -53,7 +56,7 @@ function ItemsList({
                   </>
                 ) : (
                   <Item.Image
-                    style={{ height: 225, width: 150 }}
+                    style={{ height: 225, width: 150, marginBottom: isMobile ? '2em' : '0' }}
                     size="small"
                     src={getImageUrl(movie)}
                     onClick={() => cardHandleClick(movie, movie.id)}
@@ -80,8 +83,8 @@ function ItemsList({
                         {movie.known_for_department
                           ? movie.known_for_department
                           : getDateHumanReadble(
-                              movie.release_date || movie.air_date || movie.first_air_date
-                            )}
+                            movie.release_date || movie.air_date || movie.first_air_date
+                          )}
                       </Item.Meta>
                       <Item.Description>{movie.overview}</Item.Description>
                     </>

@@ -90,3 +90,7 @@ export const AuthContainer = styled.div`
   display: flex;
   gap: 2em;
 `;
+
+export const SearchContainer = styled.div`
+  padding: 0.5em 1.5em;
+`;

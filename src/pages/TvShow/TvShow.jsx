@@ -64,7 +64,7 @@ import {
   getDateHumanReadble
 } from '../../utilities/helperFunctions';
 
-import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 function TvShow() {
   const [isLoading, setIsLoading] = useState(false);
@@ -117,6 +117,7 @@ function TvShow() {
       }
     };
     loadMovie();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tvShowId]);
 
   const getPersonBiography = () => {
@@ -293,7 +294,7 @@ function TvShow() {
                 </Button>
               </p>
 
-              <MovieDataTable>
+              <MovieDataTable isMobile={isMobile}>
                 <div>
                   <span>Type</span>
                   <span>{movieDetails.type}</span>

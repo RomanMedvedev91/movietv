@@ -25,10 +25,10 @@ import {
   PersonCreditsTable,
   MovieCreditLink
 } from './Person.style';
-// import * as route from '../../constants/routes';
 
 import CardCarousel from '../../components/CardCarousel/CardCarousel';
 import { HeaderGradient } from '../home/Home.style';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 import personBackground from '../../assets/personBackground.jpg';
 
@@ -43,6 +43,7 @@ function Person() {
   const { personId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const { isMobile } = useMediaQuery();
 
   const getSortedCreditList = (list) => {
     const sortedList = list.sort((a, b) => {
@@ -84,7 +85,6 @@ function Person() {
         setPersonDetails(resPersonDetails);
         setPersonCredits(sortedCastList);
         setPersonCreditsCrew(sortedCrewList);
-        // setPersonCredits(resPersonCredits);
         setPersonExternalIds(resPersonExternalIds);
         setPersonKnownForMovies(sortedKnownForMovies);
 
@@ -94,6 +94,7 @@ function Person() {
       }
     };
     loadMovie();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personId]);
 
   const cardHandleClick = (movie, id) => {
@@ -143,7 +144,7 @@ function Person() {
   };
 
   const personCreditsTable = (credits) => (
-    <Table basic="very" compact collapsing inverted>
+    <Table basic="very" compact unstackable inverted>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell textAlign="center" width={2}>
@@ -161,8 +162,6 @@ function Person() {
             </Table.Cell>
 
             <Table.Cell>
-              {/* <MovieCreditLink to={cardHandleClick(el.media_type, el.id)}> */}
-              {/* <MovieCreditLink to={`/${el.media_type}/${el.id}`}> */}
               <MovieCreditLink
                 to={`/${el.media_type}/${el.id}`}
                 state={{ id: el.id, category: el.media_type }}>
@@ -212,7 +211,7 @@ function Person() {
 
       {!isLoading && personDetails && (
         <PersonContainer>
-          <PersonDetail>
+          <PersonDetail isMobile={isMobile}>
             <BackgroundImage>
               <img src={personBackground} alt="personBackground" />
             </BackgroundImage>
@@ -228,7 +227,7 @@ function Person() {
               />
             </PosterContainer>
 
-            <PersonDataContainer>
+            <PersonDataContainer isMobile={isMobile}>
               <h2>{personDetails.name}</h2>
 
               <p>
@@ -238,7 +237,7 @@ function Person() {
                 </Button>
               </p>
 
-              <PersonDataTable>
+              <PersonDataTable isMobile={isMobile}>
                 <div>
                   <span>Known For</span>
                   <span>{personDetails.known_for_department}</span>
@@ -312,28 +311,36 @@ function Person() {
             <HeaderGradient />
           </PersonDetail>
           {personKnownForMovies && (
-            <CardCarousel
-              title
-              titleHeader="Known For"
-              // titleLink={`${route.MOVIES}`}
-              totalSlides={personKnownForMovies.length}
-              visibleSlides={5}>
-              {personKnownForMovies.map((movie) => (
-                <Card
-                  key={`${movie.credit_id}`}
-                  image={
-                    movie.backdrop_path
-                      ? `${TMDB_POSTER_PATH + movie.poster_path}`
-                      : 'https://react.semantic-ui.com/images/wireframe/image.png'
-                  }
-                  header={movie.title || movie.name}
-                  meta={movie.release_date || movie.first_air_date}
-                  onClick={() => cardHandleClick(movie, movie.id)}
-                />
-              ))}
-            </CardCarousel>
+            <div style={{ padding: isMobile ? '0 20px' : undefined }}>
+              <CardCarousel
+                title
+                titleHeader="Known For"
+                totalSlides={personKnownForMovies.length}
+                visibleSlides={5}
+                naturalSlideWidth={1}
+                naturalSlideHeight={isMobile ? 1.3 : 2}
+              >
+                {personKnownForMovies.map((movie) => (
+                  <Card
+                    style={{
+                      maxWidth: isMobile ? 250 : undefined,
+                      margin: isMobile ? 'auto' : undefined
+                    }}
+                    key={`${movie.credit_id}`}
+                    image={
+                      movie.backdrop_path
+                        ? `${TMDB_POSTER_PATH + movie.poster_path}`
+                        : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                    }
+                    header={movie.title || movie.name}
+                    meta={movie.release_date || movie.first_air_date}
+                    onClick={() => cardHandleClick(movie, movie.id)}
+                  />
+                ))}
+              </CardCarousel>
+            </div>
           )}
-          <PersonCreditsTable>
+          <PersonCreditsTable isMobile={isMobile}>
             <h2>Person credits</h2>
             {TabExampleSecondaryPointing()}
           </PersonCreditsTable>

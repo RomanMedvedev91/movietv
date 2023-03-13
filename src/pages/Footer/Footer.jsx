@@ -4,7 +4,7 @@ import { Icon } from 'semantic-ui-react';
 
 import * as route from '../../constants/routes';
 
-import { useMediaQuery } from '../../hooks/useMediaQuery.tsx';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import footerBackground from '../../assets/footerBackground.jpg';
 
 // eslint-disable-next-line object-curly-newline

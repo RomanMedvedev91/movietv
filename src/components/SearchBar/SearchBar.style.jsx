@@ -20,10 +20,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const StyledSearchNavbarContainer = styled.div`
-  width: 200px;
-  /* .ui.form input {
-    background: none;
-  } */
+  width: ${({ isMobile }) => (isMobile ? '100%' : '200px')};
 
   form {
     display: flex;
